@@ -1,4 +1,4 @@
 package bmstu.hdfs.lab2;
 
-public class FlightsMapper {
+public class FlightMapper {
 }
