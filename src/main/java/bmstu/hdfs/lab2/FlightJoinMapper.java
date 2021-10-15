@@ -11,9 +11,11 @@ public class FlightJoinMapper extends Mapper<LongWritable, Text, AirportIDWritab
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException, NumberFormatException {
         String[] values = value.toString().split(separator);
-        int airportID = Integer.parseInt(values[14]);
-        if (values[17].charAt(0) != '-' && values[17].charAt(0) != '0') {
-            context.write(new AirportIDWritableComparable(new IntWritable(airportID), new IntWritable(1)), new Text(values[17]));
-        }
+        try {
+            int airportID = Integer.parseInt(values[14]);
+            if (values[17].charAt(0) != '-' && values[17].charAt(0) != '0') {
+                context.write(new AirportIDWritableComparable(new IntWritable(airportID), new IntWritable(1)), new Text(values[17]));
+            }
+        } catch (NumberFormatException ignored) {}
     }
 }

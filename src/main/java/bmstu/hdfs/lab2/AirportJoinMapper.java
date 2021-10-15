@@ -11,7 +11,9 @@ public class AirportJoinMapper extends Mapper<LongWritable, Text, AirportIDWrita
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException, NumberFormatException {
         String[] values = value.toString().split(separator);
-        int airportID = Integer.parseInt(values[0]);
-        context.write(new AirportIDWritableComparable(new IntWritable(airportID), new IntWritable(0)), new Text(values[1]));
+        try {
+            int airportID = Integer.parseInt(values[0]);
+            context.write(new AirportIDWritableComparable(new IntWritable(airportID), new IntWritable(0)), new Text(values[1]));
+        } catch (NumberFormatException ignored) {}
     }
 }
