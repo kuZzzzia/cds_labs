@@ -12,6 +12,8 @@ public class FlightMapper extends Mapper<LongWritable, Text, AirportCodeWritable
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException, NumberFormatException {
         String[] values = value.toString().split(separator);
         int airportID = Integer.parseInt(values[14]);
-        context.write(new AirportCodeWritableComparable(new IntWritable(airportID), new IntWritable(1)), new Text(values[17]));
+        if (values[17].charAt(0) != '-' && values[17].charAt(0) != '0') {
+            context.write(new AirportCodeWritableComparable(new IntWritable(airportID), new IntWritable(1)), new Text(values[17]));
+        }
     }
 }
