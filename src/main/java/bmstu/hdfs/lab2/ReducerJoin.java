@@ -4,6 +4,45 @@ import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text, FloatWritable> {
-    
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text, Text> {
+
+    @Override
+    protected void reduce(AirportIDWritableComparable key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
+        final Text airportName;
+        Iterator<Text> valuesIterator = values.iterator();
+        if (valuesIterator.hasNext()) {
+            airportName = valuesIterator.next();
+            ArrayList<String> delays = new ArrayList<>();
+            while(valuesIterator.hasNext()) {
+                delays.add(valuesIterator.next().toString());
+            }
+            if (delays.size() > 0) {
+                context.write(airportName, computeMinMaxAverageDelay(delays));
+            }
+        }
+    }
+
+    protected Text computeMinMaxAverageDelay(ArrayList<String> delays) {
+        float min = Float.MAX_VALUE, max = 0, sum = 0, count = 0;
+        for (String delay: delays) {
+            try {
+                float delayFloatValue = Float.parseFloat(delay);
+                if (delayFloatValue < min) {
+                    min = delayFloatValue;
+                }
+                if (delayFloatValue > max) {
+                    max = delayFloatValue;
+                }
+                sum += delayFloatValue;
+            } catch (NumberFormatException ignored) {
+                count--;
+            }
+            count++;
+        }
+        
+    }
 }
