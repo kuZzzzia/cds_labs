@@ -17,7 +17,7 @@ public class ReduceSideJoinAirportsWithFlightsApp {
         job.setJobName("Reduce side join airports with flights");
         MultipleInputs.addInputPath(job, new Path(args[0]), TextInputFormat.class); //TODO: add mapper
         MultipleInputs.addInputPath(job, new Path(args[0]), TextInputFormat.class);
-        
+
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
     }
 }
