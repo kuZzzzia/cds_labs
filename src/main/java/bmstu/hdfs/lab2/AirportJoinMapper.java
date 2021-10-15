@@ -5,7 +5,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-public class AirportMapper extends Mapper<LongWritable, Text, AirportIDWritableComparable, Text> {
+public class AirportJoinMapper extends Mapper<LongWritable, Text, AirportIDWritableComparable, Text> {
     private static final String separator = ",";
 
     @Override

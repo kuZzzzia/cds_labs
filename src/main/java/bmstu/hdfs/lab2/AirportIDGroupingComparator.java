@@ -3,9 +3,9 @@ package bmstu.hdfs.lab2;
 import org.apache.hadoop.io.WritableComparable;
 import org.apache.hadoop.io.WritableComparator;
 
-public class GroupingComparatorByAirportID extends WritableComparator {
+public class AirportIDGroupingComparator extends WritableComparator {
 
-    public GroupingComparatorByAirportID() {
+    public AirportIDGroupingComparator() {
         super(AirportIDWritableComparable.class, true);
     }
 
