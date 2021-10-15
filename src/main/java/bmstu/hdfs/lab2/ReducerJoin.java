@@ -9,21 +9,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ReducerJoin extends Reducer<IntWritable, Text, Text, Text> {
+public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text, Text> {
 
     @Override
-    protected void reduce(IntWritable key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
+    protected void reduce(AirportIDWritableComparable key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
         final Text airportName;
         Iterator<Text> valuesIterator = values.iterator();
-        if (valuesIterator.hasNext()) {
-            airportName = valuesIterator.next();
-            ArrayList<String> delays = new ArrayList<>();
-            while(valuesIterator.hasNext()) {
-                delays.add(valuesIterator.next().toString());
-            }
-            if (delays.size() > 0) {
-                context.write(airportName, computeMinMaxAverageDelay(delays));
-            }
+        airportName = valuesIterator.next();
+        ArrayList<String> delays = new ArrayList<>();
+        while(valuesIterator.hasNext()) {
+            delays.add(valuesIterator.next().toString());
+        }
+        if (delays.size() > 0) {
+            context.write(airportName, computeMinMaxAverageDelay(delays));
         }
     }
 
