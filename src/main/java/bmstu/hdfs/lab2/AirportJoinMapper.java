@@ -12,7 +12,7 @@ public class AirportJoinMapper extends Mapper<LongWritable, Text, AirportIDWrita
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException, NumberFormatException {
         String[] values = value.toString().split(separator);
         try {
-            int airportID = Integer.parseInt(values[0].substring(1, values[0].length() - 1));
+            int airportID = Integer.parseInt(values[0]);
             context.write(new AirportIDWritableComparable(new IntWritable(airportID), new IntWritable(0)), new Text(values[1]));
         } catch (NumberFormatException ignored) {}
     }
