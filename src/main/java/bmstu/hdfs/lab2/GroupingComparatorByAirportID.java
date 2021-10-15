@@ -1,4 +1,7 @@
 package bmstu.hdfs.lab2;
 
-public class GroupingComparatorByAirportID {
+import org.apache.hadoop.io.WritableComparator;
+
+public class GroupingComparatorByAirportID extends WritableComparator {
+    
 }
