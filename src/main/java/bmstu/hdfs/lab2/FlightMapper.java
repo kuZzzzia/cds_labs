@@ -4,9 +4,11 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.Mapper;
 
-public class FlightMapper extends Mapper<LongWritable, Text, > {
+import java.io.IOException;
+
+public class FlightMapper extends Mapper<LongWritable, Text, TextPair, Text> {
     @Override
-    protected void map(LongWritable key, Text value, org.apache.hadoop.mapreduce.Mapper.Context) {
-        
+    protected void map(LongWritable key, Text value, org.apache.hadoop.mapreduce.Mapper.Context) throws IOException, InterruptedException {
+
     }
 }
