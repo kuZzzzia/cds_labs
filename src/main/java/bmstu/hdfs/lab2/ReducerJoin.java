@@ -9,10 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, IntWritable, Text> {
+public class ReducerJoin extends Reducer<IntWritable, Text, IntWritable, Text> {
 
     @Override
-    protected void reduce(AirportIDWritableComparable key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
+    protected void reduce(IntWritable key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
         final Text airportName;
         Iterator<Text> valuesIterator = values.iterator();
         if (valuesIterator.hasNext()) {
@@ -21,9 +21,10 @@ public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, IntW
             while(valuesIterator.hasNext()) {
                 delays.add(valuesIterator.next().toString());
             }
-            if (delays.size() > 0) {
-                context.write(new IntWritable(key.getAirportID()), computeMinMaxAverageDelay(delays));
-            }
+//            if (delays.size() > 0) {
+//                context.write(new IntWritable(key.getAirportID()), computeMinMaxAverageDelay(delays));
+//            }
+            if ()
         }
     }
 
