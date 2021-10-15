@@ -7,6 +7,6 @@ public class AirportIDPartitioner extends Partitioner<AirportIDWritableComparabl
 
     @Override
     public int getPartition(AirportIDWritableComparable airportIDWritableComparable, Text text, int numReduceTasks) {
-        return airportIDWritableComparable.getAirportID() % numReduceTasks;
+        return  new Integer(airportIDWritableComparable.getAirportID()).hashCode() % numReduceTasks;
     }
 }
