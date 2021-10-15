@@ -29,7 +29,7 @@ public class AirportIDWritableComparable implements WritableComparable<AirportID
     public int compareTo(AirportIDWritableComparable o) {
         int thisID = this.getAirportID();
         int thatID = o.getAirportID();
-        return Integer.compare(thisID, thatID);
+        return (thisID < thatID ? -1 : (thisID == thatID ? ));
     }
 
     @Override
