@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ReducerJoin extends Reducer<IntWritable, Text, IntWritable, Text> {
+public class ReducerJoin extends Reducer<IntWritable, Text, Text, Text> {
 
     @Override
     protected void reduce(IntWritable key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
@@ -22,7 +22,7 @@ public class ReducerJoin extends Reducer<IntWritable, Text, IntWritable, Text> {
                 delays.add(valuesIterator.next().toString());
             }
             if (delays.size() > 0) {
-                context.write(new IntWritable(key.getAirportID()), computeMinMaxAverageDelay(delays));
+                context.write(airportName, computeMinMaxAverageDelay(delays));
             }
         }
     }
