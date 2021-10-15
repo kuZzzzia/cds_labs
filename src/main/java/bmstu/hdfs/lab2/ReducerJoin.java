@@ -21,10 +21,9 @@ public class ReducerJoin extends Reducer<IntWritable, Text, IntWritable, Text> {
             while(valuesIterator.hasNext()) {
                 delays.add(valuesIterator.next().toString());
             }
-//            if (delays.size() > 0) {
-//                context.write(new IntWritable(key.getAirportID()), computeMinMaxAverageDelay(delays));
-//            }
-            if ()
+            if (delays.size() > 0) {
+                context.write(new IntWritable(key.getAirportID()), computeMinMaxAverageDelay(delays));
+            }
         }
     }
 
