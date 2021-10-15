@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="hdfs_lab_2" target="8" />
+      <module name="hdfs_lab_2" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
