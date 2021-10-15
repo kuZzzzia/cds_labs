@@ -1,6 +1,7 @@
 package bmstu.hdfs.lab2;
 
 import org.apache.hadoop.io.FloatWritable;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
@@ -8,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text, Text> {
+public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, IntWritable, Text> {
 
     @Override
     protected void reduce(AirportIDWritableComparable key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
@@ -21,7 +22,7 @@ public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text
                 delays.add(valuesIterator.next().toString());
             }
             if (delays.size() > 0) {
-                context.write(airportName, computeMinMaxAverageDelay(delays));
+                context.write(new IntWritable(key.getAirportID()), computeMinMaxAverageDelay(delays));
             }
         }
     }
