@@ -1,5 +1,6 @@
 package bmstu.hdfs.lab2;
 
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.WritableComparable;
 
 import java.io.DataInput;
@@ -7,6 +8,12 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 public class AirportCodeWritableComparable implements WritableComparable {
+    private final IntWritable airportID;
+    private final IntWritable indicatorDataset;
+
+    public AirportCodeWritableComparable() {
+    }
+
     @Override
     public int compareTo(Object o) {
         return 0;
