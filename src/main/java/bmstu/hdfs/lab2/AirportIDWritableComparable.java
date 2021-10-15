@@ -11,11 +11,6 @@ public class AirportIDWritableComparable implements WritableComparable<AirportID
     private final IntWritable airportID;
     private final IntWritable datasetIndicator;
 
-    public AirportIDWritableComparable() {
-        airportID = new IntWritable(0);
-        datasetIndicator = new IntWritable(0);
-    }
-
     public AirportIDWritableComparable(IntWritable airportID, IntWritable datasetIndicator) {
         this.airportID = airportID;
         this.datasetIndicator = datasetIndicator;
