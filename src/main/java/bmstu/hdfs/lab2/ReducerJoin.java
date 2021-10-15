@@ -43,6 +43,7 @@ public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text
             }
             count++;
         }
-        
+        return new Text("min: " + min + ", average: " + sum/count +  ", max: " + max);
+
     }
 }
