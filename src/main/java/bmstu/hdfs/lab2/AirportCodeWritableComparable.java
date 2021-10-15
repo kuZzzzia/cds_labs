@@ -21,6 +21,10 @@ public class AirportCodeWritableComparable implements WritableComparable {
         this.datasetIndicator = datasetIndicator;
     }
 
+    private IntWritable detAirportID() {
+        
+    }
+
     @Override
     public int compareTo(Object o) {
         int thisID = this
