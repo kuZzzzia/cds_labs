@@ -23,6 +23,8 @@ public class ReduceSideJoinFlightsWithAirportsApp {
         job.setGroupingComparatorClass(AirportIDGroupingComparator.class);
         job.setReducerClass(ReducerJoin.class);
         job.setMapOutputKeyClass(AirportIDWritableComparable.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(Text.class);
 
 
         job.setNumReduceTasks(2);
