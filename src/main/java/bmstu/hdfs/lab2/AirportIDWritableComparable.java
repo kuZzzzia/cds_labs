@@ -21,7 +21,7 @@ public class AirportIDWritableComparable implements WritableComparable {
         this.datasetIndicator = datasetIndicator;
     }
 
-    private int getAirportID() {
+    protected int getAirportID() {
         return this.airportID.get();
     }
 
