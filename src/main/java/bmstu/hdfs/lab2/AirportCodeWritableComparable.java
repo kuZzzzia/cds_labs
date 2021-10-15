@@ -21,14 +21,15 @@ public class AirportCodeWritableComparable implements WritableComparable {
         this.datasetIndicator = datasetIndicator;
     }
 
-    private IntWritable detAirportID() {
-        
+    private int getAirportID() {
+        return this.airportID.get();
     }
 
     @Override
     public int compareTo(Object o) {
-        int thisID = this
-        return 0;
+        int thisID = this.getAirportID();
+        int thatID = this.getAirportID();
+        return Integer.compare(thisID, thatID);
     }
 
     @Override
