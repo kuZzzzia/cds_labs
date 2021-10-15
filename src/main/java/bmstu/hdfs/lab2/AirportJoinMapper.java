@@ -12,7 +12,8 @@ public class AirportJoinMapper extends Mapper<LongWritable, Text, AirportIDWrita
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException, NumberFormatException {
         final int indexOfSeparator = value.toString().indexOf(separator);
         String regEx = "\\d*";
-        String airportIdCandidate = value.toString().substring(1, indexOfSeparator - 1).trim();
+        String airportIdCandidate = value.toString().substring(1, indexOfSeparator - 1).replaceAll(" ", "").replaceAll("\"", "");
+
         if (!airportIdCandidate.matches(regEx)) {
             throw new InterruptedException("wrong");
         }
