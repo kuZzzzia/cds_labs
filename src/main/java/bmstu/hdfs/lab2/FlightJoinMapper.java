@@ -13,7 +13,7 @@ public class FlightJoinMapper extends Mapper<LongWritable, Text, AirportIDWritab
         String[] values = value.toString().split(separator);
         try {
             int airportID = Integer.parseInt(values[14]);
-            if (values[17].charAt(0) != '-' && values[17].charAt(0) != '0') {
+            if (values[17].length() != 0) {
                 context.write(new AirportIDWritableComparable(new IntWritable(airportID), new IntWritable(1)), new Text(values[17]));
             }
         } catch (NumberFormatException ignored) {}
