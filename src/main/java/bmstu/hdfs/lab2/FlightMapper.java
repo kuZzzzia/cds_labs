@@ -5,7 +5,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-public class FlightMapper extends Mapper<LongWritable, Text, AirportCodeWritableComparable, Text> {
+public class FlightMapper extends Mapper<LongWritable, Text, AirportIDWritableComparable, Text> {
     private static final String separator = ",";
 
     @Override
@@ -13,7 +13,7 @@ public class FlightMapper extends Mapper<LongWritable, Text, AirportCodeWritable
         String[] values = value.toString().split(separator);
         int airportID = Integer.parseInt(values[14]);
         if (values[17].charAt(0) != '-' && values[17].charAt(0) != '0') {
-            context.write(new AirportCodeWritableComparable(new IntWritable(airportID), new IntWritable(1)), new Text(values[17]));
+            context.write(new AirportIDWritableComparable(new IntWritable(airportID), new IntWritable(1)), new Text(values[17]));
         }
     }
 }
