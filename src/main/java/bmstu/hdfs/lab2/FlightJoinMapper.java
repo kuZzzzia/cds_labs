@@ -13,6 +13,7 @@ public class FlightJoinMapper extends Mapper<LongWritable, Text, AirportIDWritab
         String[] values = value.toString().split(separator);
         try {
             int airportID = Integer.parseInt(values[14]);
+            System.out.println(airportID);
             if (values[17].length() != 0) {
                 context.write(new AirportIDWritableComparable(new IntWritable(airportID), new IntWritable(1)), new Text(values[17]));
             }
