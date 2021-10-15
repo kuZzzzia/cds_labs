@@ -8,39 +8,50 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 public class AirportCodeWritableComparable implements WritableComparable {
-    private final IntWritable airportID;
-    private final IntWritable datasetIndicator;
+    private int airportID;
+    private int datasetIndicator;
 
     public AirportCodeWritableComparable() {
-        airportID = new IntWritable(0);
-        datasetIndicator = new IntWritable(0);
+        airportID = 0;
+        datasetIndicator = 0;
     }
 
-    public AirportCodeWritableComparable(IntWritable airportID, IntWritable datasetIndicator) {
+    public AirportCodeWritableComparable(int airportID, int datasetIndicator) {
         this.airportID = airportID;
         this.datasetIndicator = datasetIndicator;
     }
 
     private int getAirportID() {
-        return this.airportID.get();
+        return this.airportID;
+    }
+
+    private int getDatasetIndicator() {
+        return  this.datasetIndicator;
+    }
+
+    private void setAirportID(int airportID) {
+        this.airportID = airportID;
+    }
+    private void setDatasetIndicator(int datasetIndicator) {
+        this.datasetIndicator = datasetIndicator;
     }
 
     @Override
     public int compareTo(Object o) {
         int thisID = this.getAirportID();
-        int thatID = this.getAirportID();
+        int thatID = ((AirportCodeWritableComparable) o).getAirportID();
         return Integer.compare(thisID, thatID);
     }
 
     @Override
     public void write(DataOutput dataOutput) throws IOException {
-        airportID.write(dataOutput);
-        datasetIndicator.write(dataOutput);
+        dataOutput.writeInt(getAirportID());
+        dataOutput.writeInt(getDatasetIndicator());
     }
 
     @Override
     public void readFields(DataInput dataInput) throws IOException {
-        airportID.readFields(dataInput);
-        datasetIndicator.readFields(dataInput);
+        setAirportID(dataInput.readInt());
+        setDatasetIndicator(dataInput.readInt());
     }
 }
