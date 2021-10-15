@@ -9,8 +9,9 @@ public class FlightMapper extends Mapper<LongWritable, Text, AirportCodeWritable
     private static final String separator = ",";
 
     @Override
-    protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+    protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException, NumberFormatException {
         String[] values = value.toString().split(separator);
-        context.write(new AirportCodeWritableComparable(), new Text());
+        int airportID = Integer.parseInt(values[14]);
+        context.write(new AirportCodeWritableComparable(new IntWritable(airportID), ), new Text());
     }
 }
