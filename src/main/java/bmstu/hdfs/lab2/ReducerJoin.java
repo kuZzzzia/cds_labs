@@ -20,8 +20,6 @@ public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text
         }
         if (delays.size() > 0) {
             context.write(airportName, computeMinMaxAverageDelay(delays));
-        } else {
-            context.write(airportName, new Text("airport"));
         }
     }
 
