@@ -6,7 +6,7 @@ import org.apache.hadoop.io.WritableComparator;
 public class AirportIDGroupingComparator extends WritableComparator {
 
     public AirportIDGroupingComparator() {
-        super(AirportIDWritableComparable.class);
+        super(AirportIDWritableComparable.class, true);
     }
 
     @Override
