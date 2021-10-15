@@ -7,14 +7,17 @@ import java.io.IOException;
 
 public class FlightJoinMapper extends Mapper<LongWritable, Text, AirportIDWritableComparable, Text> {
     private static final String separator = ",";
+    private static final int destinationAirportIDIndex = 14;
+    private static final int delayIndex = 17;
+    private static final int datasetIndicator = 1;
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException, NumberFormatException {
         String[] values = value.toString().split(separator);
         try {
-            int airportID = Integer.parseInt(values[14].trim());
-            if (values[17].length() != 0) {
-                context.write(new AirportIDWritableComparable(new IntWritable(airportID), new IntWritable(1)), new Text(values[17].trim()));
+            int airportID = Integer.parseInt(values[destinationAirportIDIndex].trim());
+            if (values[delayIndex].length() != 0) {
+                context.write(new AirportIDWritableComparable(new IntWritable(airportID), new IntWritable(datasetIndicator)), new Text(values[delayIndex].trim()));
             }
         } catch (NumberFormatException ignored) {}
     }
