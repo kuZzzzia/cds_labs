@@ -12,10 +12,10 @@ public class AirportJoinMapper extends Mapper<LongWritable, Text, AirportIDWrita
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException, NumberFormatException {
         final int indexOfSeparator = value.toString().indexOf(separator);
         String airportIdCandidate = value.toString().substring(1, indexOfSeparator - 1);
-        String airportNameCandidate = value.toString().substring(indexOfSeparator)
+        String airportName = value.toString().substring(indexOfSeparator + 1);
         try {
-            int airportID = Integer.parseInt(values[0].substring(1, values[0].length() - 1));
-            context.write(new AirportIDWritableComparable(new IntWritable(airportID), new IntWritable(0)), new Text(values[1]));
+            int airportID = Integer.parseInt(airportIdCandidate);
+            context.write(new AirportIDWritableComparable(new IntWritable(airportID), new IntWritable(0)), new Text(airportName));
         } catch (NumberFormatException ignored) {}
     }
 }
