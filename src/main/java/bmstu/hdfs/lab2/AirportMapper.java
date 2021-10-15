@@ -11,6 +11,7 @@ public class AirportMapper extends Mapper<LongWritable, Text, Pair<AirportCodeWr
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-
+        String[] values = value.toString().split(separator);
+        
     }
 }
