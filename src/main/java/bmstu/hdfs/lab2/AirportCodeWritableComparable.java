@@ -9,23 +9,33 @@ import java.io.IOException;
 
 public class AirportCodeWritableComparable implements WritableComparable {
     private final IntWritable airportID;
-    private final IntWritable indicatorDataset;
+    private final IntWritable datasetIndicator;
 
     public AirportCodeWritableComparable() {
+        airportID = new IntWritable(0);
+        datasetIndicator = new IntWritable(0);
+    }
+
+    public AirportCodeWritableComparable(IntWritable airportID, IntWritable datasetIndicator) {
+        this.airportID = airportID;
+        this.datasetIndicator = datasetIndicator;
     }
 
     @Override
     public int compareTo(Object o) {
+        int thisID = this
         return 0;
     }
 
     @Override
     public void write(DataOutput dataOutput) throws IOException {
-
+        airportID.write(dataOutput);
+        datasetIndicator.write(dataOutput);
     }
 
     @Override
     public void readFields(DataInput dataInput) throws IOException {
-
+        airportID.readFields(dataInput);
+        datasetIndicator.readFields(dataInput);
     }
 }
