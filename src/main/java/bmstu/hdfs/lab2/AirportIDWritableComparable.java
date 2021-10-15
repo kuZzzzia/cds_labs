@@ -7,7 +7,7 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class AirportIDWritableComparable implements WritableComparable {
+public class AirportIDWritableComparable implements WritableComparable<AirportIDWritableComparable> {
     private final IntWritable airportID;
     private final IntWritable datasetIndicator;
 
@@ -26,9 +26,9 @@ public class AirportIDWritableComparable implements WritableComparable {
     }
 
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(AirportIDWritableComparable o) {
         int thisID = this.getAirportID();
-        int thatID = ((AirportIDWritableComparable) o).getAirportID();
+        int thatID = o.getAirportID();
         return Integer.compare(thisID, thatID);
     }
 
