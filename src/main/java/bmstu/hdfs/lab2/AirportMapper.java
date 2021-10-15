@@ -1,7 +1,7 @@
 package bmstu.hdfs.lab2;
 
-import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.*;
+import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
