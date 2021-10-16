@@ -12,16 +12,17 @@ public class AirportJoinMapper extends Mapper<LongWritable, Text, AirportIDWrita
     private static final String DOUBLE_QUOTES_REG_EX = "\"";
     private static final String INTEGER_REG_EX = "^\\d+$";
     private static final int LIMIT_SEPARATOR = 2;
+    private static final int AIRPORT_ID_INDEX = 0;
+    private static final int AIRPORT_NAME_INDEX = 1;
     private static final int DATASET_INDICATOR = 0;
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException, NumberFormatException {
         String[] values = value.toString().split(SEPARATOR, LIMIT_SEPARATOR);
-        String stringValue = value.toString();
-        final int indexOfSeparator = stringValue.indexOf(SEPARATOR);
-        String airportIdCandidate = getAirportID(stringValue, indexOfSeparator);
-        String airportName = getAirportName(stringValue, indexOfSeparator);
-        if (airportIdCandidate.matches(INTEGER_REG_EX)) {
+
+        String airportIdString = removeDoubleQuotesFromString(values[AIRPORT_ID_INDEX]);
+        String airportName = removeDoubleQuotesFromString(values[AIRPORT_NAME_INDEX]);
+        if (airportIdString.startsWith()) {
             int airportID = Integer.parseInt(airportIdCandidate);
             context.write(
                     new AirportIDWritableComparable(
@@ -33,17 +34,8 @@ public class AirportJoinMapper extends Mapper<LongWritable, Text, AirportIDWrita
         }
     }
 
-    private static String getAirportID(final String data, final int indexOfSeparator) {
+    private static String removeDoubleQuotesFromString(final String data) {
         return data
-                .substring(0, indexOfSeparator)
-                .replaceAll(WHITESPACE_REG_EX, EMPTY_STRING)
                 .replaceAll(DOUBLE_QUOTES_REG_EX, EMPTY_STRING);
-    }
-
-    private static String getAirportName(final String data, final int indexOfSeparator) {
-        return data
-                .substring(indexOfSeparator + 1)
-                .replaceAll(DOUBLE_QUOTES_REG_EX, EMPTY_STRING)
-                .trim();
     }
 }
