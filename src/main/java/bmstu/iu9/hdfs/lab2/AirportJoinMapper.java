@@ -11,10 +11,12 @@ public class AirportJoinMapper extends Mapper<LongWritable, Text, AirportIDWrita
     private static final String EMPTY_STRING = "";
     private static final String DOUBLE_QUOTES_REG_EX = "\"";
     private static final String INTEGER_REG_EX = "^\\d+$";
+    private static final int LIMIT_SEPARATOR = 2;
     private static final int DATASET_INDICATOR = 0;
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException, NumberFormatException {
+        String[] values = value.toString().split(SEPARATOR, LIMIT_SEPARATOR);
         String stringValue = value.toString();
         final int indexOfSeparator = stringValue.indexOf(SEPARATOR);
         String airportIdCandidate = getAirportID(stringValue, indexOfSeparator);
