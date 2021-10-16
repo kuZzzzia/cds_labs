@@ -15,10 +15,13 @@ public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text
         final Text airportName;
         Iterator<Text> valuesIterator = values.iterator();
         airportName = new Text(valuesIterator.next().toString());
-        ArrayList<String> delays = getDelays(valuesIterator);
-        if (delays.size() > 0) {
-            context.write(airportName, computeMinMaxAverageDelay(delays));
+        if (airportName.toString().matches("\\d")) {
+            context.write(airportName, new Text(String.valueOf(key.getAirportID())));
         }
+//        ArrayList<String> delays = getDelays(valuesIterator);
+//        if (delays.size() > 0) {
+//            context.write(airportName, computeMinMaxAverageDelay(delays));
+//        }
     }
 
     protected ArrayList<String> getDelays(Iterator<Text> valuesIterator) {
