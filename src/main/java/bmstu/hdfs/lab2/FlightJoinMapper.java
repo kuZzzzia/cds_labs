@@ -2,6 +2,7 @@ package bmstu.hdfs.lab2;
 
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.mortbay.log.Log;
 
 import java.io.IOException;
 
@@ -19,6 +20,8 @@ public class FlightJoinMapper extends Mapper<LongWritable, Text, AirportIDWritab
             if (values[delayIndex].length() != 0) {
                 context.write(new AirportIDWritableComparable(new IntWritable(airportID), new IntWritable(datasetIndicator)), new Text(values[delayIndex].trim()));
             }
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException e) {
+            Log.info(e.toString());
+        }
     }
 }
