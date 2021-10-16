@@ -17,9 +17,15 @@ public class FlightJoinMapper extends Mapper<LongWritable, Text, AirportIDWritab
         String[] values = value.toString().split(separator);
         if (values[destinationAirportIDIndex].matches(numberRegEx)) {
             int airportID = Integer.parseInt(values[destinationAirportIDIndex]);
-            if (values[delayIndex].length() != 0) {
-                context.write(new AirportIDWritableComparable(new IntWritable(airportID), new IntWritable(datasetIndicator)),
-                        new Text(values[delayIndex].trim()));
+            String delay = values[delayIndex];
+            if (delay.length() != 0) {
+                context.write(
+                        new AirportIDWritableComparable(
+                            new IntWritable(airportID),
+                            new IntWritable(datasetIndicator)
+                        ),
+                        new Text(delay.trim())
+                );
             }
         }
     }
