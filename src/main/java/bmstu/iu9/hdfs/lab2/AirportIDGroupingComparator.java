@@ -13,6 +13,6 @@ public class AirportIDGroupingComparator extends WritableComparator {
     public int compare(WritableComparable a, WritableComparable b) {
         AirportIDWritableComparable id1 = (AirportIDWritableComparable) a;
         AirportIDWritableComparable id2 = (AirportIDWritableComparable) b;
-        return id1.compareTo(id2);
+        return Integer.compare(id1.getAirportID(),id2.getAirportID());
     }
 }

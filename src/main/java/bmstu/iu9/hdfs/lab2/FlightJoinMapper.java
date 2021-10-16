@@ -16,7 +16,7 @@ public class FlightJoinMapper extends Mapper<LongWritable, Text, AirportIDWritab
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException, NumberFormatException {
         String[] values = value.toString().split(SEPARATOR);
         String airportIDString = values[DESTINATION_AIRPORT_ID_INDEX];
-        if (!airportIDString.startsWith(FILE_FIRST_STRING_PREFIX)) {
+        if (!airportIDString.equals(FILE_FIRST_STRING_PREFIX)) {
             int airportID = Integer.parseInt(airportIDString);
             String delay = values[DELAY_INDEX];
             if (delay.length() != 0) {
