@@ -2,7 +2,6 @@ package bmstu.hdfs.lab2;
 
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.mortbay.log.Log;
 
 import java.io.IOException;
 
