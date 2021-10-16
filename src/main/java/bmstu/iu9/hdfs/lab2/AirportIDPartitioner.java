@@ -8,10 +8,9 @@ public class AirportIDPartitioner extends Partitioner<AirportIDWritableComparabl
     @Override
     public int getPartition(AirportIDWritableComparable airportIDWritableComparable, Text text, int numReduceTasks) {
         return Math.abs(
-                new Integer(
-                        airportIDWritableComparable
-                                .getAirportID()
-                ).hashCode()
+                airportIDWritableComparable
+                        .getAirportID()
+                        .hashCode()
         ) % numReduceTasks;
     }
 }
