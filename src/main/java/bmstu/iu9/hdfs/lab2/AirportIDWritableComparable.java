@@ -7,7 +7,7 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class AirportIDWritableComparable implements WritableComparable<AirportIDWritableComparable> {
+public class AirportIDWritableComparable implements WritableComparable {
     private final IntWritable airportID;
     private final IntWritable datasetIndicator;
 
@@ -41,8 +41,7 @@ public class AirportIDWritableComparable implements WritableComparable<AirportID
         datasetIndicator.readFields(dataInput);
     }
 
-    @SuppressWarnings("unchecked")
     public int compareTo(AirportIDWritableComparable o) {
-        
+        return this.compareTo(o);
     }
 }
