@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class FlightJoinMapper extends Mapper<LongWritable, Text, AirportIDWritableComparable, Text> {
     private static final String SEPARATOR = ",";
-    private static final String FILE_FIRST_STRING_PREFIX = "\"YEAR\"";
+    private static final String FILE_FIRST_STRING_PREFIX = "\"DEST_AIRPORT_ID\"";
     private static final int DESTINATION_AIRPORT_ID_INDEX = 14;
     private static final int DELAY_INDEX = 17;
     private static final int DATASET_INDICATOR = 1;
