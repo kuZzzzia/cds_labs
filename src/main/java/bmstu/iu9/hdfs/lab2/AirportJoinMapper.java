@@ -32,7 +32,8 @@ public class AirportJoinMapper extends Mapper<LongWritable, Text, AirportIDWrita
     }
 
     private String getAirportID(String data, final int indexOfSeparator) {
-        return data.substring(0, indexOfSeparator)
+        return data
+                .substring(0, indexOfSeparator)
                 .replaceAll(WHITESPACE_REG_EX, EMPTY_STRING)
                 .replaceAll(DOUBLE_QUOTES_REG_EX, EMPTY_STRING);
     }
