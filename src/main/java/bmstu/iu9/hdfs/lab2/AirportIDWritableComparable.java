@@ -25,8 +25,8 @@ public class AirportIDWritableComparable implements WritableComparable<AirportID
         return this.airportID.get();
     }
 
-    @Override
-    public int compareTo(AirportIDWritableComparable o) {
+
+    public int airportIDCompareTo(AirportIDWritableComparable o) {
         int thisID = this.getAirportID();
         int thatID = o.getAirportID();
         return Integer.compare(thisID, thatID);
@@ -42,5 +42,10 @@ public class AirportIDWritableComparable implements WritableComparable<AirportID
     public void readFields(DataInput dataInput) throws IOException {
         airportID.readFields(dataInput);
         datasetIndicator.readFields(dataInput);
+    }
+
+    @Override
+    public int compareTo(AirportIDWritableComparable o) {
+        return 0;
     }
 }

@@ -7,10 +7,9 @@ import java.io.IOException;
 
 public class AirportJoinMapper extends Mapper<LongWritable, Text, AirportIDWritableComparable, Text> {
     private static final String SEPARATOR = ",";
-    private static final String WHITESPACE_REG_EX = "\\s";
     private static final String EMPTY_STRING = "";
     private static final String DOUBLE_QUOTES_REG_EX = "\"";
-    private static final String INTEGER_REG_EX = "^\\d+$";
+    private static final String FILE_FIRST_STRING_PREFIX = "Code";
     private static final int LIMIT_SEPARATOR = 2;
     private static final int AIRPORT_ID_INDEX = 0;
     private static final int AIRPORT_NAME_INDEX = 1;
@@ -22,8 +21,8 @@ public class AirportJoinMapper extends Mapper<LongWritable, Text, AirportIDWrita
 
         String airportIdString = removeDoubleQuotesFromString(values[AIRPORT_ID_INDEX]);
         String airportName = removeDoubleQuotesFromString(values[AIRPORT_NAME_INDEX]);
-        if (airportIdString.startsWith()) {
-            int airportID = Integer.parseInt(airportIdCandidate);
+        if (airportIdString.startsWith(FILE_FIRST_STRING_PREFIX)) {
+            int airportID = Integer.parseInt(airportIdString);
             context.write(
                     new AirportIDWritableComparable(
                             new IntWritable(airportID),
