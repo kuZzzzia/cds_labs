@@ -28,7 +28,7 @@ public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text
     }
 
     protected Text computeMinMaxAverageDelay(ArrayList<String> delays) {
-        float min = Float.MAX_VALUE, max = 0, sum = 0, count = 0;
+        float min = Float.MAX_VALUE, max = 0, sum = 0;
         for (String delay: delays) {
             float delayFloatValue = Float.parseFloat(delay);
             if (delayFloatValue < min) {
@@ -38,8 +38,7 @@ public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text
                 max = delayFloatValue;
             }
             sum += delayFloatValue;
-            count++;
         }
-        return new Text("min= " + min + ", average= " + sum/count +  ", max= " + max);
+        return new Text("min= " + min + ", average= " + sum/delays.size() +  ", max= " + max);
     }
 }
