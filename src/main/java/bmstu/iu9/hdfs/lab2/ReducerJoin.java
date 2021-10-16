@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text, Text> {
-    private static final String floatNumberRegEx = "\\d+/.\\d+";
+    private static final String floatNumberRegEx = "\\d+\\.\\d+";
 
     @Override
     protected void reduce(AirportIDWritableComparable key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
