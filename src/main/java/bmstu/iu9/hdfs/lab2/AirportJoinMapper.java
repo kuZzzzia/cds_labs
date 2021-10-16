@@ -18,7 +18,7 @@ public class AirportJoinMapper extends Mapper<LongWritable, Text, AirportIDWrita
         String stringValue = value.toString();
         final int indexOfSeparator = stringValue.indexOf(separator);
         String airportIdCandidate = stringValue.substring(0, indexOfSeparator).replaceAll(whitespaceRegEx, emptyString)
-                .replaceAll(doubleQuotesRegEx, emptyString).trim();
+                .replaceAll(doubleQuotesRegEx, emptyString);
         String airportName = stringValue.substring(indexOfSeparator + 1).replaceAll(doubleQuotesRegEx, emptyString).trim();
         if (airportIdCandidate.matches(numberRegEx)) {
             int airportID = Integer.parseInt(airportIdCandidate);
