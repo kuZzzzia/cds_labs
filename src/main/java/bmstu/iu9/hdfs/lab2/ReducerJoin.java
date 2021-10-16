@@ -14,7 +14,11 @@ public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text
     protected void reduce(AirportIDWritableComparable key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
         final Text airportName;
         Iterator<Text> valuesIterator = values.iterator();
-        airportName = new Text(valuesIterator.next().toString());
+        airportName = new Text(
+                valuesIterator
+                        .next()
+                        .toString()
+        );
         ArrayList<String> delays = getDelays(valuesIterator);
         if (delays.size() > 0) {
             context.write(airportName, computeMinMaxAverageDelay(delays));
@@ -44,6 +48,10 @@ public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text
             }
             sum += delayFloatValue;
         }
-        return new Text("min= " + min + ", average= " + sum/delays.size() +  ", max= " + max);
+        return new Text(
+                "min = " + min
+                        + ", average = " + sum/delays.size()
+                        + ", max = " + max
+        );
     }
 }
