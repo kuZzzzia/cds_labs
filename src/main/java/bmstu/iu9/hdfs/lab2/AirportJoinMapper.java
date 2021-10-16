@@ -31,14 +31,14 @@ public class AirportJoinMapper extends Mapper<LongWritable, Text, AirportIDWrita
         }
     }
 
-    private String getAirportID(String data, final int indexOfSeparator) {
+    private static String getAirportID(final String data, final int indexOfSeparator) {
         return data
                 .substring(0, indexOfSeparator)
                 .replaceAll(WHITESPACE_REG_EX, EMPTY_STRING)
                 .replaceAll(DOUBLE_QUOTES_REG_EX, EMPTY_STRING);
     }
 
-    private String getAirportName(String data, final int indexOfSeparator) {
+    private static String getAirportName(final String data, final int indexOfSeparator) {
         return data
                 .substring(indexOfSeparator + 1)
                 .replaceAll(DOUBLE_QUOTES_REG_EX, EMPTY_STRING)
