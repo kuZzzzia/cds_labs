@@ -21,7 +21,7 @@ public class AirportJoinMapper extends Mapper<LongWritable, Text, AirportIDWrita
 
         String airportIdString = removeDoubleQuotesFromString(values[AIRPORT_ID_INDEX]);
         String airportName = removeDoubleQuotesFromString(values[AIRPORT_NAME_INDEX]);
-        if (airportIdString.startsWith(FILE_FIRST_STRING_PREFIX)) {
+        if (!airportIdString.equals(FILE_FIRST_STRING_PREFIX)) {
             int airportID = Integer.parseInt(airportIdString);
             context.write(
                     new AirportIDWritableComparable(
