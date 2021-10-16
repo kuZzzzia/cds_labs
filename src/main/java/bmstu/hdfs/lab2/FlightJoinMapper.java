@@ -8,6 +8,7 @@ import java.io.IOException;
 
 public class FlightJoinMapper extends Mapper<LongWritable, Text, AirportIDWritableComparable, Text> {
     private static final String separator = ",";
+    private static final String numberRegEx = "\\d+";
     private static final int destinationAirportIDIndex = 14;
     private static final int delayIndex = 17;
     private static final int datasetIndicator = 1;
@@ -15,13 +16,11 @@ public class FlightJoinMapper extends Mapper<LongWritable, Text, AirportIDWritab
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException, NumberFormatException {
         String[] values = value.toString().split(separator);
-        try {
-            int airportID = Integer.parseInt(values[destinationAirportIDIndex].trim());
+        if (values[destinationAirportIDIndex].matches(numberRegEx)) {
+            int airportID = Integer.parseInt(values[destinationAirportIDIndex]);
             if (values[delayIndex].length() != 0) {
                 context.write(new AirportIDWritableComparable(new IntWritable(airportID), new IntWritable(datasetIndicator)), new Text(values[delayIndex].trim()));
             }
-        } catch (NumberFormatException e) {
-            Log.info(e.toString());
         }
     }
 }
