@@ -1,4 +1,4 @@
-package bmstu.hdfs.lab2;
+package bmstu.iu9.hdfs.lab2;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text, Text> {
+    private static final String floatNumberRegEx = "\\d+/.\\d+";
 
     @Override
     protected void reduce(AirportIDWritableComparable key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
@@ -26,7 +27,7 @@ public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text
     protected Text computeMinMaxAverageDelay(ArrayList<String> delays) {
         float min = Float.MAX_VALUE, max = 0, sum = 0, count = 0;
         for (String delay: delays) {
-            try {
+            if (delay.matches(floatNumberRegEx)) {
                 float delayFloatValue = Float.parseFloat(delay);
                 if (delayFloatValue < min) {
                     min = delayFloatValue;
@@ -35,10 +36,8 @@ public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text
                     max = delayFloatValue;
                 }
                 sum += delayFloatValue;
-            } catch (NumberFormatException ignored) {
-                count--;
+                count++;
             }
-            count++;
         }
         return new Text("min= " + min + ", average= " + sum/count +  ", max= " + max);
     }

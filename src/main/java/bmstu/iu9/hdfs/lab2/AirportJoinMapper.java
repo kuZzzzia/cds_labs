@@ -1,4 +1,4 @@
-package bmstu.hdfs.lab2;
+package bmstu.iu9.hdfs.lab2;
 
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapreduce.Mapper;
