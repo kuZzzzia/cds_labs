@@ -15,7 +15,7 @@ public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text
         final Text airportName;
         Iterator<Text> valuesIterator = values.iterator();
         airportName = new Text(valuesIterator.next().toString());
-        if (airportName.toString().contains()) {
+        if (airportName.toString().matches("^[0-9]+\\.[0-9]+$")) {
             context.write(airportName, new Text(String.valueOf(key.getAirportID())));
         }
 //        ArrayList<String> delays = getDelays(valuesIterator);
