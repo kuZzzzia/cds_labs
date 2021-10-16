@@ -41,6 +41,7 @@ public class AirportIDWritableComparable implements WritableComparable {
         datasetIndicator.readFields(dataInput);
     }
 
+    @SuppressWarnings("unchecked")
     public int compareTo(Object o) {
         return this.compareTo(o);
     }
