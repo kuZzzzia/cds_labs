@@ -17,7 +17,10 @@ public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text
         airportName = new Text(valuesIterator.next().toString() + " " + key.getAirportID());
         ArrayList<String> delays = new ArrayList<>();
         while(valuesIterator.hasNext()) {
-            delays.add(valuesIterator.next().toString());
+            String delay = valuesIterator.next().toString();
+            if (delay.matches(floatNumberRegEx)) {
+                delays.add(delay);
+            }
         }
         if (delays.size() > 0) {
             context.write(airportName, computeMinMaxAverageDelay(delays));
@@ -27,17 +30,15 @@ public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text
     protected Text computeMinMaxAverageDelay(ArrayList<String> delays) {
         float min = Float.MAX_VALUE, max = 0, sum = 0, count = 0;
         for (String delay: delays) {
-            if (delay.matches(floatNumberRegEx)) {
-                float delayFloatValue = Float.parseFloat(delay);
-                if (delayFloatValue < min) {
-                    min = delayFloatValue;
-                }
-                if (delayFloatValue > max) {
-                    max = delayFloatValue;
-                }
-                sum += delayFloatValue;
-                count++;
+            float delayFloatValue = Float.parseFloat(delay);
+            if (delayFloatValue < min) {
+                min = delayFloatValue;
             }
+            if (delayFloatValue > max) {
+                max = delayFloatValue;
+            }
+            sum += delayFloatValue;
+            count++;
         }
         return new Text("min= " + min + ", average= " + sum/count +  ", max= " + max);
     }
