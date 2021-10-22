@@ -17,7 +17,9 @@ public class AirportJoinMapper extends Mapper<LongWritable, Text, AirportIDWrita
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException, NumberFormatException {
-        String[] values = value.toString().split(SEPARATOR, LIMIT_SEPARATOR);
+        String[] values = value
+                .toString()
+                .split(SEPARATOR, LIMIT_SEPARATOR);
 
         String airportIdString = removeDoubleQuotesFromString(values[AIRPORT_ID_INDEX]);
         String airportName = removeDoubleQuotesFromString(values[AIRPORT_NAME_INDEX]);

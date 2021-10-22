@@ -21,7 +21,10 @@ public class ReducerJoin extends Reducer<AirportIDWritableComparable, Text, Text
         );
         ArrayList<String> delays = getDelays(valuesIterator);
         if (delays.size() > 0) {
-            context.write(airportName, computeMinMaxAverageDelay(delays));
+            context.write(
+                    airportName,
+                    computeMinMaxAverageDelay(delays)
+            );
         }
     }
 

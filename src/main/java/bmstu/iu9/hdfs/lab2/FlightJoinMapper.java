@@ -14,7 +14,9 @@ public class FlightJoinMapper extends Mapper<LongWritable, Text, AirportIDWritab
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException, NumberFormatException {
-        String[] values = value.toString().split(SEPARATOR);
+        String[] values = value
+                .toString()
+                .split(SEPARATOR);
         String airportIDString = values[DESTINATION_AIRPORT_ID_INDEX];
 
         if (!airportIDString.equals(CSV_COLUMN_NAME)) {

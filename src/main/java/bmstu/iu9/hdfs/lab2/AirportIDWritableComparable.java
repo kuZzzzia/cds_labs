@@ -42,10 +42,16 @@ public class AirportIDWritableComparable implements WritableComparable<AirportID
     }
 
     public int compareTo(AirportIDWritableComparable o) {
-        int resultOfCompareAirportID = this.getAirportID().compareTo(o.getAirportID());
+        int resultOfCompareAirportID = this.getAirportID()
+                .compareTo(
+                        o.getAirportID()
+                );
         return resultOfCompareAirportID == 0
                 ?
-                this.getDatasetIndicator().compareTo(o.getDatasetIndicator())
+                this.getDatasetIndicator()
+                        .compareTo(
+                                o.getDatasetIndicator()
+                        )
                 :
                 resultOfCompareAirportID;
     }
