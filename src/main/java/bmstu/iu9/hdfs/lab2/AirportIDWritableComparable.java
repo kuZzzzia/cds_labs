@@ -41,6 +41,7 @@ public class AirportIDWritableComparable implements WritableComparable<AirportID
         datasetIndicator.readFields(dataInput);
     }
 
+    @Override
     public int compareTo(AirportIDWritableComparable o) {
         int resultOfCompareAirportID = this.getAirportID()
                 .compareTo(
