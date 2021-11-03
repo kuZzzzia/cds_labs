@@ -71,7 +71,7 @@ public class AirportAnalyzerApp {
 
         final Broadcast<Map<String, String>> airportsBroadcasted = sc.broadcast(airportNames.collectAsMap());
 
-        JavaPairRDD<ParsedData> parsedData = 
+        JavaPairRDD<ParsedData> parsedData = delaysBetweenAirports.map();
 
 
 //        flightsDelays.saveAsTextFile(OUTPUT_FILENAME);
