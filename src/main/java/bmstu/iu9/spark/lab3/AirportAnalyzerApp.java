@@ -9,6 +9,7 @@ import scala.Tuple2;
 public class AirportAnalyzerApp {
     private static final String SPARK_APP_NAME = "Airport analyzer";
     private static final String HDFS_PATH_TO_FLIGHTS = "flights.csv";
+    private static final String HDFS_PATH_TO_AIRPORTS = "airports.csv";
     private static final String FLIGHT_DATA_SEPARATOR = ",";
     private static final String OUTPUT_FILENAME = "delays";
     private static final int    DEPARTURE_AIRPORT_ID_INDEX = 11;
@@ -46,7 +47,8 @@ public class AirportAnalyzerApp {
                 AverageDelayBetweenAirports
                 > delaysBetweenAirports = flightsDelays.combineByKey();
 
-        
+        JavaRDD<String> airports = sc.textFile(HDFS_PATH_TO_AIRPORTS);
+        flights = flights.filter(flight -> !flight.startsWith("\""));
 
 
 //        flightsDelays.saveAsTextFile(OUTPUT_FILENAME);
