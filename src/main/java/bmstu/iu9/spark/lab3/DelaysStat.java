@@ -116,7 +116,7 @@ public class DelaysStat implements Serializable {
         return departureAirportName + " -> " + destinationAirportName +
                 "\nMax delay: " + maxDelay +
                 "\n" + percentOfCancelledFlights + "% flights were cancelled" +
-                "\n" + percentOfDelayedFlights + "% flights were delayed";
+                "\n" + percentOfDelayedFlights + "% flights were delayed\n";
     }
 
     private static String percentage(float numerator, int denominator) {
