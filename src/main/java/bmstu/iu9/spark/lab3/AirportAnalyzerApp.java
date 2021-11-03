@@ -11,6 +11,6 @@ public class AirportAnalyzerApp {
         SparkConf conf = new SparkConf().setAppName(SPARK_APP_NAME);
         JavaSparkContext sc = new JavaSparkContext(conf);
 
-        JavaRDD<String> flights = sc.textFile("");
+        JavaRDD<String> flights = sc.textFile("flights.csv");
     }
 }
