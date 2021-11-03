@@ -8,7 +8,7 @@ public class AverageDelayBetweenAirports implements Serializable {
 
     private final String  departureAirportName;
     private final String  destinationAirportName;
-    
+
 
     public AverageDelayBetweenAirports(Object delaysBtwAirports, Map<String, String> airportName) {
 
