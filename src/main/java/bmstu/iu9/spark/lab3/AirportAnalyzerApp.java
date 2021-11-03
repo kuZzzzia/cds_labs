@@ -38,7 +38,16 @@ public class AirportAnalyzerApp {
                         }
         );
 
-        flightsDelays.saveAsTextFile(OUTPUT_FILENAME);
+        JavaPairRDD<
+                Tuple2<
+                        Integer,
+                        Integer
+                        >,
+                FlightDelay
+                > averageDelayDurationsBetweenAirports = 
+
+
+//        flightsDelays.saveAsTextFile(OUTPUT_FILENAME);
     }
 
     private static String[] getFlightDataBySplittingFlightString(final String flightString) {
