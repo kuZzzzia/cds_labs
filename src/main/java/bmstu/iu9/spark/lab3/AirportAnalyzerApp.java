@@ -44,7 +44,9 @@ public class AirportAnalyzerApp {
                         String
                         >,
                 AverageDelayBetweenAirports
-                > delaysBetweenAirports =
+                > delaysBetweenAirports = flightsDelays.combineByKey();
+
+        
 
 
 //        flightsDelays.saveAsTextFile(OUTPUT_FILENAME);

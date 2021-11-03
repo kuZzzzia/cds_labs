@@ -1,4 +1,7 @@
 package bmstu.iu9.spark.lab3;
 
-public class AverageDelayBetweenAirports {
+import scala.Serializable;
+
+public class AverageDelayBetweenAirports implements Serializable {
+
 }
