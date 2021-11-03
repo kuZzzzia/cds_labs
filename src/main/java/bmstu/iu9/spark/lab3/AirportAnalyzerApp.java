@@ -48,7 +48,7 @@ public class AirportAnalyzerApp {
                 > delaysBetweenAirports = flightsDelays.combineByKey();
 
         JavaRDD<String> airports = sc.textFile(HDFS_PATH_TO_AIRPORTS);
-        flights = flights.filter(flight -> !flight.startsWith("\""));
+        airports = airports.filter(airport -> !airport.startsWith("\""));
 
 
 //        flightsDelays.saveAsTextFile(OUTPUT_FILENAME);
