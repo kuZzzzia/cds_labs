@@ -34,10 +34,10 @@ public class AirportAnalyzerApp {
                 flightsDelays = flights.mapToPair(
                         flight -> {
                             String[] flightData = flight.split(DATA_SEPARATOR);
+                            FlightDelay flightDelay = new FlightDelay(flightData);
                             return new Tuple2<>(
-                                    FlightDelay
-                                            .makePairOfDepartureAndDestinationAirportIDs(flightData),
-                                    new FlightDelay(flightData)
+                                    flightDelay.makePairOfDepartureAndDestinationAirportIDs(),
+                                    flightDelay
                             );
                         }
                         );

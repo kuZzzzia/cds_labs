@@ -12,8 +12,13 @@ public class FlightDelay implements Serializable {
 
     private final boolean cancelledStatus;
     private final float   delayDuration;
+    private final String  departureAirportID;
+    private final String  destinationAirportID;
 
     public FlightDelay(String[] flightData) {
+        this.departureAirportID = flightData[DEPARTURE_AIRPORT_ID_INDEX];
+        this.destinationAirportID = flightData[DESTINATION_AIRPORT_ID_INDEX];
+
         String cancelledStatus = flightData[CANCELLED_STATUS_INDEX];
 
         if (!cancelledStatus.isEmpty()) {
@@ -35,10 +40,10 @@ public class FlightDelay implements Serializable {
         return this.delayDuration;
     }
 
-    protected static Tuple2<String, String> makePairOfDepartureAndDestinationAirportIDs(final String[] flightData) {
+    protected Tuple2<String, String> makePairOfDepartureAndDestinationAirportIDs() {
         return new Tuple2<>(
-                flightData[DEPARTURE_AIRPORT_ID_INDEX],
-                flightData[DESTINATION_AIRPORT_ID_INDEX]
+                this.departureAirportID,
+                this.destinationAirportID
         );
     }
 
