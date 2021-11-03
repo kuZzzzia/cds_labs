@@ -51,7 +51,7 @@ public class AirportAnalyzerApp {
                 >
                 delaysStat = flightsDelays.combineByKey(
                         flightDelay -> new DelaysStat(flightDelay),
-                        (delayStat, )
+                        (delayStat, flightDelay) -> 
                 );
 
 
