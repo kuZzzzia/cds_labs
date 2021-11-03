@@ -71,6 +71,8 @@ public class AirportAnalyzerApp {
 
         final Broadcast<Map<String, String>> airportsBroadcasted = sc.broadcast(airportNames.collectAsMap());
 
+        
+
 
 //        flightsDelays.saveAsTextFile(OUTPUT_FILENAME);
     }
