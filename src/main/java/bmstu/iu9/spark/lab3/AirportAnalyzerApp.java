@@ -12,7 +12,7 @@ public class AirportAnalyzerApp {
     private static final String FLIGHT_DATA_SEPARATOR = ",";
     private static final String OUTPUT_FILENAME = "delays";
     private static final int    DEPARTURE_AIRPORT_ID_INDEX = 11;
-    private static final int    DESTINATION_AIRPORT_ID_INDEX = 0;
+    private static final int    DESTINATION_AIRPORT_ID_INDEX = 14;
 
 
     public static void main(String[] args) {
