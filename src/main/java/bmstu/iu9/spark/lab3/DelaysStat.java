@@ -112,16 +112,15 @@ public class DelaysStat implements Serializable {
 
     @Override
     public String toString() {
-        float percentOfCancelledFlights = String.format("%.2f", (getCancelledCount() / getFlightsCount())) * PERCENT_CONVERSION_CONSTANT;
-        float percentOfDelayedFlights = (getDelayedCount() / getFlightsCount()) * PERCENT_CONVERSION_CONSTANT;
+        String percentOfCancelledFlights = percentage(getCancelledCount(), getFlightsCount());
+        String percentOfDelayedFlights = percentage(getDelayedCount(), getFlightsCount());
         return departureAirportName + " -> " + destinationAirportName +
                 "\nMax delay: " + maxDelay +
                 "\n" + percentOfCancelledFlights + "% flights were cancelled" +
                 "\n" + percentOfDelayedFlights + "% flights were delayed";
     }
 
-    private static String percentage(float num1, int denominator) {
-        String.format("%.2f", (getCancelledCount() / getFlightsCount())) * PERCENT_CONVERSION_CONSTANT
-
+    private static String percentage(float numerator, int denominator) {
+        return String.format("%.2f", numerator / denominator * PERCENT_CONVERSION_CONSTANT;
     }
 }
