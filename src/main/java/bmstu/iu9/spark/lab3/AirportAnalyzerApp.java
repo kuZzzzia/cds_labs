@@ -15,6 +15,6 @@ public class AirportAnalyzerApp {
         JavaRDD<String> flights = sc.textFile(HDFS_PATH_TO_FLIGHTS);
         flights = flights.filter(flight -> !flight.startsWith("\""));
 
-        
+        //save
     }
 }
