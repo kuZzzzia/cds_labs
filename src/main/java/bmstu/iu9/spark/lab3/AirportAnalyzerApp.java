@@ -69,14 +69,14 @@ public class AirportAnalyzerApp {
                         }
                         );
 
-        final Broadcast<Map<String, String>> airportsBroadcasted = sc.broadcast(airportNames.collectAsMap());
+        final Broadcast<Map<String, String>> airportsBroadcast = sc.broadcast(airportNames.collectAsMap());
 
         JavaPairRDD<ParsedData> parsedData = averageDelaysBetweenAirports.map(
-                averageDelay -> new ParsedData(averageDelay, airportsBroadcasted.value())
+                averageDelay -> new ParsedData(averageDelay, airportsBroadcast.value())
         );
 
 
-//        flightsDelays.saveAsTextFile(OUTPUT_FILENAME);
+        parsedData.saveAsTextFile(OUTPUT_FILENAME);
     }
 
     private static String[] getFlightDataBySplittingFlightString(final String flightString) {
