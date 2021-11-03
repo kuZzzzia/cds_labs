@@ -30,4 +30,12 @@ public class FlightDelay implements Serializable {
     protected float getDelayDuration() {
         return this.delayDuration;
     }
+
+    @Override
+    public String toString() {
+        return "FlightDelay{" +
+                "cancelledStatus=" + cancelledStatus +
+                ", delayDuration=" + delayDuration +
+                '}';
+    }
 }
