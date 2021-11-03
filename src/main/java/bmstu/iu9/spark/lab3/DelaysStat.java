@@ -28,6 +28,10 @@ public class DelaysStat implements Serializable {
         this.flightsCancelledCount = delaysStatSrc.getFlightsCancelledCount();
     }
 
+    public static DelaysStat addDelay(DelaysStat delayStat, FlightDelay flightDelay) {
+
+    }
+
     protected int getMaxDelay() {
         return this.maxDelay;
     }
@@ -55,5 +59,6 @@ public class DelaysStat implements Serializable {
     }
 
     public static DelaysStat add(DelaysStat a, DelaysStat b) {
+        
     }
 }
