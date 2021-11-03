@@ -24,8 +24,8 @@ public class AirportAnalyzerApp {
 
         JavaPairRDD<
                 Tuple2<
-                        Integer,
-                        Integer
+                        String,
+                        String
                         >,
                 FlightDelay
                 > flightsDelays = flights.mapToPair(
@@ -40,11 +40,11 @@ public class AirportAnalyzerApp {
 
         JavaPairRDD<
                 Tuple2<
-                        Integer,
-                        Integer
+                        String,
+                        
                         >,
                 FlightDelay
-                > averageDelayDurationsBetweenAirports = 
+                > averageDelayDurationsBetweenAirports =
 
 
 //        flightsDelays.saveAsTextFile(OUTPUT_FILENAME);
@@ -54,14 +54,10 @@ public class AirportAnalyzerApp {
         return flightString.split(FLIGHT_DATA_SEPARATOR);
     }
 
-    private static Tuple2<Integer, Integer> makePairOfDepartureAndDestinationAirportIDs(final String[] flightData) {
+    private static Tuple2<String, String> makePairOfDepartureAndDestinationAirportIDs(final String[] flightData) {
         return new Tuple2<>(
-                Integer.valueOf(
-                        flightData[DEPARTURE_AIRPORT_ID_INDEX]
-                ),
-                Integer.valueOf(
-                        flightData[DESTINATION_AIRPORT_ID_INDEX]
-                )
+                flightData[DEPARTURE_AIRPORT_ID_INDEX],
+                flightData[DESTINATION_AIRPORT_ID_INDEX]
         );
     }
 
