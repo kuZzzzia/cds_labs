@@ -50,7 +50,7 @@ public class DelaysStat implements Serializable {
     }
 
     public static DelaysStat addDelay(DelaysStat delayStat, FlightDelay flightDelay) {
-
+        return new DelaysStat()
     }
 
     protected float getMaxDelay() {
