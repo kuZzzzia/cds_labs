@@ -1,6 +1,7 @@
 package bmstu.iu9.spark.lab3;
 
-import java.io.Serializable;
+import scala.Serializable;
 
 public class FlightDelay implements Serializable {
+    private boolean cancell
 }
