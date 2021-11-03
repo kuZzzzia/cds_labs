@@ -29,15 +29,16 @@ public class AirportAnalyzerApp {
                         String
                         >,
                 FlightDelay
-                > flightsDelays = flights.mapToPair(
+                >
+                flightsDelays = flights.mapToPair(
                         flight -> {
-                            String[] flightData = getFlightDataBySplittingFlightString(flight);
+                            String[] flightData = flight.split(FLIGHT_DATA_SEPARATOR);
                             return new Tuple2<>(
                                     makePairOfDepartureAndDestinationAirportIDs(flightData),
                                     new FlightDelay(flightData)
                             );
                         }
-        );
+                        );
 
         JavaPairRDD<
                 Tuple2<
@@ -45,12 +46,25 @@ public class AirportAnalyzerApp {
                         String
                         >,
                 AverageDelayBetweenAirports
-                > delaysBetweenAirports = flightsDelays.combineByKey();
+                >
+                delaysBetweenAirports = flightsDelays.combineByKey();
 
         JavaRDD<String> airports = sc.textFile(HDFS_PATH_TO_AIRPORTS);
         airports = airports.filter(airport -> !airport.startsWith("C"));
 
-        JavaPairRDD<String, String>
+        JavaPairRDD<
+                String,
+                String
+                >
+                airportNames = airports.mapToPair(
+                        airport -> {
+                            String[] airportData = airport.split(FLIGHT_DATA_SEPARATOR, 2);
+                            return new Tuple2<>(
+                                    deleteDoubleQuotes(airportData[0]),
+                                    deleteDoubleQuotes(airportData[1])
+                            );
+                        }
+                        );
 
 
 //        flightsDelays.saveAsTextFile(OUTPUT_FILENAME);
@@ -65,6 +79,10 @@ public class AirportAnalyzerApp {
                 flightData[DEPARTURE_AIRPORT_ID_INDEX],
                 flightData[DESTINATION_AIRPORT_ID_INDEX]
         );
+    }
+
+    private static String deleteDoubleQuotes(String s) {
+        return s.replaceAll("\"", "");
     }
 
 }
