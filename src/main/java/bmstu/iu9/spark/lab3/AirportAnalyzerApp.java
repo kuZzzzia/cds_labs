@@ -41,10 +41,10 @@ public class AirportAnalyzerApp {
         JavaPairRDD<
                 Tuple2<
                         String,
-                        
+                        String
                         >,
-                FlightDelay
-                > averageDelayDurationsBetweenAirports =
+                AverageDelayBetweenAirports
+                > delaysBetweenAirports =
 
 
 //        flightsDelays.saveAsTextFile(OUTPUT_FILENAME);
