@@ -6,6 +6,7 @@ import scala.Tuple2;
 import java.util.Map;
 
 public class DelaysStat implements Serializable {
+    private static final int    PERCENT_CONVERSION_CONSTANT = 100;
     private static final int    MIN_FLIGHTS_AMOUNT = 1;
     private static final int    MIN_CANCELLED_FLIGHTS_AMOUNT = 0;
     private static final int    MIN_DELAYED_FLIGHTS_AMOUNT = 0;
@@ -112,8 +113,8 @@ public class DelaysStat implements Serializable {
 
     @Override
     public String toString() {
-        float percentOfCancelledFlights = cancelledCount / flightsCount * 100; //TODO: constant
-        float percentOfDelayedFlights = delayedCount / flightsCount * 100;
+        float percentOfCancelledFlights = cancelledCount / flightsCount * PERCENT_CONVERSION_CONSTANT;
+        float percentOfDelayedFlights = delayedCount / flightsCount * PERCENT_CONVERSION_CONSTANT;
         return departureAirportName + " -> " + destinationAirportName +
                 "\nMax delay: " + maxDelay +
                 "\n" + percentOfCancelledFlights + " flights were cancelled" +

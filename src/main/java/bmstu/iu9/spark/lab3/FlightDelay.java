@@ -8,6 +8,8 @@ public class FlightDelay implements Serializable {
     private static final int    DELAY_DURATION_INDEX = 18;
     private static final int    DEPARTURE_AIRPORT_ID_INDEX = 11;
     private static final int    DESTINATION_AIRPORT_ID_INDEX = 14;
+    private static final String DOUBLE_QUOTES_REGEX = "\"";
+    private static final String EMPTY_STRING = "";
 
     private final boolean cancelledStatus;
     private float         delayDuration;
@@ -42,7 +44,7 @@ public class FlightDelay implements Serializable {
     }
 
     protected static String deleteDoubleQuotes(String s) {
-        return s.replaceAll("\"", "");  //TODO: constant
+        return s.replaceAll(DOUBLE_QUOTES_REGEX, EMPTY_STRING);
     }
 
     @Override

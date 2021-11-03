@@ -15,6 +15,8 @@ public class AirportAnalyzerApp {
     private static final String HDFS_PATH_TO_AIRPORTS = "airports.csv";
     private static final String DATA_SEPARATOR = ",";
     private static final String OUTPUT_FILENAME = "delays";
+    private static final String FLIGHTS_FILE_FIRST_LINE_PREFIX = "\"";
+    private static final String AIRPORTS_FILE_FIRST_LINE_PREFIX = "C";
 
 
     public static void main(String[] args) {
@@ -22,7 +24,7 @@ public class AirportAnalyzerApp {
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         JavaRDD<String> flights = sc.textFile(HDFS_PATH_TO_FLIGHTS);
-        flights = flights.filter(flight -> !flight.startsWith("\"")); //TODO: constant
+        flights = flights.filter(flight -> !flight.startsWith(FLIGHTS_FILE_FIRST_LINE_PREFIX));
 
         JavaPairRDD<
                 Tuple2<
@@ -56,7 +58,7 @@ public class AirportAnalyzerApp {
 
 
         JavaRDD<String> airports = sc.textFile(HDFS_PATH_TO_AIRPORTS);
-        airports = airports.filter(airport -> !airport.startsWith("C")); //TODO: constant
+        airports = airports.filter(airport -> !airport.startsWith(AIRPORTS_FILE_FIRST_LINE_PREFIX));
 
         JavaPairRDD<
                 String,
