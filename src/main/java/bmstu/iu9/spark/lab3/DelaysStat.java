@@ -9,7 +9,7 @@ public class DelaysStat implements Serializable {
 
     private String    departureAirportName;
     private String    destinationAirportName;
-    private int       maxDelay;
+    private float     maxDelay;
 
     private int       flightsCount;
     private int       flightsDelayedCount;
@@ -29,14 +29,14 @@ public class DelaysStat implements Serializable {
     }
 
     public DelaysStat(FlightDelay flightDelay) {
-        
+        this.maxDelay = flightDelay.getDelayDuration();
     }
 
     public static DelaysStat addDelay(DelaysStat delayStat, FlightDelay flightDelay) {
 
     }
 
-    protected int getMaxDelay() {
+    protected float getMaxDelay() {
         return this.maxDelay;
     }
 
