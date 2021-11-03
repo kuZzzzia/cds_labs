@@ -54,6 +54,6 @@ public class DelaysStat implements Serializable {
                 "\n" + percentOfDelayedFlights + " flights were delayed";
     }
 
-    public static <C> C add(C c, C c1) {
+    public static DelaysStat add(DelaysStat a, DelaysStat b) {
     }
 }
