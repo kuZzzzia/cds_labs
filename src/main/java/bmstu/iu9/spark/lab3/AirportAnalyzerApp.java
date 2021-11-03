@@ -82,7 +82,6 @@ public class AirportAnalyzerApp {
                 delaysBtwAirports -> new DelaysStat(delaysBtwAirports, airportsBroadcast.value())
         );
 
-
         parsedData.saveAsTextFile(OUTPUT_FILENAME);
     }
 }

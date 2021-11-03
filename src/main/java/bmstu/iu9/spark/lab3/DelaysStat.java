@@ -13,12 +13,12 @@ public class DelaysStat implements Serializable {
 
     private String    departureAirportName;
     private String    destinationAirportName;
-    private float     maxDelay;
 
-    private int       flightsCount;
     private int       delayedCount;
     private int       cancelledCount;
 
+    private final float     maxDelay;
+    private final int       flightsCount;
 
     public DelaysStat(Tuple2<Tuple2<String, String>, DelaysStat> delaysBtwAirports, Map<String, String> airportName) {
         this.departureAirportName = airportName.get(delaysBtwAirports._1()._1());
@@ -81,7 +81,17 @@ public class DelaysStat implements Serializable {
     }
 
     public static DelaysStat add(DelaysStat a, DelaysStat b) {
-        
+        float maxDelay1 = a.getMaxDelay();
+        float maxDelay2 = b.getMaxDelay();
+        if ( maxDelay2 > maxDelay1) {
+            maxDelay1 = maxDelay2;
+        }
+        return new DelaysStat(
+                maxDelay1,
+                a.getFlightsCount() + b.getFlightsCount(),
+                a.getDelayedCount() + b.getDelayedCount(),
+                a.getCancelledCount() + b.getCancelledCount()
+        );
     }
 
     protected float getMaxDelay() {
