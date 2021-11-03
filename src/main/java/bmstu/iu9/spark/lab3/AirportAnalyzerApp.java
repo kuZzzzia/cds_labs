@@ -7,6 +7,8 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.broadcast.Broadcast;
 import scala.Tuple2;
 
+import java.util.Map;
+
 public class AirportAnalyzerApp {
     private static final String SPARK_APP_NAME = "Airport analyzer";
     private static final String HDFS_PATH_TO_FLIGHTS = "flights.csv";
