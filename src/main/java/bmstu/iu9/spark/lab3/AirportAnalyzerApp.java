@@ -50,7 +50,7 @@ public class AirportAnalyzerApp {
                         >,
                 AverageDelayBetweenAirports
                 >
-                delaysBetweenAirports = flightsDelays.combineByKey();
+                averageDelaysBetweenAirports = flightsDelays.combineByKey();
 
         JavaRDD<String> airports = sc.textFile(HDFS_PATH_TO_AIRPORTS);
         airports = airports.filter(airport -> !airport.startsWith("C"));
@@ -71,7 +71,9 @@ public class AirportAnalyzerApp {
 
         final Broadcast<Map<String, String>> airportsBroadcasted = sc.broadcast(airportNames.collectAsMap());
 
-        JavaPairRDD<ParsedData> parsedData = delaysBetweenAirports.map();
+        JavaPairRDD<ParsedData> parsedData = averageDelaysBetweenAirports.map(
+                averageDelay -> new ParsedData(averageDelay, airportsBroadcasted.value())
+        );
 
 
 //        flightsDelays.saveAsTextFile(OUTPUT_FILENAME);
