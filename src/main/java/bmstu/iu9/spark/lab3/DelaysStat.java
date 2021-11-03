@@ -13,14 +13,12 @@ public class DelaysStat implements Serializable {
     private static final float  NO_DELAY_VALUE = 0.0F;
     private static final String FLOAT_STRING_FORMAT = "%.2f";
 
-    private String    departureAirportName;
-    private String    destinationAirportName;
-
+    private String      departureAirportName;
+    private String      destinationAirportName;
     private float       delayedCount;
     private float       cancelledCount;
-
-    private final float     maxDelay;
-    private final int       flightsCount;
+    private final float maxDelay;
+    private final int   flightsCount;
 
     public DelaysStat(Tuple2<Tuple2<String, String>, DelaysStat> delaysBtwAirports, Map<String, String> airportName) {
         this.departureAirportName = airportName.get(delaysBtwAirports._1()._1());
