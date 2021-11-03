@@ -46,11 +46,11 @@ public class AirportAnalyzerApp {
 
     private static Tuple2<Integer, Integer> makePairOfDepartureAndDestinationAirportIDs(final String[] flightData) {
         return new Tuple2<>(
-                new Integer(
+                Integer.valueOf(
                         flightData[DEPARTURE_AIRPORT_ID_INDEX]
                 ),
-                new Integer(
-                        flightData[AirportAnalyzerApp.DESTINATION_AIRPORT_ID_INDEX]
+                Integer.valueOf(
+                        flightData[DESTINATION_AIRPORT_ID_INDEX]
                 )
         );
     }
