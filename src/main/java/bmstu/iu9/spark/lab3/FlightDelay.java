@@ -3,7 +3,7 @@ package bmstu.iu9.spark.lab3;
 import scala.Serializable;
 
 public class FlightDelay implements Serializable {
-    private static final int    CANCELLED_STATUS_INDEX = 20;
+    private static final int    CANCELLED_STATUS_INDEX = 21;
     private static final int    DELAY_DURATION_INDEX = 17;
     private static final float  DEFAULT_DELAY_VALUE = 0.0F;
 
@@ -12,7 +12,7 @@ public class FlightDelay implements Serializable {
 
     public FlightDelay(String[] flightData) {
         String cancelledStatus = flightData[CANCELLED_STATUS_INDEX];
-        if (cancelledStatus.isEmpty()) {
+        if (!cancelledStatus.isEmpty()) {
             this.cancelledStatus = false;
             this.delayDuration = Float.parseFloat(
                     flightData[DELAY_DURATION_INDEX]
