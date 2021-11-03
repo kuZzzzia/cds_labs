@@ -17,7 +17,7 @@ public class AirportAnalyzerApp {
         JavaRDD<String> flights = sc.textFile(HDFS_PATH_TO_FLIGHTS);
         flights = flights.filter(flight -> !flight.startsWith("\""));
 
-        JavaPairRDD<Tuple2<Integer, Integer>, >
+        JavaPairRDD<Tuple2<Integer, Integer>, Float> flightsData = flights.mapToPair()
 
         //saveAsTextFile() - method
     }
