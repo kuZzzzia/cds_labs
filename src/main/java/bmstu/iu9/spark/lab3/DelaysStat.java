@@ -15,8 +15,8 @@ public class DelaysStat implements Serializable {
     private String    departureAirportName;
     private String    destinationAirportName;
 
-    private int       delayedCount;
-    private int       cancelledCount;
+    private float       delayedCount;
+    private float       cancelledCount;
 
     private final float     maxDelay;
     private final int       flightsCount;
@@ -33,7 +33,7 @@ public class DelaysStat implements Serializable {
         this.cancelledCount = delaysStatSrc.getCancelledCount();
     }
 
-    public DelaysStat(float maxDelay, int flightsCount, int delayedCount, int cancelledCount) {
+    public DelaysStat(float maxDelay, int flightsCount, float delayedCount, float cancelledCount) {
         this.maxDelay = maxDelay;
         this.flightsCount = flightsCount;
         this.delayedCount = delayedCount;
@@ -58,8 +58,8 @@ public class DelaysStat implements Serializable {
 
     public static DelaysStat addDelay(DelaysStat delayStat, FlightDelay flightDelay) {
         float newMaxDelay = delayStat.getMaxDelay();
-        int newDelayedCount = delayStat.getDelayedCount();
-        int newCancelledCount = delayStat.getCancelledCount();
+        float newDelayedCount = delayStat.getDelayedCount();
+        float newCancelledCount = delayStat.getCancelledCount();
 
         if (flightDelay.getCancelledStatus()) {
             newCancelledCount++;
@@ -102,11 +102,11 @@ public class DelaysStat implements Serializable {
         return this.flightsCount;
     }
 
-    protected int getDelayedCount() {
+    protected float getDelayedCount() {
         return this.delayedCount;
     }
 
-    protected int getCancelledCount() {
+    protected float getCancelledCount() {
         return this.cancelledCount;
     }
 
