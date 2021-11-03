@@ -50,6 +50,13 @@ public class DelaysStat implements Serializable {
     }
 
     public static DelaysStat addDelay(DelaysStat delayStat, FlightDelay flightDelay) {
+        float newMaxDelay = delayStat.getMaxDelay();
+        int newFlightsDelayedCount = delayStat.getFlightsDelayedCount();
+        int newCancelledCount = delayStat.getFlightsCancelledCount();
+
+        if (flightDelay.getCancelledStatus()) {
+
+        }
         return new DelaysStat()
     }
 
