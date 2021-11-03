@@ -4,7 +4,7 @@ import scala.Serializable;
 
 public class FlightDelay implements Serializable {
     private static final int    CANCELLED_STATUS_INDEX = 0;
-    private static final int    DELAY_DURATION_INDEX = 0;
+    private static final int    DELAY_DURATION_INDEX = 17;
     private static final float  DEFAULT_DELAY_VALUE = 0.0F;
 
     private final boolean cancelledStatus;
