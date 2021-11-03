@@ -49,7 +49,10 @@ public class AirportAnalyzerApp {
                         >,
                 DelaysStat
                 >
-                averageDelaysBetweenAirports = flightsDelays.combineByKey();
+                averageDelaysBetweenAirports = flightsDelays.combineByKey(
+                        flightDelay -> new DelaysStat(flightDelay)
+                
+                );
 
 
         JavaRDD<String> airports = sc.textFile(HDFS_PATH_TO_AIRPORTS);
