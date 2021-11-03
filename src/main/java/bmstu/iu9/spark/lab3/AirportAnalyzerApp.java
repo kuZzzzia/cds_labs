@@ -17,6 +17,8 @@ public class AirportAnalyzerApp {
     private static final String OUTPUT_FILENAME = "delays";
     private static final String FLIGHTS_FILE_FIRST_LINE_PREFIX = "\"";
     private static final String AIRPORTS_FILE_FIRST_LINE_PREFIX = "C";
+    private static final int    AIRPORT_ID_INDEX = 0;
+    private static final int    AIRPORT_NAME_INDEX = 1;
 
 
     public static void main(String[] args) {
@@ -69,10 +71,10 @@ public class AirportAnalyzerApp {
                             String[] airportData = airport.split(DATA_SEPARATOR, 2);
                             return new Tuple2<>(
                                     FlightDelay.deleteDoubleQuotes(
-                                            airportData[0]
+                                            airportData[AIRPORT_ID_INDEX]
                                     ),
                                     FlightDelay.deleteDoubleQuotes(
-                                            airportData[1]
+                                            airportData[AIRPORT_NAME_INDEX]
                                     )
                             );
                         }
@@ -81,9 +83,13 @@ public class AirportAnalyzerApp {
         final Broadcast<Map<String, String>> airportsBroadcast = sc.broadcast(airportNames.collectAsMap());
 
         JavaRDD<DelaysStat> parsedData = delaysStat.map(
-                delaysBtwAirports -> new DelaysStat(delaysBtwAirports, airportsBroadcast.value())
+                delaysBtwAirports -> new DelaysStat(
+                        delaysBtwAirports,
+                        airportsBroadcast.value()
+                )
         );
 
         parsedData.saveAsTextFile(OUTPUT_FILENAME);
     }
+
 }

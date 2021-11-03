@@ -11,6 +11,7 @@ public class DelaysStat implements Serializable {
     private static final int    MIN_CANCELLED_FLIGHTS_AMOUNT = 0;
     private static final int    MIN_DELAYED_FLIGHTS_AMOUNT = 0;
     private static final float  NO_DELAY_VALUE = 0.0F;
+    private static final String FLOAT_STRING_FORMAT = "%.2f";
 
     private String    departureAirportName;
     private String    destinationAirportName;
@@ -121,6 +122,6 @@ public class DelaysStat implements Serializable {
     }
 
     private static String percentage(float numerator, int denominator) {
-        return String.format("%.2f", numerator / denominator * PERCENT_CONVERSION_CONSTANT;
+        return String.format(FLOAT_STRING_FORMAT, numerator / denominator * PERCENT_CONVERSION_CONSTANT);
     }
 }

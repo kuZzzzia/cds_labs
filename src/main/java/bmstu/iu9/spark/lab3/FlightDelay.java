@@ -46,10 +46,4 @@ public class FlightDelay implements Serializable {
     protected static String deleteDoubleQuotes(String s) {
         return s.replaceAll(DOUBLE_QUOTES_REGEX, EMPTY_STRING);
     }
-
-    @Override
-    public String toString() {
-        return "cancelledStatus=" + cancelledStatus +
-                ", delayDuration=" + delayDuration;
-    }
 }
