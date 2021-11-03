@@ -26,13 +26,13 @@ public class AirportAnalyzerApp {
                         Integer,
                         Integer
                         >,
-                Float
+                FlightDelay
                 > flightsDelays = flights.mapToPair(
                         flight -> {
                             String[] flightData = getFlightDataBySplittingFlightString(flight);
                             return new Tuple2<>(
                                     makePairOfDepartureAndDestinationAirportIDs(flightData),
-                                    make()
+                                    new FlightDelay(flightData)
                             );
                         }
         );
@@ -54,4 +54,5 @@ public class AirportAnalyzerApp {
                 )
         );
     }
+
 }
