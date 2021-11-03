@@ -33,9 +33,7 @@ public class FlightDelay implements Serializable {
 
     @Override
     public String toString() {
-        return "FlightDelay{" +
-                "cancelledStatus=" + cancelledStatus +
-                ", delayDuration=" + delayDuration +
-                '}';
+        return "cancelledStatus=" + cancelledStatus +
+                ", delayDuration=" + delayDuration;
     }
 }
