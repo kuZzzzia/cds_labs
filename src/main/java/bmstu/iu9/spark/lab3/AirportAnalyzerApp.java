@@ -50,8 +50,8 @@ public class AirportAnalyzerApp {
                 DelaysStat
                 >
                 averageDelaysBetweenAirports = flightsDelays.combineByKey(
-                        flightDelay -> new DelaysStat(flightDelay)
-                
+                        flightDelay -> new DelaysStat(flightDelay),
+                        ()
                 );
 
 
