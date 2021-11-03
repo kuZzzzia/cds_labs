@@ -13,6 +13,6 @@ public class AirportAnalyzerApp {
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         JavaRDD<String> flights = sc.textFile(HDFS_PATH_TO_FLIGHTS);
-        flights = flights.filter(flight => )
+        flights = flights.filter(flight -> !flight.startsWith("\""));
     }
 }
