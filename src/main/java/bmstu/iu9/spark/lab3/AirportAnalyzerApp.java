@@ -13,10 +13,8 @@ public class AirportAnalyzerApp {
     private static final String SPARK_APP_NAME = "Airport analyzer";
     private static final String HDFS_PATH_TO_FLIGHTS = "flights.csv";
     private static final String HDFS_PATH_TO_AIRPORTS = "airports.csv";
-    private static final String FLIGHT_DATA_SEPARATOR = ",";
+    private static final String DATA_SEPARATOR = ",";
     private static final String OUTPUT_FILENAME = "delays";
-    private static final int    DEPARTURE_AIRPORT_ID_INDEX = 11;
-    private static final int    DESTINATION_AIRPORT_ID_INDEX = 14;
 
 
     public static void main(String[] args) {
@@ -35,9 +33,10 @@ public class AirportAnalyzerApp {
                 >
                 flightsDelays = flights.mapToPair(
                         flight -> {
-                            String[] flightData = flight.split(FLIGHT_DATA_SEPARATOR);
+                            String[] flightData = flight.split(DATA_SEPARATOR);
                             return new Tuple2<>(
-                                    makePairOfDepartureAndDestinationAirportIDs(flightData),
+                                    FlightDelay
+                                            .makePairOfDepartureAndDestinationAirportIDs(flightData),
                                     new FlightDelay(flightData)
                             );
                         }
@@ -52,6 +51,7 @@ public class AirportAnalyzerApp {
                 >
                 averageDelaysBetweenAirports = flightsDelays.combineByKey();
 
+
         JavaRDD<String> airports = sc.textFile(HDFS_PATH_TO_AIRPORTS);
         airports = airports.filter(airport -> !airport.startsWith("C"));
 
@@ -61,10 +61,14 @@ public class AirportAnalyzerApp {
                 >
                 airportNames = airports.mapToPair(
                         airport -> {
-                            String[] airportData = airport.split(FLIGHT_DATA_SEPARATOR, 2);
+                            String[] airportData = airport.split(DATA_SEPARATOR, 2);
                             return new Tuple2<>(
-                                    deleteDoubleQuotes(airportData[0]),
-                                    deleteDoubleQuotes(airportData[1])
+                                    deleteDoubleQuotes(
+                                            airportData[0]
+                                    ),
+                                    deleteDoubleQuotes(
+                                            airportData[1]
+                                    )
                             );
                         }
                         );
@@ -77,17 +81,6 @@ public class AirportAnalyzerApp {
 
 
         parsedData.saveAsTextFile(OUTPUT_FILENAME);
-    }
-
-    private static String[] getFlightDataBySplittingFlightString(final String flightString) {
-        return flightString.split(FLIGHT_DATA_SEPARATOR);
-    }
-
-    private static Tuple2<String, String> makePairOfDepartureAndDestinationAirportIDs(final String[] flightData) {
-        return new Tuple2<>(
-                flightData[DEPARTURE_AIRPORT_ID_INDEX],
-                flightData[DESTINATION_AIRPORT_ID_INDEX]
-        );
     }
 
     private static String deleteDoubleQuotes(String s) {
