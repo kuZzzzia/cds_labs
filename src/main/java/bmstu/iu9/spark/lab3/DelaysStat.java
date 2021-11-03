@@ -120,7 +120,7 @@ public class DelaysStat implements Serializable {
                 "\n" + percentOfDelayedFlights + "% flights were delayed";
     }
 
-    private static String percentage(float num1, int num2) {
+    private static String percentage(float num1, int denominator) {
         String.format("%.2f", (getCancelledCount() / getFlightsCount())) * PERCENT_CONVERSION_CONSTANT
 
     }
