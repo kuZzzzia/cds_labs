@@ -69,7 +69,7 @@ public class AirportAnalyzerApp {
                         }
                         );
 
-        final Broadcast<Map<String, String>>
+        final Broadcast<Map<String, String>> airportsBroadcasted
 
 
 //        flightsDelays.saveAsTextFile(OUTPUT_FILENAME);
