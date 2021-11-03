@@ -22,7 +22,7 @@ public class AirportAnalyzerApp {
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         JavaRDD<String> flights = sc.textFile(HDFS_PATH_TO_FLIGHTS);
-        flights = flights.filter(flight -> !flight.startsWith("\""));
+        flights = flights.filter(flight -> !flight.startsWith("\"")); //TODO: constant
 
         JavaPairRDD<
                 Tuple2<
@@ -34,10 +34,9 @@ public class AirportAnalyzerApp {
                 flightsDelays = flights.mapToPair(
                         flight -> {
                             String[] flightData = flight.split(DATA_SEPARATOR);
-                            FlightDelay flightDelay = new FlightDelay(flightData);
                             return new Tuple2<>(
-                                    flightDelay.makePairOfDepartureAndDestinationAirportIDs(),
-                                    flightDelay
+                                    FlightDelay.makePairOfDepartureAndDestinationAirportIDs(flightData),
+                                    new FlightDelay(flightData)
                             );
                         }
                         );
@@ -50,14 +49,14 @@ public class AirportAnalyzerApp {
                 DelaysStat
                 >
                 delaysStat = flightsDelays.combineByKey(
-                        flightDelay -> new DelaysStat(flightDelay),
-                        (delayStat, flightDelay) -> DelaysStat.addDelay(delayStat, flightDelay),
+                        DelaysStat::new,
+                        DelaysStat::addDelay,
                         DelaysStat::add
                 );
 
 
         JavaRDD<String> airports = sc.textFile(HDFS_PATH_TO_AIRPORTS);
-        airports = airports.filter(airport -> !airport.startsWith("C"));
+        airports = airports.filter(airport -> !airport.startsWith("C")); //TODO: constant
 
         JavaPairRDD<
                 String,
@@ -67,10 +66,10 @@ public class AirportAnalyzerApp {
                         airport -> {
                             String[] airportData = airport.split(DATA_SEPARATOR, 2);
                             return new Tuple2<>(
-                                    deleteDoubleQuotes(
+                                    FlightDelay.deleteDoubleQuotes(
                                             airportData[0]
                                     ),
-                                    deleteDoubleQuotes(
+                                    FlightDelay.deleteDoubleQuotes(
                                             airportData[1]
                                     )
                             );
@@ -79,16 +78,11 @@ public class AirportAnalyzerApp {
 
         final Broadcast<Map<String, String>> airportsBroadcast = sc.broadcast(airportNames.collectAsMap());
 
-        JavaRDD<DelaysStat> parsedData = averageDelaysBetweenAirports.map(
+        JavaRDD<DelaysStat> parsedData = delaysStat.map(
                 delaysBtwAirports -> new DelaysStat(delaysBtwAirports, airportsBroadcast.value())
         );
 
 
         parsedData.saveAsTextFile(OUTPUT_FILENAME);
     }
-
-    private static String deleteDoubleQuotes(String s) {
-        return s.replaceAll("\"", "");
-    }
-
 }

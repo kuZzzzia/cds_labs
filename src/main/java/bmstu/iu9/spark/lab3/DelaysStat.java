@@ -28,6 +28,10 @@ public class DelaysStat implements Serializable {
         this.flightsCancelledCount = delaysStatSrc.getFlightsCancelledCount();
     }
 
+    public DelaysStat(FlightDelay flightDelay) {
+        
+    }
+
     public static DelaysStat addDelay(DelaysStat delayStat, FlightDelay flightDelay) {
 
     }
@@ -50,7 +54,7 @@ public class DelaysStat implements Serializable {
 
     @Override
     public String toString() {
-        float percentOfCancelledFlights = flightsCancelledCount / flightsCount * 100;
+        float percentOfCancelledFlights = flightsCancelledCount / flightsCount * 100; //TODO: constant
         float percentOfDelayedFlights = flightsDelayedCount / flightsCount * 100;
         return departureAirportName + " -> " + destinationAirportName +
                 "\nMax delay: " + maxDelay +
@@ -59,6 +63,6 @@ public class DelaysStat implements Serializable {
     }
 
     public static DelaysStat add(DelaysStat a, DelaysStat b) {
-        
+
     }
 }

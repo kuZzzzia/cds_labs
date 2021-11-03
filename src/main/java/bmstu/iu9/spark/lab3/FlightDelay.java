@@ -12,12 +12,8 @@ public class FlightDelay implements Serializable {
 
     private final boolean cancelledStatus;
     private final float   delayDuration;
-    private final String  departureAirportID;
-    private final String  destinationAirportID;
 
     public FlightDelay(String[] flightData) {
-        this.departureAirportID = flightData[DEPARTURE_AIRPORT_ID_INDEX];
-        this.destinationAirportID = flightData[DESTINATION_AIRPORT_ID_INDEX];
 
         String cancelledStatus = flightData[CANCELLED_STATUS_INDEX];
 
@@ -40,11 +36,15 @@ public class FlightDelay implements Serializable {
         return this.delayDuration;
     }
 
-    protected Tuple2<String, String> makePairOfDepartureAndDestinationAirportIDs() {
+    protected static Tuple2<String, String> makePairOfDepartureAndDestinationAirportIDs(String[] flightData) {
         return new Tuple2<>(
-                this.departureAirportID,
-                this.destinationAirportID
+                flightData[DEPARTURE_AIRPORT_ID_INDEX],
+                flightData[DESTINATION_AIRPORT_ID_INDEX]
         );
+    }
+
+    protected static String deleteDoubleQuotes(String s) {
+        return s.replaceAll("\"", "");  //TODO: constant
     }
 
     @Override
