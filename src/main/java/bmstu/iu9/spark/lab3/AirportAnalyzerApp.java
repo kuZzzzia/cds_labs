@@ -1,6 +1,7 @@
 package bmstu.iu9.spark.lab3;
 
 import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 
@@ -15,7 +16,7 @@ public class AirportAnalyzerApp {
         JavaRDD<String> flights = sc.textFile(HDFS_PATH_TO_FLIGHTS);
         flights = flights.filter(flight -> !flight.startsWith("\""));
 
-        
+        JavaPairRDD<>
 
         //saveAsTextFile() - method
     }
