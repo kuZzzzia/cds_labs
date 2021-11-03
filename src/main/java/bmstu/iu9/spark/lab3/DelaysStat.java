@@ -45,8 +45,7 @@ public class DelaysStat implements Serializable {
         this.cancelledCount = MIN_CANCELLED_FLIGHTS_AMOUNT;
         this.delayedCount = MIN_DELAYED_FLIGHTS_AMOUNT;
 
-        boolean cancelledStatus = flightDelay.getCancelledStatus();
-        if (cancelledStatus) {
+        if (flightDelay.getCancelledStatus()) {
             this.maxDelay = NO_DELAY_VALUE;
             this.cancelledCount++;
         } else {
@@ -113,11 +112,11 @@ public class DelaysStat implements Serializable {
 
     @Override
     public String toString() {
-        float percentOfCancelledFlights = cancelledCount / flightsCount * PERCENT_CONVERSION_CONSTANT;
-        float percentOfDelayedFlights = delayedCount / flightsCount * PERCENT_CONVERSION_CONSTANT;
+        float percentOfCancelledFlights = (getCancelledCount() / getFlightsCount()) * PERCENT_CONVERSION_CONSTANT;
+        float percentOfDelayedFlights = (getDelayedCount() / getFlightsCount()) * PERCENT_CONVERSION_CONSTANT;
         return departureAirportName + " -> " + destinationAirportName +
                 "\nMax delay: " + maxDelay +
-                "\n" + percentOfCancelledFlights + " flights were cancelled" +
-                "\n" + percentOfDelayedFlights + " flights were delayed";
+                "\n" + percentOfCancelledFlights + "% flights were cancelled" +
+                "\n" + percentOfDelayedFlights + "% flights were delayed";
     }
 }
