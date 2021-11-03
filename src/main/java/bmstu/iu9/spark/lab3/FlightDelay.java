@@ -1,4 +1,6 @@
 package bmstu.iu9.spark.lab3;
 
-public class FlightDelay {
+import java.io.Serializable;
+
+public class FlightDelay implements Serializable {
 }
