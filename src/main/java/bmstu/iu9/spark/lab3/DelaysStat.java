@@ -6,6 +6,10 @@ import scala.Tuple2;
 import java.util.Map;
 
 public class DelaysStat implements Serializable {
+    private static final int    MIN_FLIGHTS_AMOUNT = 1;
+    private static final int    MIN_CANCELLED_FLIGHTS_AMOUNT = 0;
+    private static final int    MIN_DELAYED_FLIGHTS_AMOUNT = 0;
+    private static final float  NO_DELAY_VALUE = 0.0F;
 
     private String    departureAirportName;
     private String    destinationAirportName;
@@ -29,7 +33,20 @@ public class DelaysStat implements Serializable {
     }
 
     public DelaysStat(FlightDelay flightDelay) {
-        this.maxDelay = flightDelay.getDelayDuration();
+        this.flightsCount = MIN_FLIGHTS_AMOUNT;
+        this.flightsCancelledCount = MIN_CANCELLED_FLIGHTS_AMOUNT;
+        this.flightsDelayedCount = MIN_DELAYED_FLIGHTS_AMOUNT;
+
+        boolean cancelledStatus = flightDelay.getCancelledStatus();
+        if (cancelledStatus) {
+            this.maxDelay = NO_DELAY_VALUE;
+            this.flightsCancelledCount++;
+        } else {
+            this.maxDelay = flightDelay.getDelayDuration();
+            if (this.maxDelay != NO_DELAY_VALUE) {
+                this.flightsDelayedCount++;
+            }
+        }
     }
 
     public static DelaysStat addDelay(DelaysStat delayStat, FlightDelay flightDelay) {

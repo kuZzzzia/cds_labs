@@ -5,13 +5,12 @@ import scala.Tuple2;
 
 public class FlightDelay implements Serializable {
     private static final int    CANCELLED_STATUS_INDEX = 21;
-    private static final int    DELAY_DURATION_INDEX = 17;
-    private static final float  DEFAULT_DELAY_VALUE = 0.0F;
+    private static final int    DELAY_DURATION_INDEX = 18;
     private static final int    DEPARTURE_AIRPORT_ID_INDEX = 11;
     private static final int    DESTINATION_AIRPORT_ID_INDEX = 14;
 
     private final boolean cancelledStatus;
-    private final float   delayDuration;
+    private float         delayDuration;
 
     public FlightDelay(String[] flightData) {
 
@@ -24,7 +23,6 @@ public class FlightDelay implements Serializable {
             );
         } else {
             this.cancelledStatus = true;
-            this.delayDuration = DEFAULT_DELAY_VALUE;
         }
     }
 
