@@ -4,6 +4,7 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import scala.Tuple2;
 
 public class AirportAnalyzerApp {
     private static final String SPARK_APP_NAME = "Airport analyzer";
@@ -16,7 +17,7 @@ public class AirportAnalyzerApp {
         JavaRDD<String> flights = sc.textFile(HDFS_PATH_TO_FLIGHTS);
         flights = flights.filter(flight -> !flight.startsWith("\""));
 
-        JavaPairRDD<>
+        JavaPairRDD<Tuple2<Integer, Integer>, >
 
         //saveAsTextFile() - method
     }
