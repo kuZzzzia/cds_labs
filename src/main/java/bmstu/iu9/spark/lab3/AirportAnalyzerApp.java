@@ -65,6 +65,12 @@ public class AirportAnalyzerApp {
         parsedData.saveAsTextFile(OUTPUT_FILENAME);
     }
 
+    private static JavaRDD<String> readDataFromCSVFile(JavaSparkContext sc,
+                                                       final String path, final String firstLinePrefix) {
+        JavaRDD<String> data = sc.textFile(path);
+        return data.filter(line -> !line.startsWith(firstLinePrefix));
+    }
+
     private static JavaPairRDD<Tuple2<String, String>, FlightDelay> parseFlightsDelaysFromFile(JavaSparkContext sc) {
         JavaRDD<String> flights = sc.textFile(HDFS_PATH_TO_FLIGHTS);
         flights = flights.filter(flight -> !flight.startsWith(FLIGHTS_FILE_FIRST_LINE_PREFIX));
