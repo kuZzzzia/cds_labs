@@ -20,7 +20,7 @@ public class DelaysStat implements Serializable {
     private final float maxDelay;
     private final int   flightsCount;
 
-    public DelaysStat(Tuple2<Tuple2<String, String>, DelaysStat> delaysBtwAirports, Map<String, String> airportName) {
+    protected DelaysStat(Tuple2<Tuple2<String, String>, DelaysStat> delaysBtwAirports, Map<String, String> airportName) {
         this.departureAirportName = airportName.get(delaysBtwAirports._1()._1());
         this.destinationAirportName = airportName.get(delaysBtwAirports._1()._2());
 
@@ -32,14 +32,14 @@ public class DelaysStat implements Serializable {
         this.cancelledCount = delaysStatSrc.getCancelledCount();
     }
 
-    public DelaysStat(float maxDelay, int flightsCount, float delayedCount, float cancelledCount) {
+    protected DelaysStat(float maxDelay, int flightsCount, float delayedCount, float cancelledCount) {
         this.maxDelay = maxDelay;
         this.flightsCount = flightsCount;
         this.delayedCount = delayedCount;
         this.cancelledCount = cancelledCount;
     }
 
-    public DelaysStat(FlightDelay flightDelay) {
+    protected DelaysStat(FlightDelay flightDelay) {
         this.flightsCount = MIN_FLIGHTS_AMOUNT;
         this.cancelledCount = MIN_CANCELLED_FLIGHTS_AMOUNT;
         this.delayedCount = MIN_DELAYED_FLIGHTS_AMOUNT;
@@ -55,7 +55,7 @@ public class DelaysStat implements Serializable {
         }
     }
 
-    public static DelaysStat addDelay(DelaysStat delayStat, FlightDelay flightDelay) {
+    protected static DelaysStat addDelay(DelaysStat delayStat, FlightDelay flightDelay) {
         float newMaxDelay = delayStat.getMaxDelay();
         float newDelayedCount = delayStat.getDelayedCount();
         float newCancelledCount = delayStat.getCancelledCount();
@@ -79,7 +79,7 @@ public class DelaysStat implements Serializable {
         );
     }
 
-    public static DelaysStat add(DelaysStat a, DelaysStat b) {
+    protected static DelaysStat add(DelaysStat a, DelaysStat b) {
         return new DelaysStat(
                 getMax(
                         a.getMaxDelay(),
