@@ -17,7 +17,7 @@ public class DelaysStat implements Serializable {
     private String      destinationAirportName;
     private float       delayedCount;
     private float       cancelledCount;
-    private final float maxDelay;
+    private float       maxDelay;
     private final int   flightsCount;
 
     protected DelaysStat(Tuple2<Tuple2<String, String>, DelaysStat> delaysBtwAirports, Map<String, String> airportName) {
@@ -39,43 +39,34 @@ public class DelaysStat implements Serializable {
         this.cancelledCount = cancelledCount;
     }
 
-    protected DelaysStat(FlightDelay flightDelay) {
-        this.flightsCount = MIN_FLIGHTS_AMOUNT;
-        this.cancelledCount = MIN_CANCELLED_FLIGHTS_AMOUNT;
-        this.delayedCount = MIN_DELAYED_FLIGHTS_AMOUNT;
-
+    private void updateDelaysStat(FlightDelay flightDelay) {
         if (flightDelay.getCancelledStatus()) {
-            this.maxDelay = NO_DELAY_VALUE;
             this.cancelledCount++;
         } else {
-            this.maxDelay = flightDelay.getDelayDuration();
-            if (this.maxDelay != NO_DELAY_VALUE) {
+            float delayValue = flightDelay.getDelayDuration();
+            if (delayValue != NO_DELAY_VALUE) {
                 this.delayedCount++;
+                this.maxDelay = getMax(delayValue, this.maxDelay);
             }
         }
     }
 
-    protected static DelaysStat addDelay(DelaysStat delayStat, FlightDelay flightDelay) {
-        float newMaxDelay = delayStat.getMaxDelay();
-        float newDelayedCount = delayStat.getDelayedCount();
-        float newCancelledCount = delayStat.getCancelledCount();
+    protected DelaysStat(FlightDelay flightDelay) {
+        this.flightsCount = MIN_FLIGHTS_AMOUNT;
+        this.cancelledCount = MIN_CANCELLED_FLIGHTS_AMOUNT;
+        this.delayedCount = MIN_DELAYED_FLIGHTS_AMOUNT;
+        this.maxDelay = NO_DELAY_VALUE;
 
-        if (flightDelay.getCancelledStatus()) {
-            newCancelledCount++;
-        } else {
-            float delayValue = flightDelay.getDelayDuration();
-            if (delayValue != NO_DELAY_VALUE) {
-                newDelayedCount++;
-                if (delayValue > newMaxDelay) {
-                    newMaxDelay = delayValue;
-                }
-            }
-        }
+        updateDelaysStat(flightDelay);
+    }
+
+    protected static DelaysStat addDelay(DelaysStat delayStat, FlightDelay flightDelay) {
+        delayStat.updateDelaysStat(flightDelay);
         return new DelaysStat(
-                newMaxDelay,
+                delayStat.getMaxDelay(),
                 delayStat.getFlightsCount() + 1,
-                newDelayedCount,
-                newCancelledCount
+                delayStat.getDelayedCount(),
+                delayStat.getCancelledCount()
         );
     }
 
