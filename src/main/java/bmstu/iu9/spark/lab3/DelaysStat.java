@@ -80,17 +80,19 @@ public class DelaysStat implements Serializable {
     }
 
     public static DelaysStat add(DelaysStat a, DelaysStat b) {
-        float maxDelay1 = a.getMaxDelay();
-        float maxDelay2 = b.getMaxDelay();
-        if ( maxDelay2 > maxDelay1) {
-            maxDelay1 = maxDelay2;
-        }
         return new DelaysStat(
-                maxDelay1,
+                getMax(
+                        a.getMaxDelay(),
+                        b.getMaxDelay()
+                ),
                 a.getFlightsCount() + b.getFlightsCount(),
                 a.getDelayedCount() + b.getDelayedCount(),
                 a.getCancelledCount() + b.getCancelledCount()
         );
+    }
+
+    private static float getMax(float num1, float num2) {
+        return Math.max(num1, num2);
     }
 
     protected float getMaxDelay() {

@@ -32,7 +32,7 @@ public class AirportAnalyzerApp {
                         >,
                 FlightDelay
                 >
-                flightsDelays = parseFlightsDelaysFromFile(sc);
+                flightsDelays = parseFlightsDelaysFromCSV(sc);
 
         JavaPairRDD<
                 Tuple2<
@@ -51,7 +51,7 @@ public class AirportAnalyzerApp {
                 String,
                 String
                 >
-                airportNames = parseAirportsFromFile(sc);
+                airportNames = parseAirportsFromCSV(sc);
 
         final Broadcast<Map<String, String>> airportsBroadcast = sc.broadcast(airportNames.collectAsMap());
 
@@ -65,15 +65,14 @@ public class AirportAnalyzerApp {
         parsedData.saveAsTextFile(OUTPUT_FILENAME);
     }
 
-    private static JavaRDD<String> readDataFromCSVFile(JavaSparkContext sc,
+    private static JavaRDD<String> readDataFromCSV(JavaSparkContext sc,
                                                        final String path, final String firstLinePrefix) {
         JavaRDD<String> data = sc.textFile(path);
         return data.filter(line -> !line.startsWith(firstLinePrefix));
     }
 
-    private static JavaPairRDD<Tuple2<String, String>, FlightDelay> parseFlightsDelaysFromFile(JavaSparkContext sc) {
-        JavaRDD<String> flights = sc.textFile(HDFS_PATH_TO_FLIGHTS);
-        flights = flights.filter(flight -> !flight.startsWith(FLIGHTS_FILE_FIRST_LINE_PREFIX));
+    private static JavaPairRDD<Tuple2<String, String>, FlightDelay> parseFlightsDelaysFromCSV(JavaSparkContext sc) {
+        JavaRDD<String> flights = readDataFromCSV(sc, HDFS_PATH_TO_FLIGHTS, FLIGHTS_FILE_FIRST_LINE_PREFIX);
 
         return flights.mapToPair(
                 flight -> {
@@ -86,9 +85,8 @@ public class AirportAnalyzerApp {
                 );
     }
 
-    private static JavaPairRDD<String, String> parseAirportsFromFile(JavaSparkContext sc) {
-        JavaRDD<String> airports = sc.textFile(HDFS_PATH_TO_AIRPORTS);
-        airports = airports.filter(airport -> !airport.startsWith(AIRPORTS_FILE_FIRST_LINE_PREFIX));
+    private static JavaPairRDD<String, String> parseAirportsFromCSV(JavaSparkContext sc) {
+        JavaRDD<String> airports = readDataFromCSV(sc, HDFS_PATH_TO_AIRPORTS, AIRPORTS_FILE_FIRST_LINE_PREFIX);
 
         return airports.mapToPair(
                 airport -> {

@@ -15,7 +15,6 @@ public class FlightDelay implements Serializable {
     private float         delayDuration;
 
     public FlightDelay(String[] flightData) {
-
         String cancelledStatus = flightData[CANCELLED_STATUS_INDEX];
 
         if (!cancelledStatus.isEmpty()) {
