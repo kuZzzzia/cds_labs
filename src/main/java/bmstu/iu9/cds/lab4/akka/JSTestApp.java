@@ -10,6 +10,7 @@ import akka.http.javadsl.ServerBinding;
 import akka.http.javadsl.marshallers.jackson.Jackson;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
+import akka.http.javadsl.model.StatusCodes;
 import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Route;
 import akka.pattern.Patterns;
@@ -62,7 +63,7 @@ public class JSTestApp extends AllDirectives {
                             get(
                                     () -> parameter("packageId", (id) -> {
                                         Future<Object> result = Patterns.ask(actorRouter, new MessageGetTestPackageResult(id), 5000);
-                                        return completeOKWithFuture(result, Jackson.marshaller()).orElse(() -> );
+                                        return completeOKWithFuture(result, Jackson.marshaller()).orElse(() -> complete(StatusCodes.NOT_FOUND, "Not Found"));
                                     })
                             )
                     )
