@@ -52,7 +52,7 @@ public class JSTestApp extends AllDirectives {
                 path("test", () ->
                         route(
                                 post(() ->
-                                        entity(Jackson.unmarshaller(TestsPackageMessage.class), message -> {
+                                        entity(Jackson.unmarshaller(MessageTestsPackage.class), message -> {
                                             actorRouter.tell(message, ActorRef.noSender());
                                             return complete("Test started!");
                                         }))
@@ -61,7 +61,7 @@ public class JSTestApp extends AllDirectives {
                     route(
                             get(
                                     () -> parameter("packageId", (id) -> {
-                                        Future<Object> result = Patterns.ask(actorRouter, new GetTestPackageResultMessage(id), 5000);
+                                        Future<Object> result = Patterns.ask(actorRouter, new MessageGetTestPackageResult(id), 5000);
                                         return completeOKWithFuture(result, Jackson.marshaller());
                                     })
                             )

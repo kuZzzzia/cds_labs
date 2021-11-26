@@ -11,7 +11,7 @@ public class ActorKeeper extends AbstractActor {
     public Receive createReceive() {
         return receiveBuilder()
                 .match(
-                        StoreTestResultMessage.class,
+                        MessageStoreTestResult.class,
                         m -> {
                             String packageId = m.getPackageId();
                             if (results.containsKey(packageId)) {
@@ -27,9 +27,9 @@ public class ActorKeeper extends AbstractActor {
                             System.out.println("Received message: " + m);
                         })
                 .match(
-                        GetTestPackageResultMessage.class,
+                        MessageGetTestPackageResult.class,
                         req -> sender().tell(
-                                new ReturnResultsMessage(
+                                new MessageReturnResults(
                                         req.getPackageID(),
                                         results.get(req.getPackageID())
                                 ),
