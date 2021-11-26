@@ -1,6 +1,7 @@
 package bmstu.iu9.cds.lab4.akka;
 
 import akka.actor.AbstractActor;
+import akka.actor.Actor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.routing.ActorRefRoutee;
@@ -34,6 +35,10 @@ public class ActorRouter extends AbstractActor {
                 .match(
                         TestBodyMessage.class,
                         message -> router.route(message, keeper)
+                )
+                .match(
+                        GetTestPackageResultMessage.class,
+                        message -> keeper.tell(message, ActorRef.noSender())
                 )
                 .build();
     }
