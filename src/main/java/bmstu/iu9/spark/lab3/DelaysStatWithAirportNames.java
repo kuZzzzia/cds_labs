@@ -1,2 +1,4 @@
-package bmstu.iu9.spark.lab3;public class DelaysStatWithAirportNames {
+package bmstu.iu9.spark.lab3;
+
+public class DelaysStatWithAirportNames {
 }
