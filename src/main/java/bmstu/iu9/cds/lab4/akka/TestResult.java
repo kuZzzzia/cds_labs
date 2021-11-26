@@ -36,12 +36,4 @@ public class TestResult {
         return receivedResult;
     }
 
-    @Override
-    public String toString() {
-        return "Status: " + status + "\n"
-                + "Test name: " + testName + "\n"
-                + "Expected: " + expectedResult + "\n"
-                + "Received: " + receivedResult + "\n";
-    }
-
 }

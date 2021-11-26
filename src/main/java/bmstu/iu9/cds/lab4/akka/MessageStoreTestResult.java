@@ -17,10 +17,4 @@ public class MessageStoreTestResult {
     protected  TestResult getTestResult() {
         return result;
     }
-
-    @Override
-    public String toString() {
-        return "PackageID = " + packageId + "\n"
-                + result;
-    }
 }
