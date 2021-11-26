@@ -18,7 +18,7 @@ public class ActorTester extends AbstractActor {
     public Receive createReceive() {
         return receiveBuilder()
                 .match(
-                        TestBodyMessage.class,
+                        TestsPackageMessage.class,
                         m -> sender().tell(
                                 runTest(m),
                                 self()
@@ -34,7 +34,7 @@ public class ActorTester extends AbstractActor {
         return invocable.invokeFunction(functionName, params).toString();
     }
 
-    private StoreTestResultMessage runTest(TestBodyMessage message) {
+    private StoreTestResultMessage runTest(TestsPackageMessage message) {
         String received;
         String status;
         String expected = message.getExpectedResult();

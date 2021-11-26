@@ -32,7 +32,7 @@ public class ActorRouter extends AbstractActor {
     public Receive createReceive() {
         return receiveBuilder()
                 .match(
-                        TestBodyMessage.class,
+                        TestsPackageMessage.class,
                         message -> router.route(message, keeper)
                 )
                 .match(
