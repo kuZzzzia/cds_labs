@@ -6,6 +6,7 @@
 
     <groupId>bmstu.iu9</groupId>
     <artifactId>cds_lab_4_akka</artifactId>
+    <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
