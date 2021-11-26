@@ -1,11 +1,11 @@
 package bmstu.iu9.cds.lab4.akka;
 
-public class TestResultMessage {
+public class StoreTestResultMessage {
     private final int           packageId;
     private final TestResult    result;
 
-    public TestResultMessage(int packageId, String status,
-                             String testName, String expectedResult, String receivedResult) {
+    public StoreTestResultMessage(int packageId, String status,
+                                  String testName, String expectedResult, String receivedResult) {
         result = new TestResult(status, testName, expectedResult, receivedResult);
         this.packageId = packageId;
     }
