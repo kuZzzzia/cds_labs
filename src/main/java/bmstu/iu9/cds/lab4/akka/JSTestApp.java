@@ -53,7 +53,8 @@ public class JSTestApp extends AllDirectives {
                         get(() ->
                                 parameter("packageId", (id) ->
                                         parameter("results", (res) -> {
-                                            actorRouter.tell(new GetTestsPackageMessage(id));
+                                            actorRouter.tell(new GetTestPackageResultMessage(id), ActorRef.noSender());
+                                            return complete("Package id: " + id + "\n" + "Result:\n" + res);
                                         })))));
     }
 
