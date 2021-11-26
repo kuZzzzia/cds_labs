@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.concurrent.CompletionStage;
 
 public class JSTestApp extends AllDirectives {
-    private static final String ACTOR_SYSTEM_NAME = "js test app";
+    private static final String ACTOR_SYSTEM_NAME = "js_test_app";
 
     public static void main(String[] args) throws IOException {
         ActorSystem actorSystem = ActorSystem.create(ACTOR_SYSTEM_NAME);
