@@ -26,19 +26,13 @@ public class AirportAnalyzerApp {
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         JavaPairRDD<
-                Tuple2<
-                        String,
-                        String
-                        >,
+                Tuple2<String, String>,
                 FlightDelay
                 >
                 flightsDelays = parseFlightsDelaysFromCSV(sc);
 
         JavaPairRDD<
-                Tuple2<
-                        String,
-                        String
-                        >,
+                Tuple2<String, String>,
                 DelaysStat
                 >
                 delaysStat = flightsDelays.combineByKey(
@@ -47,11 +41,7 @@ public class AirportAnalyzerApp {
                         DelaysStat::add
                 );
 
-        JavaPairRDD<
-                String,
-                String
-                >
-                airportNames = parseAirportsFromCSV(sc);
+        JavaPairRDD<String, String> airportNames = parseAirportsFromCSV(sc);
 
         final Broadcast<Map<String, String>> airportsBroadcast = sc.broadcast(airportNames.collectAsMap());
 
