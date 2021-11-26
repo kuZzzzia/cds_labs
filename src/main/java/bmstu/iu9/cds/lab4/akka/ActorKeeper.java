@@ -20,7 +20,7 @@ public class ActorKeeper extends AbstractActor {
                 .match(
                         GetTestResultMessage.class,
                         req -> sender().tell(
-                                new 
+                                new
                         ))
                 .build();
     }
