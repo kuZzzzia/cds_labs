@@ -1,6 +1,7 @@
 package bmstu.iu9.cds.lab4.akka;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TestResult {
     private final String status;
@@ -9,8 +10,10 @@ public class TestResult {
     private final String receivedResult;
 
     @JsonCreator
-    public TestResult(String status, String testName,
-                      String expectedResult, String receivedResult) {
+    public TestResult(@JsonProperty("status") String status,
+                      @JsonProperty("testName") String testName,
+                      @JsonProperty("expectedResult") String expectedResult,
+                      @JsonProperty("receivedResult") String receivedResult) {
         this.status = status;
         this.testName = testName;
         this.expectedResult = expectedResult;
