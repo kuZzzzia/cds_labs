@@ -2,11 +2,10 @@ package bmstu.iu9.cds.lab4.akka;
 
 import akka.actor.AbstractActor;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ActorKeeper extends AbstractActor {
-    private Map<Integer, TestResult> results = new HashMap<>();
+    private final Map<Integer, List<TestResult>> results = new HashMap<>();
 
     @Override
     public Receive createReceive() {
@@ -14,13 +13,25 @@ public class ActorKeeper extends AbstractActor {
                 .match(
                         StoreTestResultMessage.class,
                         m -> {
-                            results.put(m.getPackageId(), m.getTestResult());
+                            int packageId = m.getPackageId();
+                            if (results.containsKey(packageId)) {
+                                results.get(packageId).add(m.getTestResult());
+                            } else {
+                                results.put(
+                                        m.getPackageId(),
+                                        new ArrayList<>(
+                                                Collections.singleton(m.getTestResult())
+                                        )
+                                );
+                            }
                             System.out.println("Received message: " + m);
                         })
                 .match(
                         GetTestResultMessage.class,
                         req -> sender().tell(
-                                new
+                                new GetTestsPackageMessage(
+                                        results
+                                );
                         ))
                 .build();
     }
