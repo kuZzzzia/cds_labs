@@ -45,9 +45,10 @@ public class AirportAnalyzerApp {
 
         final Broadcast<Map<String, String>> airportsBroadcast = sc.broadcast(airportNames.collectAsMap());
 
-        JavaRDD<DelaysStat> parsedData = delaysStat.map(
-                delaysBtwAirports -> new DelaysStat(
-                        delaysBtwAirports,
+        JavaRDD<DelaysStatWithAirportNames> parsedData = delaysStat.map(
+                delaysBtwAirports -> new DelaysStatWithAirportNames(
+                        delaysBtwAirports._1(),
+                        delaysBtwAirports._2(),
                         airportsBroadcast.value()
                 )
         );
