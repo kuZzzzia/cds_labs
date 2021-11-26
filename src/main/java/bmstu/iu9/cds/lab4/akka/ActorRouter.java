@@ -2,6 +2,7 @@ package bmstu.iu9.cds.lab4.akka;
 
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
+import akka.actor.Props;
 import akka.routing.Routee;
 import akka.routing.Router;
 
@@ -15,7 +16,7 @@ public class ActorRouter extends AbstractActor {
     {
         List<Routee> routees = new ArrayList<Routee>();
         for (int i = 0; i < 5; i++) {
-            ActorRef r = getContext().actorOf(Props.create(Worker.class));
+            ActorRef r = getContext().actorOf(Props.create(Actor.class));
             getContext().watch(r);
             routees.add(new ActorRefRoutee(r));
         }
