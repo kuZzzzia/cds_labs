@@ -46,7 +46,7 @@ public class JSTestApp extends AllDirectives {
 
     private Route createRoute(ActorSystem actorSystem) {
         return route(
-                path("hello", () ->
+                path("result", () ->
                         get(() ->
                                 complete("<h1>Say hello to akka-http</h1>"))));
     }
