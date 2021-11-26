@@ -21,8 +21,8 @@ public class TestBody {
         return testName;
     }
 
-    protected String getParams() {
-        return String.join(",",params);
+    protected int[] getParams() {
+        return params;
     }
 
     protected String getExpectedResult() {
