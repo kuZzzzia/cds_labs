@@ -55,7 +55,7 @@
       <updated>1637919781036</updated>
       <workItem from="1637919783128" duration="256000" />
       <workItem from="1637920117441" duration="4000" />
-      <workItem from="1637920428266" duration="20033000" />
+      <workItem from="1637920428266" duration="20404000" />
     </task>
     <servers />
   </component>
@@ -73,5 +73,26 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/bmstu/iu9/cds/lab4/akka/JSTestApp.java</url>
+          <line>64</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/bmstu/iu9/cds/lab4/akka/JSTestApp.java</url>
+          <line>65</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/bmstu/iu9/cds/lab4/akka/ActorKeeper.java</url>
+          <line>26</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
