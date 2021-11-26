@@ -7,12 +7,12 @@ import java.util.List;
 
 public class MessageReturnResults {
     private final String packageID;
-    private final List<String> results;
+    private final List<TestResult> results;
 
     @JsonCreator
     public MessageReturnResults(
             @JsonProperty("packageId") String packageID,
-            @JsonProperty("results") List<String> results) {
+            @JsonProperty("results") List<TestResult> results) {
         this.packageID = packageID;
         this.results = results;
     }
@@ -21,7 +21,7 @@ public class MessageReturnResults {
         return packageID;
     }
 
-    public List<String> getResults() {
+    public List<TestResult> getResults() {
         return results;
     }
 
