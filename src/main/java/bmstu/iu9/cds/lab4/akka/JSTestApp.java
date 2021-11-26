@@ -51,7 +51,6 @@ public class JSTestApp extends AllDirectives {
                                 complete("<h1>Say hello to akka-http</h1>"))),
                 path("result", () ->
                         get(() ->
-                                parameter("packageId"))));
-    }
-
+                                parameter("packageId", (id) -> {
+                                    actorRouter.tell(new GetTestResultMessage(id), ActorRef.noSender());
 }

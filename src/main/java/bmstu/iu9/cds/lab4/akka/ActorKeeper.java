@@ -9,7 +9,7 @@ import scala.concurrent.duration.Duration;
 import java.util.*;
 
 public class ActorKeeper extends AbstractActor {
-    private final Map<Integer, List<TestResult>> results = new HashMap<>();
+    private final Map<String, List<TestResult>> results = new HashMap<>();
 
     @Override
     public Receive createReceive() {
@@ -17,7 +17,7 @@ public class ActorKeeper extends AbstractActor {
                 .match(
                         StoreTestResultMessage.class,
                         m -> {
-                            int packageId = m.getPackageId();
+                            String packageId = m.getPackageId();
                             if (results.containsKey(packageId)) {
                                 results.get(packageId).add(m.getTestResult());
                             } else {

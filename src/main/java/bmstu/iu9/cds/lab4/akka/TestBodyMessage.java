@@ -1,7 +1,7 @@
 package bmstu.iu9.cds.lab4.akka;
 
 public class TestBodyMessage {
-    private final int packageID;
+    private final String packageID;
     private final String jsScript;
     private final String funcName;
     private final String testName;
@@ -9,7 +9,7 @@ public class TestBodyMessage {
     private final String expectedResult;
 
     public TestBodyMessage(
-            int packageID,
+            String packageID,
             String jsScript,
             String funcName,
             String testName,
@@ -23,7 +23,7 @@ public class TestBodyMessage {
         this.expectedResult = expectedResult;
     }
 
-    protected int getPackageID() {
+    protected String getPackageID() {
         return packageID;
     }
 
