@@ -19,13 +19,24 @@ import java.util.concurrent.CompletionStage;
 public class JSTestApp {
     private static final String ACTOR_SYSTEM_NAME = "js test app";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) extends throws IOException {
         ActorSystem actorSystem = ActorSystem.create(ACTOR_SYSTEM_NAME);
         ActorRef actorRouter = actorSystem.actorOf(Props.create(ActorRouter.class));
 
+        final Http http = Http.get(system);
+        final ActorMaterializer materializer = ActorMaterializer.create(system);
+
+        //In order to access all directives we need an instance where the routes are define.
+        HttpServerMinimalExampleTest app = new HttpServerMinimalExampleTest();
+
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.createRoute().flow(system, materializer);
+        final CompletionStage<ServerBinding> binding = http.bindAndHandle(routeFlow,
+                ConnectHttp.toHost("localhost", 8080), materializer);
+
+
         final Http http = Http.get(actorSystem);
         final ActorMaterializer materializer = ActorMaterializer.create(actorSystem);
-        MainHttp instance = new MainHttp(actorSystem);
+        JSTestApp instance = new JSTestApp();
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow =
                 instance.createRoute(actorSystem).flow(actorSystem, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
