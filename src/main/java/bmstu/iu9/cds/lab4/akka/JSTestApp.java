@@ -45,19 +45,44 @@ public class JSTestApp extends AllDirectives {
     }
 
     private Route createRoute(ActorRef actorRouter) {
+//        return route(
+//                path("test", () ->
+//                        route(
+//                                post(() ->
+//                                        entity())
+//                        )),
+//                path("result", () ->
+//                        get(() ->
+//                                parameter("packageId", (id) ->
+//                                        parameter("results", (res) -> {
+//                                            actorRouter.tell(new GetTestPackageResultMessage(id), ActorRef.noSender());
+//                                            return complete("Package id: " + id + "\n" + "Result:\n" + res);
+//                                        })))));
         return route(
+                path("semaphore", () ->
+                        route(
+                                get( () -> {
+                                    Future<Object> result = Patterns.ask(testPackageActor,
+                                            SemaphoreActor.makeRequest(), 5000);
+                                    return completeOKWithFuture(result, Jackson.marshaller());
+                                }))),
                 path("test", () ->
                         route(
                                 post(() ->
-                                        entity())
-                        )),
-                path("result", () ->
+                                        entity(Jackson.unmarshaller(TestPackageMsg.class), msg -> {
+                                            testPackageActor.tell(msg, ActorRef.noSender());
+                                            return complete("Test started!");
+                                        })))),
+                path("put", () ->
                         get(() ->
-                                parameter("packageId", (id) ->
-                                        parameter("results", (res) -> {
-                                            actorRouter.tell(new GetTestPackageResultMessage(id), ActorRef.noSender());
-                                            return complete("Package id: " + id + "\n" + "Result:\n" + res);
-                                        })))));
+                                parameter("key", (key) ->
+                                        parameter("value", (value) ->
+                                        {
+                                            storeActor.tell(new StoreActor.StoreMessage(key, value), ActorRef.noSender());
+                                            return complete("value saved to store ! key=" + key + " value=" + value);
+                                        })))),
     }
+
+
 
 }
