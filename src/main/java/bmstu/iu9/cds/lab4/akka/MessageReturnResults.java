@@ -17,11 +17,11 @@ public class MessageReturnResults {
         this.results = results;
     }
 
-    protected String getPackageID() {
+    public String getPackageID() {
         return packageID;
     }
 
-    protected List<String> getResults() {
+    public List<String> getResults() {
         return results;
     }
 
