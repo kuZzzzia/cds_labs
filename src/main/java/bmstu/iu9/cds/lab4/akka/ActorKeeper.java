@@ -1,4 +1,11 @@
 package bmstu.iu9.cds.lab4.akka;
 
-public class ActorKeeper {
+import akka.actor.AbstractActor;
+
+public class ActorKeeper extends AbstractActor {
+
+    @Override
+    public Receive createReceive() {
+        return null;
+    }
 }
