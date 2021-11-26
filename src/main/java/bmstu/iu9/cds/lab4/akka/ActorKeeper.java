@@ -14,6 +14,7 @@ public class ActorKeeper extends AbstractActor {
 
     private class TestResult {
         private String status;
-        
+        private String testName;
+        private 
     }
 }
