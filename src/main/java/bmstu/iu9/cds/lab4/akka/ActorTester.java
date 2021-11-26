@@ -8,7 +8,7 @@ public class ActorTester extends AbstractActor {
     public Receive createReceive() {
         return receiveBuilder()
                 .match(
-                        
+
                 )
                 .build();
     }
