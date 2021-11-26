@@ -20,6 +20,22 @@ public class TestResult {
         this.receivedResult = receivedResult;
     }
 
+    protected String getStatus() {
+        return status;
+    }
+
+    protected String getTestName() {
+        return testName;
+    }
+
+    protected String getExpectedResult() {
+        return expectedResult;
+    }
+
+    protected String getReceivedResult() {
+        return receivedResult;
+    }
+
     @Override
     public String toString() {
         return "Status: " + status + "\n"
