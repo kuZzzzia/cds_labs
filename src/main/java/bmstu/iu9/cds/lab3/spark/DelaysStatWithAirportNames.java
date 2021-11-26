@@ -1,4 +1,4 @@
-package bmstu.iu9.spark.lab3;
+package bmstu.iu9.cds.lab3.spark;
 
 import scala.Tuple2;
 

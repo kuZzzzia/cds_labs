@@ -1,4 +1,4 @@
-package bmstu.iu9.spark.lab3;
+package bmstu.iu9.cds.lab3.spark;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
@@ -57,7 +57,8 @@ public class AirportAnalyzerApp {
     }
 
     private static JavaRDD<String> readDataFromCSV(JavaSparkContext sc,
-                                                       final String path, final String firstLinePrefix) {
+                                                       final String path,
+                                                   final String firstLinePrefix) {
         JavaRDD<String> data = sc.textFile(path);
         return data.filter(line -> !line.startsWith(firstLinePrefix));
     }
