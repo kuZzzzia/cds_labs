@@ -16,14 +16,18 @@ public class ActorTester extends AbstractActor {
     private static final String TEST_CRASHED_STATUS = "CRASHED";
     private static final String EMPTY_STRING = "";
 
-    private ActorRef storage;
+    private final ActorRef storage;
+
+    public ActorTester(ActorRef storage) {
+        this.storage = storage;
+    }
 
     @Override
     public Receive createReceive() {
         return receiveBuilder()
                 .match(
                         TestBodyMessage.class,
-                        m -> sender().tell(
+                        m -> storage.tell(
                                 runTest(m),
                                 self()
                         )
