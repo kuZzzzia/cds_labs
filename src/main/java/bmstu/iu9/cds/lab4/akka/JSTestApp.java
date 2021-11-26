@@ -49,7 +49,9 @@ public class JSTestApp extends AllDirectives {
                 path("test", () ->
                         get(() ->
                                 complete("<h1>Say hello to akka-http</h1>"))),
-                path("result"));
+                path("result", () ->
+                        get(() ->
+                                parameter(""))));
     }
 
 }
