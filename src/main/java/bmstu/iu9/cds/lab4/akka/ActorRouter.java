@@ -21,7 +21,7 @@ public class ActorRouter extends AbstractActor {
         keeper = getContext().actorOf(Props.create(ActorKeeper.class));
         List<Routee> routees = new ArrayList<>();
         for (int i = 0; i < TESTERS_AMOUNT; i++) {
-            ActorRef r = getContext().actorOf(ActorTester.props(keeper));
+            ActorRef r = getContext().actorOf(Props.create(ActorTester.class));
             getContext().watch(r);
             routees.add(new ActorRefRoutee(r));
         }
@@ -31,7 +31,10 @@ public class ActorRouter extends AbstractActor {
     @Override
     public Receive createReceive() {
         return receiveBuilder()
-                .match()
+                .match(
+                        TestBodyMessage.class,
+                        message -> router.route(message, keeper)
+                )
                 .build();
     }
 }

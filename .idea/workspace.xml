@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="be46d1f5-51fe-4ae7-8418-e6792ae5db38" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/java/bmstu/iu9/cds/lab4/akka/ActorRouter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bmstu/iu9/cds/lab4/akka/ActorRouter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bmstu/iu9/cds/lab4/akka/ActorTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bmstu/iu9/cds/lab4/akka/ActorTester.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +48,7 @@
       <updated>1637919781036</updated>
       <workItem from="1637919783128" duration="256000" />
       <workItem from="1637920117441" duration="4000" />
-      <workItem from="1637920428266" duration="8095000" />
+      <workItem from="1637920428266" duration="8488000" />
     </task>
     <servers />
   </component>

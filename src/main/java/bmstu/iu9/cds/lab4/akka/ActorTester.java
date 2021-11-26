@@ -16,23 +16,12 @@ public class ActorTester extends AbstractActor {
     private static final String TEST_CRASHED_STATUS = "CRASHED";
     private static final String EMPTY_STRING = "";
 
-    private final ActorRef storage;
-
-    static Props props(ActorRef storage) {
-        return Props.create(ActorTester.class, () -> new ActorTester(storage));
-    }
-
-
-    public ActorTester(ActorRef storage) {
-        this.storage = storage;
-    }
-
     @Override
     public Receive createReceive() {
         return receiveBuilder()
                 .match(
                         TestBodyMessage.class,
-                        m -> storage.tell(
+                        m -> sender().tell(
                                 runTest(m),
                                 self()
                         )
