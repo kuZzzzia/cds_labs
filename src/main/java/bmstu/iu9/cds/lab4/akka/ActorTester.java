@@ -33,7 +33,7 @@ public class ActorTester extends AbstractActor {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName(SCRIPT_ENGINE_NAME);
         engine.eval(jscript);
         Invocable invocable = (Invocable) engine;
-        return invocable.invokeFunction(functionName, params).toString();
+        return invocable.invokeFunction(functionName, params.toString()).toString();
     }
 
     private MessageStoreTestResult runTest(MessageTest message) {
