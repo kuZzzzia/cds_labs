@@ -11,7 +11,8 @@ public class ActorTester extends AbstractActor {
     private static final String SCRIPT_ENGINE_NAME = "nashorn";
     private static final String TEST_PASSED_STATUS = "PASSED";
     private static final String TEST_FAILED_STATUS = "FAILED";
-    private static final String TEST__STATUS
+    private static final String TEST_CRASHED_STATUS = "CRASHED";
+    private static final String EMPTY_STRING = "";
 
     @Override
     public Receive createReceive() {
@@ -45,9 +46,16 @@ public class ActorTester extends AbstractActor {
             );
             status = isEqual(received, expected) ? TEST_PASSED_STATUS : TEST_FAILED_STATUS;
         } catch (ScriptException | NoSuchMethodException e) {
-
+            status = TEST_CRASHED_STATUS;
+            received = EMPTY_STRING;
         }
-
+        return new StoreTestResultMessage(
+                message.getPackageID(),
+                status,
+                message.getTestName(),
+                expected,
+                received
+        );
 
     }
 
