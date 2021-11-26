@@ -8,8 +8,18 @@ public class ActorTester extends AbstractActor {
     public Receive createReceive() {
         return receiveBuilder()
                 .match(
-
+                        TestBodyMessage.class,
+                        m -> {
+                            sender().tell(
+                                    new StoreTestResultMessage(),
+                                    self()
+                            );
+                        }
                 )
                 .build();
     }
+
+    private execJS() {}
+
+    private StoreTestResultMessage 
 }

@@ -8,7 +8,8 @@ public class TestBodyMessage {
     private final String params;
     private final String expectedResult;
 
-    public TestBody(int packageID,
+    public TestBodyMessage(
+            int packageID,
             String jsScript,
             String funcName,
             String testName,
