@@ -1,5 +1,8 @@
 package bmstu.iu9.cds.lab4.akka;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class TestBodyMessage {
     private final String packageID;
     private final String jsScript;
@@ -8,8 +11,9 @@ public class TestBodyMessage {
     private final String params;
     private final String expectedResult;
 
+    @JsonCreator
     public TestBodyMessage(
-            String packageID,
+            @JsonProperty("packageId") String packageID,
             String jsScript,
             String funcName,
             String testName,
