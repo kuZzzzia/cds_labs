@@ -1,8 +1,6 @@
 package bmstu.iu9.cds.lab4.akka;
 
 import akka.actor.AbstractActor;
-import akka.actor.ActorRef;
-import akka.actor.Props;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;

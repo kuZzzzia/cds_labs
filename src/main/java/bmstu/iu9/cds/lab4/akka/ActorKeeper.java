@@ -11,18 +11,6 @@ import java.util.*;
 public class ActorKeeper extends AbstractActor {
     private final Map<Integer, List<TestResult>> results = new HashMap<>();
 
-    private static final int MAX_RETRIES = 10;
-
-    private static final SupervisorStrategy strategy =
-            new OneForOneStrategy(MAX_RETRIES,
-                    Duration.create("1 minute"),
-                    DeciderBuilder.
-                            matchAny(o -> escalate()).build());
-    @Override
-    public SupervisorStrategy supervisorStrategy() {
-        return strategy;
-    }
-
     @Override
     public Receive createReceive() {
         return receiveBuilder()
