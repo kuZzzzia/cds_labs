@@ -1,11 +1,14 @@
 package bmstu.iu9.cds.lab4.akka;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public class TestResult {
     private final String status;
     private final String testName;
     private final String expectedResult;
     private final String receivedResult;
 
+    @JsonCreator
     public TestResult(String status, String testName,
                       String expectedResult, String receivedResult) {
         this.status = status;
