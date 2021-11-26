@@ -12,20 +12,8 @@ public class ActorKeeper extends AbstractActor {
         return receiveBuilder()
                 .match(
                         MessageStoreTestResult.class,
-                        m -> {
-                            String packageId = m.getPackageId();
-                            if (results.containsKey(packageId)) {
-                                results.get(packageId).add(m.getTestResult());
-                            } else {
-                                results.put(
-                                        m.getPackageId(),
-                                        new ArrayList<>(
-                                                Collections.singleton(m.getTestResult())
-                                        )
-                                );
-                            }
-                            System.out.println("Received message: " + m);
-                        })
+                        this::storeResult
+                )
                 .match(
                         MessageGetTestPackageResult.class,
                         req -> sender().tell(
@@ -34,7 +22,23 @@ public class ActorKeeper extends AbstractActor {
                                         results.get(req.getPackageID())
                                 ),
                                 self()
-                        ))
+                        )
+                )
                 .build();
+    }
+
+    private void storeResult(MessageStoreTestResult m) {
+        String packageId = m.getPackageId();
+        if (results.containsKey(packageId)) {
+            results.get(packageId).add(m.getTestResult());
+        } else {
+            results.put(
+                    m.getPackageId(),
+                    new ArrayList<>(
+                            Collections.singleton(m.getTestResult())
+                    )
+            );
+        }
+        System.out.println("Received message: " + m);
     }
 }
