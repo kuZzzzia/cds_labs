@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="cds_spark_lab_3" />
+        <module name="cds_lab_3_spark" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="cds_spark_lab_3" target="1.8" />
+      <module name="cds_lab_3_spark" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
