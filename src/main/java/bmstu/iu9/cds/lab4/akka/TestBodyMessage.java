@@ -14,11 +14,11 @@ public class TestBodyMessage {
     @JsonCreator
     public TestBodyMessage(
             @JsonProperty("packageId") String packageID,
-            String jsScript,
-            String funcName,
-            String testName,
-            String params,
-            String expectedResult) {
+            @JsonProperty("jsScript") String jsScript,
+            @JsonProperty("funcName") String funcName,
+            @JsonProperty("testName") String testName,
+            @JsonProperty("params") String params,
+            @JsonProperty("expectedResult") String expectedResult) {
         this.packageID = packageID;
         this.funcName = funcName;
         this.testName = testName;
