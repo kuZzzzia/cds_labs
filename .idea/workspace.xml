@@ -58,7 +58,7 @@
       <updated>1637919781036</updated>
       <workItem from="1637919783128" duration="256000" />
       <workItem from="1637920117441" duration="4000" />
-      <workItem from="1637920428266" duration="21971000" />
+      <workItem from="1637920428266" duration="22414000" />
     </task>
     <servers />
   </component>
@@ -139,6 +139,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/bmstu/iu9/cds/lab4/akka/ActorRouter.java</url>
           <line>46</line>
           <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/bmstu/iu9/cds/lab4/akka/ActorTester.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-field">
           <url>file://$PROJECT_DIR$/src/main/java/bmstu/iu9/cds/lab4/akka/MessageReturnResults.java</url>

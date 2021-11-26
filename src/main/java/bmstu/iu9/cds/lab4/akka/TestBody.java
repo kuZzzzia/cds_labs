@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TestBody {
     private final String testName;
-    private final Object params;
+    private final int[] params;
     private final String expectedResult;
 
     @JsonCreator
@@ -21,7 +21,7 @@ public class TestBody {
         return testName;
     }
 
-    protected Object getParams() {
+    protected int[] getParams() {
         return params;
     }
 
