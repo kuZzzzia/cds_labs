@@ -13,7 +13,7 @@ public class ActorKeeper extends AbstractActor {
                 .match(
                         TestResultMessage.class,
                         m -> {
-                            results.put(m.getPackageId(), )
+                            results.put(m.getPackageId(), m.getTestResult());
                         }
                         )
     }

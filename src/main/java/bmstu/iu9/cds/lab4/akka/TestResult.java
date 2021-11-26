@@ -6,4 +6,12 @@ public class TestResult {
     private String expectedResult;
     private String receivedResult;
 
+    public TestResult(String status, String testName,
+                      String expectedResult, String receivedResult) {
+        this.status = status;
+        this.testName = testName;
+        this.expectedResult = expectedResult;
+        this.receivedResult = receivedResult;
+    }
+
 }
