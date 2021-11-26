@@ -1,6 +1,8 @@
 package bmstu.iu9.cds.lab4.akka;
 
 import akka.actor.AbstractActor;
+import akka.actor.Actor;
+import akka.actor.ActorRef;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
@@ -13,6 +15,8 @@ public class ActorTester extends AbstractActor {
     private static final String TEST_FAILED_STATUS = "FAILED";
     private static final String TEST_CRASHED_STATUS = "CRASHED";
     private static final String EMPTY_STRING = "";
+
+    private ActorRef storage;
 
     @Override
     public Receive createReceive() {
