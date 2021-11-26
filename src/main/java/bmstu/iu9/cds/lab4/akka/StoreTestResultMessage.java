@@ -23,6 +23,4 @@ public class StoreTestResultMessage {
         return "PackageID = " + packageId + "\n"
                 + result;
     }
-
-
 }
