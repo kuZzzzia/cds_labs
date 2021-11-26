@@ -1,9 +1,9 @@
 package bmstu.iu9.cds.lab4.akka;
 
-public class GetTestResultMessage {
+public class GetTestPackageResultMessage {
     private final String packageID;
 
-    public GetTestResultMessage(String packageID) {
+    public GetTestPackageResultMessage(String packageID) {
         this.packageID = packageID;
     }
 
