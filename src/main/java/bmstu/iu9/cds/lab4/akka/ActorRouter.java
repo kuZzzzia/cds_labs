@@ -16,7 +16,7 @@ public class ActorRouter extends AbstractActor {
     {
         List<Routee> routees = new ArrayList<Routee>();
         for (int i = 0; i < 5; i++) {
-            ActorRef r = getContext().actorOf(Props.create(Actor.class));
+            ActorRef r = getContext().actorOf(ActorTester.props()Props.create(Actor.class));
             getContext().watch(r);
             routees.add(new ActorRefRoutee(r));
         }
