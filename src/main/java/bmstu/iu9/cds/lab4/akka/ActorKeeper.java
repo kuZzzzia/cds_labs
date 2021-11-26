@@ -14,6 +14,7 @@ public class ActorKeeper extends AbstractActor {
                         TestResultMessage.class,
                         m -> {
                             results.put(m.getPackageId(), m.getTestResult());
+                            System.out.println("Received message: " + m);
                         }
                         )
     }

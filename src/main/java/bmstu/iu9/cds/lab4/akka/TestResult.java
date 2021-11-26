@@ -1,10 +1,10 @@
 package bmstu.iu9.cds.lab4.akka;
 
 public class TestResult {
-    private String status;
-    private String testName;
-    private String expectedResult;
-    private String receivedResult;
+    private final String status;
+    private final String testName;
+    private final String expectedResult;
+    private final String receivedResult;
 
     public TestResult(String status, String testName,
                       String expectedResult, String receivedResult) {
@@ -12,6 +12,14 @@ public class TestResult {
         this.testName = testName;
         this.expectedResult = expectedResult;
         this.receivedResult = receivedResult;
+    }
+
+    @Override
+    public String toString() {
+        return "Status: " + status + "\n"
+                + "Test name: " + testName + "\n"
+                + "Expected: " + expectedResult + "\n"
+                + "Received: " + receivedResult + "\n";
     }
 
 }

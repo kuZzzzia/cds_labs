@@ -18,5 +18,11 @@ public class TestResultMessage {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "PackageID = " + packageId + "\n"
+                + result;
+    }
+
 
 }
