@@ -3,6 +3,8 @@ package bmstu.iu9.cds.lab4.akka;
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
+import akka.routing.ActorRefRoutee;
+import akka.routing.RoundRobinRoutingLogic;
 import akka.routing.Routee;
 import akka.routing.Router;
 
@@ -10,13 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActorRouter extends AbstractActor {
+    private static final int TESTERS_AMOUNT = 5;
+    
     private final ActorRef keeper;
     private final Router router;
 
     {
-        List<Routee> routees = new ArrayList<Routee>();
-        for (int i = 0; i < 5; i++) {
-            ActorRef r = getContext().actorOf(ActorTester.props()Props.create(Actor.class));
+        keeper = getContext().actorOf(Props.create(ActorKeeper.class));
+        List<Routee> routees = new ArrayList<>();
+        for (int i = 0; i < TESTERS_AMOUNT; i++) {
+            ActorRef r = getContext().actorOf(ActorTester.props(keeper));
             getContext().watch(r);
             routees.add(new ActorRefRoutee(r));
         }
