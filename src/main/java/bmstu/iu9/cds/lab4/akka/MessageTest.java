@@ -11,7 +11,7 @@ public class MessageTest {
     @JsonCreator
     public MessageTest(@JsonProperty("packageId") String packageID,
                        @JsonProperty("jsScript") String jsScript,
-                       @JsonProperty("funcName") String funcName,
+                       @JsonProperty("functionName") String funcName,
                        @JsonProperty("test") TestBody test) {
         this.packageID = packageID;
         this.funcName = funcName;
