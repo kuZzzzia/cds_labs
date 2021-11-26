@@ -15,6 +15,10 @@ public class ActorKeeper extends AbstractActor {
     private class TestResult {
         private String status;
         private String testName;
-        private 
+        private String expectedResult;
+        private String recievedResult;
+
+        private TestResult() {
+        }
     }
 }
