@@ -12,7 +12,9 @@ public class ActorKeeper extends AbstractActor {
         return receiveBuilder()
                 .match(
                         TestResultMessage.class,
-                        m ->
+                        m -> {
+                            results.put(m.)
+                        }
                         )
     }
 }
