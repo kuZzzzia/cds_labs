@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ActorRouter extends AbstractActor {
     private static final int TESTERS_AMOUNT = 5;
-    
+
     private final ActorRef keeper;
     private final Router router;
 
@@ -30,6 +30,6 @@ public class ActorRouter extends AbstractActor {
 
     @Override
     public Receive createReceive() {
-        return null;
+        
     }
 }
