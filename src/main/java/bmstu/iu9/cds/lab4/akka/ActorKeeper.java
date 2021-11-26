@@ -30,7 +30,8 @@ public class ActorKeeper extends AbstractActor {
                         GetTestResultMessage.class,
                         req -> sender().tell(
                                 new GetTestsPackageMessage(
-                                        results
+                                        req.getPackageID(),
+                                        results.get(req.getPackageID())
                                 );
                         ))
                 .build();
