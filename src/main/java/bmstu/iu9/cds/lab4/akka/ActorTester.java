@@ -18,7 +18,7 @@ public class ActorTester extends AbstractActor {
     public Receive createReceive() {
         return receiveBuilder()
                 .match(
-                        MessageTestsPackage.class,
+                        MessageTest.class,
                         m -> sender().tell(
                                 runTest(m),
                                 self()
@@ -34,15 +34,15 @@ public class ActorTester extends AbstractActor {
         return invocable.invokeFunction(functionName, params).toString();
     }
 
-    private MessageStoreTestResult runTest(MessageTestsPackage message) {
+    private MessageStoreTestResult runTest(MessageTest message) {
         String received;
         String status;
-        String expected = message.getExpectedResult();
+        String expected = message.getTest().getExpectedResult();
         try {
             received = execJS(
                     message.getJsScript(),
                     message.getFuncName(),
-                    message.getParams()
+                    message.getTest().getParams()
             );
             status = isEqual(received, expected) ? TEST_PASSED_STATUS : TEST_FAILED_STATUS;
         } catch (ScriptException | NoSuchMethodException e) {
@@ -52,7 +52,7 @@ public class ActorTester extends AbstractActor {
         return new MessageStoreTestResult(
                 message.getPackageID(),
                 status,
-                message.getTestName(),
+                message.getTest().getTestName(),
                 expected,
                 received
         );

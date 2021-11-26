@@ -34,8 +34,13 @@ public class ActorRouter extends AbstractActor {
                 .match(
                         MessageTestsPackage.class,
                         message -> {
-                            for (TestBody test : )
-                            router.route(message, keeper)}
+                            String packageId = message.getPackageID();
+                            String jsScript = message.getJsScript();
+                            String funcName = message.getFuncName();
+                            for (TestBody test : message.getTests()) {
+                                router.route(new MessageTest(packageId, jsScript, funcName, test), keeper);
+                            }
+                        }
                 )
                 .match(
                         MessageGetTestPackageResult.class,
