@@ -5,7 +5,7 @@ import akka.actor.AbstractActor;
 import java.util.Map;
 
 public class ActorKeeper extends AbstractActor {
-    private Map<Integer, TestResultMessage> results;
+    private Map<Integer, TestResult> results;
 
     @Override
     public Receive createReceive() {
