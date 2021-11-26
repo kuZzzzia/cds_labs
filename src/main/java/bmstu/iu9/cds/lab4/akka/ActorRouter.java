@@ -44,7 +44,11 @@ public class ActorRouter extends AbstractActor {
                 )
                 .match(
                         MessageGetTestPackageResult.class,
-                        message -> keeper.tell(message, sender())
+                        message -> keeper.tell(message, self())
+                )
+                .match(
+                        MessageReturnResults.class,
+
                 )
                 .build();
     }
