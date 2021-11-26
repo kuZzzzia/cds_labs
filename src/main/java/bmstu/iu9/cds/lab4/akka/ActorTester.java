@@ -19,7 +19,11 @@ public class ActorTester extends AbstractActor {
                 .build();
     }
 
-    private execJS() {}
+    private String execJS() {
+        
+    }
 
-    private StoreTestResultMessage 
+    private StoreTestResultMessage runTest() {
+
+    }
 }
