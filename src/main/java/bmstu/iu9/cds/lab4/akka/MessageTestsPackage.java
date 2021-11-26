@@ -23,6 +23,10 @@ public class MessageTestsPackage {
         this.tests = tests;
     }
 
+    protected List<TestBody> getTests() {
+        return tests;
+    }
+
     protected String getPackageID() {
         return packageID;
     }
