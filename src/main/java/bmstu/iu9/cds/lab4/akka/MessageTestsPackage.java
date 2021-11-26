@@ -35,17 +35,6 @@ public class MessageTestsPackage {
         return funcName;
     }
 
-//    protected String getTestName() {
-//        return testName;
-//    }
-//
-//    protected String getParams() {
-//        return params;
-//    }
-//
-//    protected String getExpectedResult() {
-//        return expectedResult;
-//    }
 
     private static class TestBody {
         private final String testName;
@@ -59,6 +48,18 @@ public class MessageTestsPackage {
             this.expectedResult =  expectedResult;
             this.params = params;
             this.testName = testName;
+        }
+
+        protected String getTestName() {
+            return testName;
+        }
+
+        protected String getParams() {
+            return params;
+        }
+
+        protected String getExpectedResult() {
+            return expectedResult;
         }
     }
 }
