@@ -18,7 +18,10 @@ public class ActorKeeper extends AbstractActor {
                             System.out.println("Received message: " + m);
                         })
                 .match(
-
-                )
+                        GetTestResultMessage.class,
+                        req -> sender().tell(
+                                new 
+                        ))
+                .build();
     }
 }
