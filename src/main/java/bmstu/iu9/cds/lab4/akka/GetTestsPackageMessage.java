@@ -11,4 +11,12 @@ public class GetTestsPackageMessage {
         this.results = results;
     }
 
+    protected String getPackageID() {
+        return packageID;
+    }
+
+    protected List<TestResult> getResults() {
+        return results;
+    }
+
 }
