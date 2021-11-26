@@ -1,6 +1,6 @@
 package bmstu.iu9.cds.lab4.akka;
 
-public class TestBody {
+public class TestBodyMessage {
     private final int packageID;
     private final String jsScript;
     private final String funcName;
