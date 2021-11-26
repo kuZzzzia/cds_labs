@@ -30,7 +30,7 @@ public class JSTestApp extends AllDirectives {
         final ActorMaterializer materializer = ActorMaterializer.create(actorSystem);
         JSTestApp instance = new JSTestApp();
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow =
-                instance.createRoute(actorSystem).flow(actorSystem, materializer);
+                instance.createRoute(actorRouter).flow(actorSystem, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
                 ConnectHttp.toHost("localhost", 8080),
@@ -44,11 +44,12 @@ public class JSTestApp extends AllDirectives {
 
     }
 
-    private Route createRoute(ActorSystem actorSystem) {
+    private Route createRoute(ActorRef actorRouter) {
         return route(
-                path("result", () ->
+                path("test", () ->
                         get(() ->
-                                complete("<h1>Say hello to akka-http</h1>"))));
+                                complete("<h1>Say hello to akka-http</h1>"))),
+                path("result"));
     }
 
 }
