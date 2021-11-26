@@ -23,4 +23,29 @@ public class TestBodyMessage {
         this.expectedResult = expectedResult;
     }
 
+    protected int getPackageID() {
+        return packageID;
+    }
+
+    protected String getJsScript() {
+        return jsScript;
+    }
+
+    protected String getFuncName() {
+        return funcName;
+    }
+
+    protected String getTestName() {
+        return testName;
+    }
+
+    protected String getParams() {
+        return params;
+    }
+
+    protected String getExpectedResult() {
+        return expectedResult;
+    }
+
+
 }
