@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be46d1f5-51fe-4ae7-8418-e6792ae5db38" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/bmstu/iu9/cds/lab4/akka/ActorKeeper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bmstu/iu9/cds/lab4/akka/ActorKeeper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bmstu/iu9/cds/lab4/akka/MessageStoreTestResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bmstu/iu9/cds/lab4/akka/MessageStoreTestResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bmstu/iu9/cds/lab4/akka/TestResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bmstu/iu9/cds/lab4/akka/TestResult.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +57,7 @@
       <updated>1637919781036</updated>
       <workItem from="1637919783128" duration="256000" />
       <workItem from="1637920117441" duration="4000" />
-      <workItem from="1637920428266" duration="24238000" />
+      <workItem from="1637920428266" duration="24559000" />
     </task>
     <servers />
   </component>
@@ -84,6 +83,11 @@
           <properties class="com.fasterxml.jackson.databind.exc.InvalidDefinitionException" package="com.fasterxml.jackson.databind.exc" />
           <option name="timeStamp" value="22" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/bmstu/iu9/cds/lab4/akka/TestResult.java</url>
+          <line>16</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

@@ -20,19 +20,19 @@ public class TestResult {
         this.receivedResult = receivedResult;
     }
 
-    protected String getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    protected String getTestName() {
+    public String getTestName() {
         return testName;
     }
 
-    protected String getExpectedResult() {
+    public String getExpectedResult() {
         return expectedResult;
     }
 
-    protected String getReceivedResult() {
+    public String getReceivedResult() {
         return receivedResult;
     }
 
