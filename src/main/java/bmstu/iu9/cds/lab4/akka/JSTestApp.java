@@ -4,6 +4,7 @@ import akka.NotUsed;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
+import akka.compat.Future;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
@@ -11,6 +12,7 @@ import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Route;
+import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
@@ -55,6 +57,7 @@ public class JSTestApp extends AllDirectives {
                         get(() ->
                                 parameter("packageId", (id) ->
                                         parameter("results", (res) -> {
+                                            Future<Object> result = Patterns.ask(actorRouter,)
                                             actorRouter.tell(new GetTestPackageResultMessage(id), ActorRef.noSender());
                                             return complete("Package id: " + id + "\n" + "Result:\n" + res);
                                         })))));
