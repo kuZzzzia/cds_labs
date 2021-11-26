@@ -1,4 +1,4 @@
-package bmstu.iu9.hdfs.lab2;
+package bmstu.iu9.cds.lab2.hdfs;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Partitioner;
