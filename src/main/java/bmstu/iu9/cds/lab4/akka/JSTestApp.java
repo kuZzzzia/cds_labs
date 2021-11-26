@@ -63,7 +63,7 @@ public class JSTestApp extends AllDirectives {
                             get(
                                     () -> parameter("packageId", (id) -> {
                                         Future<Object> result = Patterns.ask(actorRouter, new MessageGetTestPackageResult(id), 5000);
-                                        return completeOKWithFuture(result, Jackson.marshaller()).orElse(() -> complete(StatusCodes.NOT_FOUND, "Not Found"));
+                                        return completeOKWithFuture(result, Jackson.marshaller()).orElse(complete(StatusCodes.NOT_FOUND, "Not Found"));
                                     })
                             )
                     )
