@@ -1,6 +1,8 @@
 package bmstu.iu9.cds.lab4.akka;
 
 import akka.actor.AbstractActor;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.*;
 
@@ -11,11 +13,11 @@ public class ActorKeeper extends AbstractActor {
     public Receive createReceive() {
         return receiveBuilder()
                 .match(
-                        MessageStoreTestResult.class,
+                        ActorTester.MessageStoreTestResult.class,
                         this::storeResult
                 )
                 .match(
-                        MessageGetTestPackageResult.class,
+                        JSTestApp.MessageGetTestPackageResult.class,
                         req -> sender().tell(
                                 new MessageReturnResults(
                                         req.getPackageID(),
@@ -27,7 +29,7 @@ public class ActorKeeper extends AbstractActor {
                 .build();
     }
 
-    private void storeResult(MessageStoreTestResult m) {
+    private void storeResult(ActorTester.MessageStoreTestResult m) {
         String packageId = m.getPackageId();
         if (results.containsKey(packageId)) {
             results.get(packageId).add(m.getTestResult());
@@ -40,5 +42,27 @@ public class ActorKeeper extends AbstractActor {
             );
         }
         System.out.println("Received message: " + m);
+    }
+
+    static class MessageReturnResults {
+        private final String packageID;
+        private final List<TestResult> results;
+
+        @JsonCreator
+        public MessageReturnResults(
+                @JsonProperty("packageId") String packageID,
+                @JsonProperty("results") List<TestResult> results) {
+            this.packageID = packageID;
+            this.results = results;
+        }
+
+        public String getPackageID() {
+            return packageID;
+        }
+
+        public List<TestResult> getResults() {
+            return results;
+        }
+
     }
 }

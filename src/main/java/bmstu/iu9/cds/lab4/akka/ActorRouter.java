@@ -7,6 +7,8 @@ import akka.routing.ActorRefRoutee;
 import akka.routing.RoundRobinRoutingLogic;
 import akka.routing.Routee;
 import akka.routing.Router;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +34,7 @@ public class ActorRouter extends AbstractActor {
     public Receive createReceive() {
         return receiveBuilder()
                 .match(
-                        MessageTestsPackage.class,
+                        JSTestApp.MessageTestsPackage.class,
                         message -> {
                             String packageId = message.getPackageID();
                             String jsScript = message.getJsScript();
@@ -43,9 +45,42 @@ public class ActorRouter extends AbstractActor {
                         }
                 )
                 .match(
-                        MessageGetTestPackageResult.class,
+                        JSTestApp.MessageGetTestPackageResult.class,
                         message -> keeper.tell(message, sender())
                 )
                 .build();
+    }
+
+    static class MessageTest {
+        private final String packageID;
+        private final String jsScript;
+        private final String funcName;
+        private final TestBody test;
+        @JsonCreator
+        public MessageTest(@JsonProperty("packageId") String packageID,
+                           @JsonProperty("jsScript") String jsScript,
+                           @JsonProperty("functionName") String funcName,
+                           @JsonProperty("test") TestBody test) {
+            this.packageID = packageID;
+            this.funcName = funcName;
+            this.jsScript = jsScript;
+            this.test = test;
+        }
+
+        protected String getPackageID() {
+            return packageID;
+        }
+
+        protected String getJsScript() {
+            return jsScript;
+        }
+
+        protected String getFuncName() {
+            return funcName;
+        }
+
+        protected TestBody getTest() {
+            return test;
+        }
     }
 }

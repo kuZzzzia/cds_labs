@@ -16,10 +16,13 @@ import akka.http.javadsl.server.Route;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import scala.concurrent.Future;
 
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.CompletionStage;
 
 public class JSTestApp extends AllDirectives {
@@ -71,6 +74,52 @@ public class JSTestApp extends AllDirectives {
         );
     }
 
+    static class MessageGetTestPackageResult {
+        private final String packageID;
+
+        public MessageGetTestPackageResult(String packageID) {
+            this.packageID = packageID;
+        }
+
+        protected String getPackageID() {
+            return packageID;
+        }
+    }
+
+    static class MessageTestsPackage {
+        private final String packageID;
+        private final String jsScript;
+        private final String funcName;
+        private final List<TestBody> tests;
+
+        @JsonCreator
+        public MessageTestsPackage(
+                @JsonProperty("packageId") String packageID,
+                @JsonProperty("jsScript") String jsScript,
+                @JsonProperty("functionName") String funcName,
+                @JsonProperty("tests") List<TestBody> tests) {
+            this.packageID = packageID;
+            this.funcName = funcName;
+            this.jsScript = jsScript;
+            this.tests = tests;
+        }
+
+        protected List<TestBody> getTests() {
+            return tests;
+        }
+
+        protected String getPackageID() {
+            return packageID;
+        }
+
+        protected String getJsScript() {
+            return jsScript;
+        }
+
+        protected String getFuncName() {
+            return funcName;
+        }
+    }
 
 
 }
