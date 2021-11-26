@@ -25,16 +25,6 @@ public class JSTestApp extends AllDirectives {
         ActorSystem actorSystem = ActorSystem.create(ACTOR_SYSTEM_NAME);
         ActorRef actorRouter = actorSystem.actorOf(Props.create(ActorRouter.class));
 
-//        final Http http = Http.get(system);
-//        final ActorMaterializer materializer = ActorMaterializer.create(system);
-//
-//        //In order to access all directives we need an instance where the routes are define.
-//        HttpServerMinimalExampleTest app = new HttpServerMinimalExampleTest();
-//
-//        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.createRoute().flow(system, materializer);
-//        final CompletionStage<ServerBinding> binding = http.bindAndHandle(routeFlow,
-//                ConnectHttp.toHost("localhost", 8080), materializer);
-
 
         final Http http = Http.get(actorSystem);
         final ActorMaterializer materializer = ActorMaterializer.create(actorSystem);
@@ -54,7 +44,7 @@ public class JSTestApp extends AllDirectives {
 
     }
 
-    private Route createRoute() {
+    private Route createRoute(ActorSystem actorSystem) {
         return route(
                 path("hello", () ->
                         get(() ->
