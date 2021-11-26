@@ -7,6 +7,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class ActorTester extends AbstractActor {
     private static final String SCRIPT_ENGINE_NAME = "nashorn";
@@ -32,7 +33,7 @@ public class ActorTester extends AbstractActor {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName(SCRIPT_ENGINE_NAME);
         engine.eval(jscript);
         Invocable invocable = (Invocable) engine;
-        return invocable.invokeFunction(functionName, 2, 1).toString();
+        return invocable.invokeFunction(functionName, Collections.singletonList(params)).toString();
     }
 
     private MessageStoreTestResult runTest(MessageTest message) {
