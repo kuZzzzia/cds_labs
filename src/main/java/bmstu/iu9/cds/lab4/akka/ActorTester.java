@@ -3,6 +3,7 @@ package bmstu.iu9.cds.lab4.akka;
 import akka.actor.AbstractActor;
 import akka.actor.Actor;
 import akka.actor.ActorRef;
+import akka.actor.Props;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
@@ -17,6 +18,11 @@ public class ActorTester extends AbstractActor {
     private static final String EMPTY_STRING = "";
 
     private final ActorRef storage;
+
+    static Props props(Integer magicNumber) {
+        return Props.create(ActorTester.class, () -> new ActorTester(storage));
+    }
+
 
     public ActorTester(ActorRef storage) {
         this.storage = storage;
