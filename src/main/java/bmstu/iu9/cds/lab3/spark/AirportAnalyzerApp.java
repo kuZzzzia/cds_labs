@@ -25,18 +25,13 @@ public class AirportAnalyzerApp {
         SparkConf conf = new SparkConf().setAppName(SPARK_APP_NAME);
         JavaSparkContext sc = new JavaSparkContext(conf);
 
-        JavaPairRDD<Tuple2<String, String>, FlightDelay>
-                flightsDelays = parseFlightsDelaysFromCSV(sc);
+        JavaPairRDD<Tuple2<String, String>, FlightDelay> flightsDelays = parseFlightsDelaysFromCSV(sc);
 
-        JavaPairRDD<
-                Tuple2<String, String>,
-                DelaysStat
-                >
-                delaysStat = flightsDelays.combineByKey(
-                        DelaysStat::new,
-                        DelaysStat::addDelay,
-                        DelaysStat::add
-                );
+        JavaPairRDD<Tuple2<String, String>, DelaysStat> delaysStat = flightsDelays.combineByKey(
+                DelaysStat::new,
+                DelaysStat::addDelay,
+                DelaysStat::add
+        );
 
         JavaPairRDD<String, String> airportNames = parseAirportsFromCSV(sc);
 
