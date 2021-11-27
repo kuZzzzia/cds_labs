@@ -25,9 +25,7 @@ public class AirportAnalyzerApp {
         SparkConf conf = new SparkConf().setAppName(SPARK_APP_NAME);
         JavaSparkContext sc = new JavaSparkContext(conf);
 
-        JavaPairRDD<Tuple2<String, String>,
-                FlightDelay
-                >
+        JavaPairRDD<Tuple2<String, String>, FlightDelay>
                 flightsDelays = parseFlightsDelaysFromCSV(sc);
 
         JavaPairRDD<
