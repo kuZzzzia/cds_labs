@@ -7,6 +7,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.util.List;
+import java.util.Locale;
 
 public class ActorTester extends AbstractActor {
     private static final String SCRIPT_ENGINE_NAME = "nashorn";
@@ -28,11 +29,11 @@ public class ActorTester extends AbstractActor {
                 .build();
     }
 
-    private String execJS(String jscript, String functionName, List<Object> params) throws ScriptException, NoSuchMethodException {
+    private String execJS(String jscript, String functionName, Object[] params) throws ScriptException, NoSuchMethodException {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName(SCRIPT_ENGINE_NAME);
         engine.eval(jscript);
         Invocable invocable = (Invocable) engine;
-        return invocable.invokeFunction(functionName,params.get(0), params.get(1)).toString();
+        return invocable.invokeFunction(functionName, params).toString();
     }
 
     private MessageStoreTestResult runTest(ActorRouter.MessageTest message) {
