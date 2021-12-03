@@ -4,7 +4,6 @@ import akka.NotUsed;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
-import akka.compat.Future;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
@@ -29,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Future;
 
 public class AverageHttpResponseTimeApp {
     private static final int    TIMEOUT_MILLISEC = 5000;
@@ -59,7 +59,7 @@ public class AverageHttpResponseTimeApp {
                 .mapConcat(req -> new ArrayList<>(Collections.nCopies(req.second(), req.first())))
                 .mapAsync(req -> {
                     long start = System.currentTimeMillis();
-                    Future<Response> = Dsl.asyncHttpClient().prepareGet("http://www.example.com/").execute();
+                    Future f = Dsl.asyncHttpClient().prepareGet("http://www.example.com/").execute();
                     long end = System.currentTimeMillis();
                     return CompletableFuture.completedFuture(start - end);
                 })
