@@ -81,7 +81,7 @@ public class AverageHttpResponseTimeApp {
                                             Dsl.asyncHttpClient().prepareGet("http://www.example.com/").execute();
                                             long end = System.currentTimeMillis();
                                             return CompletableFuture.completedFuture(start - end);
-                                        }).toMat(sink, Keep.right());
+                                        }).toMat(Sink.fold(0, (agg, )), Keep.right());
                                 Sink<Long, CompletionStage<Long>> sink = Sink.fold(0, (agg, next) -> agg + next);
                                 return Source.from(Collections.singletonList(req))
                                         .toMat(sink, Keep.right()).run(materializer)
