@@ -72,7 +72,12 @@ public class AverageHttpResponseTimeApp {
                                 .toMat(testSink, Keep.right()).run(materializer)
                         )
                 ).map(res -> {
-                    
+                    actor.tell(
+                            new MessageCacheResult(res.first(), res.second()),
+                            ActorRef.noSender()
+                    );
+                    return new HttpResponse() {
+                    }
                 });
 
     }
