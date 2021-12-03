@@ -73,6 +73,7 @@ public class AverageHttpResponseTimeApp {
                             if (res != null) {
                                 return CompletableFuture.completedFuture(new Pair<>(req.first(), res));
                             } else {
+                                Sink<>
                                 Flow<Pair<String, Integer>, Long, NotUsed> flow = Flow.<Pair<String, Integer>>create()
                                         .mapConcat(r -> new ArrayList<>(Collections.nCopies(r.second(), r.first())))
                                         .mapAsync(req.second(), r -> {
@@ -80,7 +81,7 @@ public class AverageHttpResponseTimeApp {
                                             Dsl.asyncHttpClient().prepareGet("http://www.example.com/").execute();
                                             long end = System.currentTimeMillis();
                                             return CompletableFuture.completedFuture(start - end);
-                                        });
+                                        }).toMat(sink, Keep.right());
                                 return Source.from(Collections.singletonList(req))
                                         .toMat(sink, Keep.right()).run(materializer)
                             }
