@@ -50,9 +50,10 @@ public class AverageHttpResponseTimeApp extends AllDirectives{
                 parameter(StringUnmarshallers.INTEGER, "count", count -> {
                     Future<Object> result = Patterns.ask(
                             actor,
-                            new MessageGetResult(url, count),
+                            new MessageGetResult(url),
                             TIMEOUT_MILLISEC
                     );
+                    result.
 
                 })
         );
