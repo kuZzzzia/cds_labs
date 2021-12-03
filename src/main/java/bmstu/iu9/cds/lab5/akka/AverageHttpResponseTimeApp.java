@@ -37,6 +37,6 @@ public class AverageHttpResponseTimeApp {
     }
 
     static class MessageCacheResult {
-        
+
     }
 }
