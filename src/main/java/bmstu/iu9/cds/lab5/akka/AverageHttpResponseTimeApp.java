@@ -55,7 +55,8 @@ public class AverageHttpResponseTimeApp extends AllDirectives{
                             TIMEOUT_MILLISEC
                     )).thenCompose(res -> {
                         return (res != null)
-                                ? 
+                                ? CompletableFuture.completedFuture(res)
+                                : 
 
                     });
 
