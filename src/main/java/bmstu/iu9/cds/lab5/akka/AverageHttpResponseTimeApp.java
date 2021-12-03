@@ -76,7 +76,7 @@ public class AverageHttpResponseTimeApp {
                                 return CompletableFuture.completedFuture(new Pair<>(req.first(), res));
                             } else {
                                 Sink<Integer, CompletionStage<Integer>> fold = Sink.fold(0, Integer::sum);
-                                Flow<Pair<String, Integer>, Integer, NotUsed> flow = Flow.<Pair<String, Integer>>create()
+                                Sink<Pair<String, Integer>, CompletionStage<Integer>> sink = Flow.<Pair<String, Integer>>create()
                                         .mapConcat(r -> new ArrayList<>(Collections.nCopies(r.second(), r.first())))
                                         .mapAsync(req.second(), url -> {
                                             long start = System.currentTimeMillis();
@@ -84,17 +84,16 @@ public class AverageHttpResponseTimeApp {
                                             long end = System.currentTimeMillis();
                                             int duration = (int) (start - end);
                                             return CompletableFuture.completedFuture(duration);
-                                        });
-                                Sink<Pair<String, Integer>, CompletionStage<Integer>> testSink = flow.toMat(fold, Keep.right());
+                                        }).toMat(fold, Keep.right());
 
                                 return Source.from(Collections.singletonList(req))
-                                        .toMat(testSink, Keep.right()).run(materializer).thenApply(sum -> new Pair<>(req.first(), sum / req.second()));
+                                        .toMat(sink, Keep.right()).run(materializer).thenApply(sum -> new Pair<>(req.first(), sum / req.second()));
                             }
                         })
                 )
                 .map(res -> {
                     actor.tell(
-                            new MessageCacheResult(res.first(), (long) res.second()),
+                            new MessageCacheResult(res.first(), (int) res.second()),
                             ActorRef.noSender()
                     );
                     return HttpResponse.create().entity(res.first() + ": " + res.second());
@@ -116,9 +115,9 @@ public class AverageHttpResponseTimeApp {
 
     static class MessageCacheResult {
         private final String url;
-        private final long   responseTime;
+        private final int   responseTime;
 
-        public MessageCacheResult(String url, long responseTime) {
+        public MessageCacheResult(String url, int responseTime) {
             this.url = url;
             this.responseTime = responseTime;
         }
@@ -127,7 +126,7 @@ public class AverageHttpResponseTimeApp {
             return url;
         }
 
-        public long getResponseTime() {
+        public int getResponseTime() {
             return responseTime;
         }
     }
