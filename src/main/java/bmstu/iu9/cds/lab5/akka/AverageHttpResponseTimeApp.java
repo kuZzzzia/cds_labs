@@ -54,8 +54,9 @@ public class AverageHttpResponseTimeApp extends AllDirectives{
                             new MessageGetResult(url),
                             TIMEOUT_MILLISEC
                     )).thenCompose(res -> {
-                        res == null ?
-                                
+                        return (res != null)
+                                ? 
+
                     });
 
                 })
