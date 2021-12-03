@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
-public class AverageHttpResponseTimeApp extends AllDirectives{
+public class AverageHttpResponseTimeApp {
     private static final String EMPTY_PATH = "";
     private static final int    TIMEOUT_MILLISEC = 5000;
 
@@ -33,7 +33,7 @@ public class AverageHttpResponseTimeApp extends AllDirectives{
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
         AverageHttpResponseTimeApp instance = new AverageHttpResponseTimeApp();
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = instance.createRoute(system, materializer, actor).flow(system, materializer);
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = flowHttpRequest(system, materializer, actor);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
                 ConnectHttp.toHost("localhost", 8080),
@@ -46,7 +46,7 @@ public class AverageHttpResponseTimeApp extends AllDirectives{
                 .thenAccept(unbound -> system.terminate());
     }
 
-    private Route createRoute(ActorSystem system, ActorMaterializer materializer, ActorRef actor) {
+    private Flow<HttpRequest, HttpResponse, NotUsed> flowHttpRequest(ActorSystem system, ActorMaterializer materializer, ActorRef actor) {
         return parameter("testUrl", url ->
                 parameter(StringUnmarshallers.INTEGER, "count", count ->
                         completeOKWithFuture(
