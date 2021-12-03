@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.util.concurrent.CompletionStage;
 
 public class AverageHttpResponseTimeApp {
-    private static final String EMPTY_PATH = "";
     private static final int    TIMEOUT_MILLISEC = 5000;
 
     public static void main(String[] args) throws IOException {
@@ -31,7 +30,6 @@ public class AverageHttpResponseTimeApp {
 
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
-        AverageHttpResponseTimeApp instance = new AverageHttpResponseTimeApp();
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = flowHttpRequest(system, materializer, actor);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
@@ -45,7 +43,7 @@ public class AverageHttpResponseTimeApp {
                 .thenAccept(unbound -> system.terminate());
     }
 
-    private Flow<HttpRequest, HttpResponse, NotUsed> flowHttpRequest(ActorSystem system, ActorMaterializer materializer, ActorRef actor) {
+    private static Flow<HttpRequest, HttpResponse, NotUsed> flowHttpRequest(ActorSystem system, ActorMaterializer materializer, ActorRef actor) {
         return Flow.of(HttpRequest.class)
                 .map( req -> {
                     Query query = req.getUri().query();
@@ -53,7 +51,9 @@ public class AverageHttpResponseTimeApp {
                     int count = Integer.parseInt(query.get("count").get());
                     return new Pair<String, Integer>(url, count);
                         }
-                ).mapAsync()
+                ).mapAsync( req -> {
+                    
+                })
 
     }
 
