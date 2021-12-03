@@ -15,6 +15,8 @@ import akka.japi.Pair;
 
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
+import akka.stream.Graph;
+import akka.stream.SinkShape;
 import akka.stream.javadsl.Flow;
 import akka.stream.javadsl.Keep;
 import akka.stream.javadsl.Source;
@@ -52,6 +54,7 @@ public class AverageHttpResponseTimeApp {
 
     private static Flow<HttpRequest, HttpResponse, NotUsed> flowHttpRequest(
             ActorSystem system, ActorMaterializer materializer, ActorRef actor) {
+        Graph<SinkShape<Pair<String, Integer>>, ?> sink;
         return Flow.of(HttpRequest.class)
                 .map( req -> {
                     Query query = req.getUri().query();
@@ -69,19 +72,19 @@ public class AverageHttpResponseTimeApp {
                         ).thenCompose( res -> (res != null)
                                 ? CompletableFuture.completedFuture(new Pair<>(req.first(), res))
                                 : Source.from(Collections.singletonList(req))
-                                .toMat(testSink, Keep.right()).run(materializer)
+                                .toMat(sink, Keep.right()).run(materializer)
                         )
                 ).map(res -> {
                     actor.tell(
                             new MessageCacheResult(res.first(), res.second()),
                             ActorRef.noSender()
                     );
-                    return HttpResponse.create().entity();
+                    return HttpResponse.create().entity(res.first() + ": " + res.second());
                 });
 
     }
 
-    private static void createFlow() {
+    private static void sink() {
         Flow<Pair<String, Integer>, Long, NotUsed> flow = Flow.create();
     }
 
