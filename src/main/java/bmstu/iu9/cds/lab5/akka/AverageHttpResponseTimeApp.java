@@ -59,16 +59,10 @@ public class AverageHttpResponseTimeApp extends AllDirectives {
     }
 
     static class MessageGetResult {
-        private String url;
-        private int    count;
+        private final String url;
 
         public MessageGetResult(String url, int count) {
             this.url = url;
-            this.count = count;
-        }
-
-        public int getCount() {
-            return count;
         }
 
         public String getUrl() {
@@ -77,6 +71,20 @@ public class AverageHttpResponseTimeApp extends AllDirectives {
     }
 
     static class MessageCacheResult {
+        private final String url;
+        private final long   responseTime;
 
+        public MessageCacheResult(String url, long responseTime) {
+            this.url = url;
+            this.responseTime = responseTime;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public long getResponseTime() {
+            return responseTime;
+        }
     }
 }

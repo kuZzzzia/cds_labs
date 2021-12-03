@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ActorCache extends AbstractActor {
-    private Map<String, Long> results= new HashMap<>();
+    private final Map<String, Long> results = new HashMap<>();
 
     @Override
     public Receive createReceive() {
@@ -17,9 +17,7 @@ public class ActorCache extends AbstractActor {
                 )
                 .match(
                         AverageHttpResponseTimeApp.MessageCacheResult.class,
-                        message -> {
-
-                        }
+                        message -> results.put(message.getUrl(), message.getResponseTime())
                 )
                 .build();
     }
