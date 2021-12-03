@@ -12,11 +12,13 @@ import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Route;
 import akka.http.javadsl.unmarshalling.StringUnmarshallers;
+import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
 import java.io.IOException;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Future;
 
 public class AverageHttpResponseTimeApp extends AllDirectives {
     private static final String EMPTY_PATH = "";
@@ -45,12 +47,16 @@ public class AverageHttpResponseTimeApp extends AllDirectives {
     private Route createRoute(ActorRef actor) {
         return parameter("testUrl", url ->
                 parameter(StringUnmarshallers.INTEGER, "count", count -> {
-                    
+                    Future<Object> result = Patterns.ask(
+                            actor,
+                            new MessageGetResult()
+                    )
                 })
         );
     }
 
     static class MessageGetResult {
+        
 
     }
 
