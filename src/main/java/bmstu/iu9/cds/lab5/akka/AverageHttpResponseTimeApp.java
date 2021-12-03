@@ -31,7 +31,12 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 public class AverageHttpResponseTimeApp {
+    private static final String QUERY_PARAMETER_URL = "testUrl";
+    private static final String QUERY_PARAMETER_COUNT = "count";
+
     private static final int    TIMEOUT_MILLISEC = 5000;
+    private static final int    MAP_PARALLELISM_FOR_EACH_GET_REQUEST = 1;
+    private static final int    PORT = 8080;
 
     public static void main(String[] args) throws IOException {
         System.out.println("start!");
@@ -40,13 +45,13 @@ public class AverageHttpResponseTimeApp {
 
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = flowHttpRequest(system, materializer, actor);
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = flowHttpRequest(materializer, actor);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
-                ConnectHttp.toHost("localhost", 8080),
+                ConnectHttp.toHost("localhost", PORT),
                 materializer
         );
-        System.out.println("Server online at http://localhost:8080/\nPress RETURN to stop...");
+        System.out.println("Server online at http://localhost:" + PORT + "/\nPress RETURN to stop...");
         System.in.read();
         binding
                 .thenCompose(ServerBinding::unbind)
@@ -54,15 +59,15 @@ public class AverageHttpResponseTimeApp {
     }
 
     private static Flow<HttpRequest, HttpResponse, NotUsed> flowHttpRequest(
-            ActorSystem system, ActorMaterializer materializer, ActorRef actor) {
+            ActorMaterializer materializer, ActorRef actor) {
         return Flow.of(HttpRequest.class)
                 .map( req -> {
                     Query query = req.getUri().query();
-                    String url = query.get("testUrl").get();
-                    int count = Integer.parseInt(query.get("count").get());
+                    String url = query.get(QUERY_PARAMETER_URL).get();
+                    int count = Integer.parseInt(query.get(QUERY_PARAMETER_COUNT).get());
                     return new Pair<>(url, count);
                 })
-                .mapAsync(1, req ->
+                .mapAsync(MAP_PARALLELISM_FOR_EACH_GET_REQUEST, req ->
                         FutureConverters.toJava(
                                 Patterns.ask(
                                         actor,
@@ -70,11 +75,13 @@ public class AverageHttpResponseTimeApp {
                                         TIMEOUT_MILLISEC
                                 )
                         ).thenCompose( res -> {
-                            if ((int)res > -1) {
+                            if ((int)res > 0) {
                                 return CompletableFuture.completedFuture(new Pair<>(req.first(), (int) res));
                             } else {
                                 Sink<Integer, CompletionStage<Integer>> fold = Sink.fold(0, Integer::sum);
-                                Sink<Pair<String, Integer>, CompletionStage<Integer>> sink = Flow.<Pair<String, Integer>>create()
+
+                                Sink<Pair<String, Integer>, CompletionStage<Integer>> sink = Flow
+                                        .<Pair<String, Integer>>create()
                                         .mapConcat(r -> new ArrayList<>(Collections.nCopies(r.second(), r.first())))
                                         .mapAsync(req.second(), url -> {
                                             long start = System.currentTimeMillis();
