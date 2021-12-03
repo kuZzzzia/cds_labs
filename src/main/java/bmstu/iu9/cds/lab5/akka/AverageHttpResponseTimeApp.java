@@ -82,7 +82,7 @@ public class AverageHttpResponseTimeApp {
                                             Dsl.asyncHttpClient().prepareGet(r).execute();
                                             long end = System.currentTimeMillis();
                                             return CompletableFuture.completedFuture(start - end);
-                                        }).toMat(Sink.fold(0, (agg, next) -> agg + next), Keep.right());
+                                        }).toMat(Sink.fold(0L, (agg, next) -> agg + next), Keep.right());
 
                                 return Source.from(Collections.singletonList(req))
                                         .toMat(sink, Keep.right()).run(materializer);
