@@ -20,7 +20,7 @@ import scala.concurrent.Future;
 import java.io.IOException;
 import java.util.concurrent.CompletionStage;
 
-public class AverageHttpResponseTimeApp {
+public class AverageHttpResponseTimeApp extends AllDirectives{
     private static final String EMPTY_PATH = "";
     private static final int    TIMEOUT_MILLISEC = 5000;
 
@@ -31,7 +31,8 @@ public class AverageHttpResponseTimeApp {
 
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = Flow.of(HttpRequest.class).map(req -> req)
+        AverageHttpResponseTimeApp instance = new AverageHttpResponseTimeApp();
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = instance.createRoute(actor);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
                 ConnectHttp.toHost("localhost", 8080),
@@ -56,8 +57,6 @@ public class AverageHttpResponseTimeApp {
                 })
         );
     }
-
-    private static F
 
     static class MessageGetResult {
         private final String url;
