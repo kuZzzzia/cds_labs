@@ -13,7 +13,6 @@ import akka.http.javadsl.model.Query;
 
 import akka.japi.Pair;
 
-import akka.japi.function.Function2;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
@@ -21,7 +20,7 @@ import akka.stream.javadsl.Keep;
 import akka.stream.javadsl.Sink;
 import akka.stream.javadsl.Source;
 import org.asynchttpclient.Dsl;
-import org.asynchttpclient.Response;
+
 import scala.compat.java8.FutureConverters;
 
 
@@ -30,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import java.util.concurrent.Future;
 
 public class AverageHttpResponseTimeApp {
     private static final int    TIMEOUT_MILLISEC = 5000;
@@ -45,10 +43,10 @@ public class AverageHttpResponseTimeApp {
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = flowHttpRequest(system, materializer, actor);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
-                ConnectHttp.toHost("localhost", 8080),
+                ConnectHttp.toHost("localhost", 8000),
                 materializer
         );
-        System.out.println("Server online at http://localhost:8080/\nPress RETURN to stop...");
+        System.out.println("Server online at http://localhost:8000/\nPress RETURN to stop...");
         System.in.read();
         binding
                 .thenCompose(ServerBinding::unbind)
