@@ -60,7 +60,7 @@ public class AverageHttpResponseTimeApp {
                 .mapAsync(req -> {
                     long start = System.currentTimeMillis();
                     prepareGet("http://www.example.com/").execute();
-                }).toMat(fold, Keep.right());
+                })
         return Flow.of(HttpRequest.class)
                 .map( req -> {
                     Query query = req.getUri().query();
