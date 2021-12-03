@@ -54,7 +54,6 @@ public class AverageHttpResponseTimeApp {
 
     private static Flow<HttpRequest, HttpResponse, NotUsed> flowHttpRequest(
             ActorSystem system, ActorMaterializer materializer, ActorRef actor) {
-        Graph<SinkShape<Pair<String, Integer>>, ?> sink;
         return Flow.of(HttpRequest.class)
                 .map( req -> {
                     Query query = req.getUri().query();
