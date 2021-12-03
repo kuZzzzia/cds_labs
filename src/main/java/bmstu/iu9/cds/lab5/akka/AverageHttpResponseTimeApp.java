@@ -50,12 +50,12 @@ public class AverageHttpResponseTimeApp {
                     Query query = req.getUri().query();
                     String url = query.get("testUrl").get();
                     int count = Integer.parseInt(query.get("count").get());
-                    return new Pair<String, Integer>(url, count);
+                    return new Pair<>(url, count);
                         }
                 ).mapAsync( req -> {
                     CompletionStage<Object> result = Patterns.ask(
                             actor,
-                            MessageGetResult(req),
+                            new MessageGetResult(req),
                             TIMEOUT_MILLISEC
                     )
                 })
