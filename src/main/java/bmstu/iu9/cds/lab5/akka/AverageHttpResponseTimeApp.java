@@ -74,7 +74,6 @@ public class AverageHttpResponseTimeApp {
                             if (res != null) {
                                 return CompletableFuture.completedFuture(new Pair<>(req.first(), res));
                             } else {
-                                Sink<Long, CompletionStage<Long>> sink = Sink.fold(0, (agg, next) -> aggnext);
                                 Flow<Pair<String, Integer>, Long, NotUsed> flow = Flow.<Pair<String, Integer>>create()
                                         .mapConcat(r -> new ArrayList<>(Collections.nCopies(r.second(), r.first())))
                                         .mapAsync(req.second(), r -> {
@@ -83,6 +82,7 @@ public class AverageHttpResponseTimeApp {
                                             long end = System.currentTimeMillis();
                                             return CompletableFuture.completedFuture(start - end);
                                         }).toMat(sink, Keep.right());
+                                Sink<Long, CompletionStage<Long>> sink = Sink.fold(0, (agg, next) -> agg + next);
                                 return Source.from(Collections.singletonList(req))
                                         .toMat(sink, Keep.right()).run(materializer)
                             }
