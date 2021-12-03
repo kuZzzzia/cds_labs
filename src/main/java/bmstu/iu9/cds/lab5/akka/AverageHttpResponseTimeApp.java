@@ -25,6 +25,7 @@ import scala.compat.java8.FutureConverters;
 
 import javax.annotation.processing.Completion;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -54,7 +55,11 @@ public class AverageHttpResponseTimeApp {
 
     private static Flow<HttpRequest, HttpResponse, NotUsed> flowHttpRequest(
             ActorSystem system, ActorMaterializer materializer, ActorRef actor) {
-        Flow.<Pair<String, Integer>>create().mapConcat(req -> )
+        Flow.<Pair<String, Integer>>create()
+                .mapConcat(req -> new ArrayList<>(Collections.nCopies(req.second(), req.first())))
+                .mapAsync(req -> {
+                    
+                })
         return Flow.of(HttpRequest.class)
                 .map( req -> {
                     Query query = req.getUri().query();
