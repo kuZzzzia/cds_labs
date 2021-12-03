@@ -4,6 +4,7 @@ import akka.NotUsed;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
+import akka.compat.Future;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
@@ -58,7 +59,7 @@ public class AverageHttpResponseTimeApp {
                 .mapConcat(req -> new ArrayList<>(Collections.nCopies(req.second(), req.first())))
                 .mapAsync(req -> {
                     long start = System.currentTimeMillis();
-                    asyncHttpClient.prepareGet("http://www.example.com/").execute();
+                    Future whenResponse = asyncHttp.prepareGet("http://www.example.com/").execute();
                 }).toMat(fold, Keep.right());
         return Flow.of(HttpRequest.class)
                 .map( req -> {
