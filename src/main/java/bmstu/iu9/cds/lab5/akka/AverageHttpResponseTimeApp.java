@@ -24,7 +24,7 @@ public class AverageHttpResponseTimeApp {
 
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = flowRequests();
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = flowRequests(http, system, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
                 ConnectHttp.toHost("localhost", 8080),
@@ -37,7 +37,7 @@ public class AverageHttpResponseTimeApp {
                 .thenAccept(unbound -> system.terminate());
     }
 
-    private static Flow<HttpRequest, HttpResponse, NotUsed> flowRequests(Http http, ) {
+    private static Flow<HttpRequest, HttpResponse, NotUsed> flowRequests(Http http, ActorSystem system, ActorMaterializer materializer) {
         return Flow.of(HttpRequest.class).map(req -> Pair).mapAsync()
     }
 
