@@ -45,7 +45,7 @@ public class AverageHttpResponseTimeApp extends AllDirectives {
         return route(
                 path(EMPTY_PATH, () ->
                         route(
-                                get(() ->)
+                                get(() -> parameter())
 
                         ))
 
