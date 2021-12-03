@@ -58,6 +58,7 @@ public class AverageHttpResponseTimeApp {
                             new MessageGetResult(req.first()),
                             TIMEOUT_MILLISEC
                     );
+                    return result.thenCompose();
                 })
 
     }
