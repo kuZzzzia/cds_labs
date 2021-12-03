@@ -55,34 +55,38 @@ public class AverageHttpResponseTimeApp {
 
     private static Flow<HttpRequest, HttpResponse, NotUsed> flowHttpRequest(
             ActorSystem system, ActorMaterializer materializer, ActorRef actor) {
-        Flow.<Pair<String, Integer>>create()
-                .mapConcat(req -> new ArrayList<>(Collections.nCopies(req.second(), req.first())))
-                .mapAsync(req -> {
-                    long start = System.currentTimeMillis();
-                    Future f = Dsl.asyncHttpClient().prepareGet("http://www.example.com/").execute();
-                    long end = System.currentTimeMillis();
-                    return CompletableFuture.completedFuture(start - end);
-                })
         return Flow.of(HttpRequest.class)
                 .map( req -> {
                     Query query = req.getUri().query();
                     String url = query.get("testUrl").get();
                     int count = Integer.parseInt(query.get("count").get());
                     return new Pair<>(url, count);
-                        }
-                ).mapAsync(1, req ->
+                })
+                .mapAsync(1, req ->
                         FutureConverters.toJava(
                                 Patterns.ask(
                                         actor,
                                         new MessageGetResult(req.first()),
                                         TIMEOUT_MILLISEC
                                 )
-                        ).thenCompose( res -> (res != null)
-                                ? CompletableFuture.completedFuture(new Pair<>(req.first(), res))
-                                : Source.from(Collections.singletonList(req))
-                                .toMat(, Keep.right()).run(materializer)
-                        )
-                ).map(res -> {
+                        ).thenCompose( res -> {
+                            if (res != null) {
+                                return CompletableFuture.completedFuture(new Pair<>(req.first(), res));
+                            } else {
+                                Flow.<Pair<String, Integer>>create()
+                                        .mapConcat(r -> new ArrayList<>(Collections.nCopies(r.second(), r.first())))
+                                        .mapAsync(req.second(), r -> {
+                                            long start = System.currentTimeMillis();
+                                            Dsl.asyncHttpClient().prepareGet("http://www.example.com/").execute();
+                                            long end = System.currentTimeMillis();
+                                            return CompletableFuture.completedFuture(start - end);
+                                        });
+                                return Source.from(Collections.singletonList(req))
+                                        .toMat(, Keep.right()).run(materializer)
+                            }
+                        })
+                )
+                .map(res -> {
                     actor.tell(
                             new MessageCacheResult(res.first(), res.second()),
                             ActorRef.noSender()
