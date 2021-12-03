@@ -71,7 +71,9 @@ public class AverageHttpResponseTimeApp {
 
     }
 
-    private static
+    private static void createFlow() {
+        
+    }
 
     static class MessageGetResult {
         private final String url;
