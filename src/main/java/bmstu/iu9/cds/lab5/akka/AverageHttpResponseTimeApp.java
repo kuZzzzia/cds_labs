@@ -9,6 +9,7 @@ import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
+import akka.http.javadsl.model.Query;
 import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Route;
 import akka.http.javadsl.unmarshalling.StringUnmarshallers;
@@ -18,6 +19,7 @@ import akka.stream.javadsl.Flow;
 import scala.compat.java8.FutureConverters;
 
 import java.io.IOException;
+import java.util.Queue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
@@ -48,7 +50,11 @@ public class AverageHttpResponseTimeApp {
 
     private Flow<HttpRequest, HttpResponse, NotUsed> flowHttpRequest(ActorSystem system, ActorMaterializer materializer, ActorRef actor) {
         return Flow.of(HttpRequest.class)
-                .map()
+                .map( req -> {
+                    Query query = req.getUri();
+                    
+                        }
+                )
 //        return parameter("testUrl", url ->
 //                parameter(StringUnmarshallers.INTEGER, "count", count ->
 //                        completeOKWithFuture(
