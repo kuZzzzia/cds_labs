@@ -1,4 +1,5 @@
 package bmstu.iu9.cds.lab5.akka;
 
-public class AverageHttpResponseTime {
+public class AverageHttpResponseTimeApp {
+    static void main()
 }
