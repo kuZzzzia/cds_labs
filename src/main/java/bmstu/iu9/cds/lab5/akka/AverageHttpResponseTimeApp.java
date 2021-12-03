@@ -31,4 +31,6 @@ public class AverageHttpResponseTimeApp {
                 .thenCompose(ServerBinding::unbind)
                 .thenAccept(unbound -> system.terminate());
     }
+
+    static class MessageGet
 }
