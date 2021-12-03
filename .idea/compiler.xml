@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="cds_lab_5_akka_streams" target="8" />
+      <module name="cds_lab_5_akka_streams" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
