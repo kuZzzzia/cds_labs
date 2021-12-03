@@ -44,7 +44,7 @@ public class AverageHttpResponseTimeApp extends AllDirectives {
 
     private Route createRoute(ActorRef actor) {
         return parameter("testUrl", url ->
-                parameter(StringUnmarshallers.INTEGER, ""))
+                parameter(StringUnmarshallers.INTEGER, "count", count -> ))
     }
 
     static class MessageGetResult {
