@@ -55,19 +55,23 @@ public class AverageHttpResponseTimeApp {
                     int count = Integer.parseInt(query.get("count").get());
                     return new Pair<>(url, count);
                         }
-                ).mapAsync(1, req -> {
-                    return FutureConverters.toJava(Patterns.ask(
-                            actor,
-                            new MessageGetResult(req.first()),
-                            TIMEOUT_MILLISEC
-                    )).thenCompose( res -> {
-                        return (res != null)
-                                ? CompletableFuture.completedFuture(new Pair<>(req.first(), res))
-                                : 
-                    });
-                });
+                ).mapAsync(1, req ->
+                        FutureConverters.toJava(
+                                Patterns.ask(
+                                        actor,
+                                        new MessageGetResult(req.first()),
+                                        TIMEOUT_MILLISEC
+                                )
+                        ).thenCompose( res ->
+                                (res != null)
+                                        ? CompletableFuture.completedFuture(new Pair<>(req.first(), res))
+                                        :
+                                )
+                );
 
     }
+
+    private static 
 
     static class MessageGetResult {
         private final String url;
