@@ -53,7 +53,10 @@ public class AverageHttpResponseTimeApp extends AllDirectives{
                             actor,
                             new MessageGetResult(url),
                             TIMEOUT_MILLISEC
-                    )).thenCompose();
+                    )).thenCompose(res -> {
+                        res == null ?
+                                
+                    });
 
                 })
         );
