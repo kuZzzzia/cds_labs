@@ -48,7 +48,7 @@ public class AverageHttpResponseTimeApp extends AllDirectives{
     private Route createRoute(ActorSystem system, ActorMaterializer materializer, ActorRef actor) {
         return parameter("testUrl", url ->
                 parameter(StringUnmarshallers.INTEGER, "count", count -> {
-                    Patterns.ask(
+                    CompletableFuture<Object> result = toJavaPatterns.ask(
                             actor,
                             new MessageGetResult(url),
                             TIMEOUT_MILLISEC
