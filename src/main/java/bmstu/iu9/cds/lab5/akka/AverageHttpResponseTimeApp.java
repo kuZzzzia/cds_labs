@@ -76,7 +76,7 @@ public class AverageHttpResponseTimeApp {
                                 return CompletableFuture.completedFuture(new Pair<>(req.first(), res));
                             } else {
                                 Sink<Integer, CompletionStage<Integer>> fold = Sink.fold(0, Integer::sum);
-                                Sink<Pair<String, Integer>, CompletionStage<Integer>> sink = Flow.<Pair<String, Integer>>create()
+                                Flow<Pair<String, Integer>, Integer, NotUsed> sink = Flow.<Pair<String, Integer>>create()
                                         .mapConcat(r -> new ArrayList<>(Collections.nCopies(r.second(), r.first())))
                                         .mapAsync(req.second(), url -> {
                                             long start = System.currentTimeMillis();
