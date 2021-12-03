@@ -15,20 +15,19 @@ import akka.japi.Pair;
 
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
-import akka.stream.Graph;
-import akka.stream.SinkShape;
 import akka.stream.javadsl.Flow;
 import akka.stream.javadsl.Keep;
 import akka.stream.javadsl.Source;
 import scala.compat.java8.FutureConverters;
 
 
-import javax.annotation.processing.Completion;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+
+import org.asynchttpclient.*;
 
 public class AverageHttpResponseTimeApp {
     private static final int    TIMEOUT_MILLISEC = 5000;
