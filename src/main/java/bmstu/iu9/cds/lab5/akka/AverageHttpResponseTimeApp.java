@@ -80,7 +80,7 @@ public class AverageHttpResponseTimeApp {
                                             long start = System.currentTimeMillis();
                                             Dsl.asyncHttpClient().prepareGet(url).execute();
                                             long end = System.currentTimeMillis();
-                                            int duration = (int) (start - end);
+                                            int duration = (int) (end - start);
                                             return CompletableFuture.completedFuture(duration);
                                         }).toMat(fold, Keep.right());
 
