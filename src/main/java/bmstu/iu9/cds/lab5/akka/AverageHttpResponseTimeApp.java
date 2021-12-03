@@ -43,8 +43,11 @@ public class AverageHttpResponseTimeApp extends AllDirectives {
 
     private Route createRoute(ActorRef actor) {
         return route(
-                path(EMPTY_PATH, () -> 
-                        )
+                path(EMPTY_PATH, () ->
+                        route(
+                                get(() ->)
+
+                        ))
 
         );
     }
