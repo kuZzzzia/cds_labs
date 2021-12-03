@@ -16,11 +16,14 @@ import akka.japi.Pair;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import akka.stream.javadsl.Keep;
+import akka.stream.javadsl.Source;
 import scala.compat.java8.FutureConverters;
 
 
 import javax.annotation.processing.Completion;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
@@ -65,7 +68,7 @@ public class AverageHttpResponseTimeApp {
                         ).thenCompose( res ->
                                 (res != null)
                                         ? CompletableFuture.completedFuture(new Pair<>(req.first(), res))
-                                        :
+                                        : Source.from(Collections.singletonList(res)).toMat(testSink, Keep.right()).run(materializer)
                                 )
                 );
 
