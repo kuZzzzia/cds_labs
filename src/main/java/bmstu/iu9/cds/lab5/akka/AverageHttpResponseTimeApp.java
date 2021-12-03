@@ -62,7 +62,8 @@ public class AverageHttpResponseTimeApp {
                             TIMEOUT_MILLISEC
                     )).thenCompose( res -> {
                         return (res != null)
-                                ? CompletableFuture.completedFuture(req.first(), res);
+                                ? CompletableFuture.completedFuture(new Pair<>(req.first(), res))
+                                : 
                     });
                 });
 
