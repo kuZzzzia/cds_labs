@@ -14,7 +14,9 @@ public class ActorCache extends AbstractActor {
                 .match(
                         AverageHttpResponseTimeApp.MessageGetResult.class,
                         message -> sender().tell(
-                                results.get(message.getUrl()),
+                                new MessageReturnResponseTime(
+                                        results.get(message.getUrl())
+                                ),
                                 self())
                 )
                 .match(
@@ -24,7 +26,15 @@ public class ActorCache extends AbstractActor {
                 .build();
     }
 
-    static class MessageReturnTimeResponse {
-        private final long 
+    static class MessageReturnResponseTime {
+        private final long responseTime;
+
+        public MessageReturnResponseTime(long responseTime) {
+            this.responseTime = responseTime;
+        }
+
+        public long getResponseTime() {
+            return responseTime;
+        }
     }
 }
