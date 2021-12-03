@@ -28,8 +28,6 @@ import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
-import org.asynchttpclient.*;
-
 public class AverageHttpResponseTimeApp {
     private static final int    TIMEOUT_MILLISEC = 5000;
 
@@ -59,7 +57,7 @@ public class AverageHttpResponseTimeApp {
                 .mapConcat(req -> new ArrayList<>(Collections.nCopies(req.second(), req.first())))
                 .mapAsync(req -> {
                     long start = System.currentTimeMillis();
-                    prepareGet("http://www.example.com/").execute();
+                    assyncprepareGet("http://www.example.com/").execute();
                 })
         return Flow.of(HttpRequest.class)
                 .map( req -> {
