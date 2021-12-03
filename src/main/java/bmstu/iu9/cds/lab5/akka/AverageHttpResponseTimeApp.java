@@ -85,6 +85,7 @@ public class AverageHttpResponseTimeApp {
                                             int duration = (int) (start - end);
                                             return CompletableFuture.completedFuture(duration);
                                         });
+                                Sink<Integer, CompletionStage<Integer>> testSink = 
 
                                 return Source.from(Collections.singletonList(req))
                                         .toMat(sink, Keep.right()).run(materializer);
