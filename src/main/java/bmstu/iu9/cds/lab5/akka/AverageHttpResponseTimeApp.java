@@ -11,6 +11,7 @@ import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Route;
+import akka.http.javadsl.unmarshalling.StringUnmarshallers;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
@@ -42,7 +43,8 @@ public class AverageHttpResponseTimeApp extends AllDirectives {
     }
 
     private Route createRoute(ActorRef actor) {
-        return parameter("testUrl")
+        return parameter("testUrl", url ->
+                parameter(StringUnmarshallers.INTEGER, ""))
     }
 
     static class MessageGetResult {
