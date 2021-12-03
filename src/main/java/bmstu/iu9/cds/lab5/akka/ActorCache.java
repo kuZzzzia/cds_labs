@@ -2,7 +2,7 @@ package bmstu.iu9.cds.lab5.akka;
 
 import akka.actor.AbstractActor;
 
-public class CacheActor extends AbstractActor {
+public class ActorCache extends AbstractActor {
     @Override
     public Receive createReceive() {
         return receiveBuilder()

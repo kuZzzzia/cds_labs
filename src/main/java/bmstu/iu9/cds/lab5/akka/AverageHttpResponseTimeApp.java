@@ -9,23 +9,26 @@ import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
+import akka.http.javadsl.server.AllDirectives;
+import akka.http.javadsl.server.Route;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
-import javafx.util.Pair;
 
 import java.io.IOException;
 import java.util.concurrent.CompletionStage;
 
-public class AverageHttpResponseTimeApp {
+public class AverageHttpResponseTimeApp extends AllDirectives {
+    private static final String EMPTY_PATH = "";
+
     public static void main(String[] args) throws IOException {
         System.out.println("start!");
         ActorSystem system = ActorSystem.create("routes");
-        ActorRef cacheActor = system.actorOf(Props.create(CacheActor.class));
+        ActorRef actor = system.actorOf(Props.create(ActorCache.class));
 
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
         AverageHttpResponseTimeApp instance = new AverageHttpResponseTimeApp();
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = instance.cre
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = instance.
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
                 ConnectHttp.toHost("localhost", 8080),
@@ -38,8 +41,12 @@ public class AverageHttpResponseTimeApp {
                 .thenAccept(unbound -> system.terminate());
     }
 
-    private static Flow<HttpRequest, HttpResponse, NotUsed> flowRequests(Http http, ActorSystem system, ActorMaterializer materializer) {
-        return Flow.of(HttpRequest.class).map(req -> req.).mapAsync()
+    private Route createRoute(ActorRef actor) {
+        return route(
+                path(EMPTY_PATH, () -> 
+                        )
+
+        );
     }
 
     static class MessageGetResult {
