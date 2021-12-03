@@ -71,7 +71,9 @@ public class AverageHttpResponseTimeApp {
                                 : Source.from(Collections.singletonList(req))
                                 .toMat(testSink, Keep.right()).run(materializer)
                         )
-                );
+                ).map(res -> {
+                    
+                });
 
     }
 
