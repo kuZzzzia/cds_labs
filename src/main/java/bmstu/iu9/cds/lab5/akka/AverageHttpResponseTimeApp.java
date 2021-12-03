@@ -87,16 +87,16 @@ public class AverageHttpResponseTimeApp {
                                         }).toMat(fold, Keep.right());
 
                                 return Source.from(Collections.singletonList(req))
-                                        .toMat(sink, Keep.right()).run(materializer).thenApply(sum -> new Pair<>(req.first(), sum / req.second()));
+                                        .toMat(sink, Keep.right()).run(materializer).thenApply(sum -> new Pair<String, Integer>(req.first(), sum / req.second()));
                             }
                         })
                 )
                 .map(res -> {
                     actor.tell(
-                            new MessageCacheResult(res.first(), (int) res.second()),
+                            new MessageCacheResult(res.first(), res.second()),
                             ActorRef.noSender()
                     );
-                    return HttpResponse.create().entity(res.first() + ": " + res.second());
+                    return HttpResponse.create().entity(res.second().toString());
                 });
 
     }
