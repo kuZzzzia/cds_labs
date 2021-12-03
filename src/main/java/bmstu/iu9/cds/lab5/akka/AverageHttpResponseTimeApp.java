@@ -53,21 +53,8 @@ public class AverageHttpResponseTimeApp {
                     int count = Integer.parseInt(query.get("count").get());
                     return new Pair<String, Integer>(url, count);
                         }
-                ).
-//        return parameter("testUrl", url ->
-//                parameter(StringUnmarshallers.INTEGER, "count", count ->
-//                        completeOKWithFuture(
-//                                FutureConverters.toJava(
-//                                        Patterns.ask(
-//                                                actor,
-//                                                new MessageGetResult(url),
-//                                                TIMEOUT_MILLISEC
-//                                        )).thenCompose(res ->
-//                                                (res != null)
-//                                                        ? CompletableFuture.completedFuture(res)
-//                                                        :
-//                        ))
-//        ));
+                ).mapAsync()
+
     }
 
     static class MessageGetResult {
