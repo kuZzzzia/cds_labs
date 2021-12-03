@@ -13,6 +13,7 @@ import akka.http.javadsl.model.Query;
 
 import akka.japi.Pair;
 
+import akka.japi.function.Function2;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
@@ -74,14 +75,14 @@ public class AverageHttpResponseTimeApp {
                             if (res != null) {
                                 return CompletableFuture.completedFuture(new Pair<>(req.first(), res));
                             } else {
-                                Flow<Pair<String, Integer>, Long, NotUsed> flow = Flow.<Pair<String, Integer>>create()
+                                Sink<Pair<String, Integer>, CompletionStage<Double>> flow = Flow.<Pair<String, Integer>>create()
                                         .mapConcat(r -> new ArrayList<>(Collections.nCopies(r.second(), r.first())))
                                         .mapAsync(req.second(), r -> {
                                             long start = System.currentTimeMillis();
                                             Dsl.asyncHttpClient().prepareGet("http://www.example.com/").execute();
                                             long end = System.currentTimeMillis();
                                             return CompletableFuture.completedFuture(start - end);
-                                        }).toMat(Sink.fold(0, (agg, )), Keep.right());
+                                        }).toMat(Sink.fold(0, Long::sum), Keep.right());
                                 Sink<Long, CompletionStage<Long>> sink = Sink.fold(0, (agg, next) -> agg + next);
                                 return Source.from(Collections.singletonList(req))
                                         .toMat(sink, Keep.right()).run(materializer)
