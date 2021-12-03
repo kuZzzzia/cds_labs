@@ -16,18 +16,6 @@
         <akka-http.version>10.2.6</akka-http.version>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.asynchttpclient</groupId>
-                <artifactId>async-http-client-bom</artifactId>
-                <version>MAJOR</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
@@ -96,7 +84,7 @@
         <dependency>
             <groupId>org.asynchttpclient</groupId>
             <artifactId>async-http-client</artifactId>
-            <version>2.12.3</version>
+            <version>2.2.0</version>
         </dependency>
 
     </dependencies>
