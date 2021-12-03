@@ -15,6 +15,7 @@ import akka.http.javadsl.unmarshalling.StringUnmarshallers;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import scala.compat.java8.FutureConverters;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -48,11 +49,11 @@ public class AverageHttpResponseTimeApp extends AllDirectives{
     private Route createRoute(ActorSystem system, ActorMaterializer materializer, ActorRef actor) {
         return parameter("testUrl", url ->
                 parameter(StringUnmarshallers.INTEGER, "count", count -> {
-                    CompletableFuture<Object> result = toJavaPatterns.ask(
+                    CompletableFuture<Object> result = FutureConverters.toJava(Patterns.ask(
                             actor,
                             new MessageGetResult(url),
                             TIMEOUT_MILLISEC
-                    ).;
+                    )).thenCompose();
 
                 })
         );
