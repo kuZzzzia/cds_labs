@@ -88,13 +88,13 @@ public class AverageHttpResponseTimeApp {
                                 Sink<Pair<String, Integer>, CompletionStage<Integer>> testSink = flow.toMat(fold, Keep.right());
 
                                 return Source.from(Collections.singletonList(req))
-                                        .toMat(testSink, Keep.right()).run(materializer).thenApply();
+                                        .toMat(testSink, Keep.right()).run(materializer).thenApply(sum -> new Pair<>(req.first(), sum / req.second()));
                             }
                         })
                 )
                 .map(res -> {
                     actor.tell(
-                            new MessageCacheResult(res.first(), res.second()),
+                            new MessageCacheResult(res.first(), (long) res.second()),
                             ActorRef.noSender()
                     );
                     return HttpResponse.create().entity(res.first() + ": " + res.second());
