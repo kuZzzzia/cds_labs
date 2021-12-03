@@ -15,13 +15,14 @@ import akka.http.javadsl.unmarshalling.StringUnmarshallers;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import scala.concurrent.Future;
 
 import java.io.IOException;
 import java.util.concurrent.CompletionStage;
-import java.util.concurrent.Future;
 
 public class AverageHttpResponseTimeApp extends AllDirectives {
     private static final String EMPTY_PATH = "";
+    private static final int    TIMEOUT_MILLISEC = 5000;
 
     public static void main(String[] args) throws IOException {
         System.out.println("start!");
@@ -49,20 +50,30 @@ public class AverageHttpResponseTimeApp extends AllDirectives {
                 parameter(StringUnmarshallers.INTEGER, "count", count -> {
                     Future<Object> result = Patterns.ask(
                             actor,
-                            new MessageGetResult()
-                    )
+                            new MessageGetResult(url, count),
+                            TIMEOUT_MILLISEC
+                    );
+
                 })
         );
     }
 
     static class MessageGetResult {
         private String url;
-        private 
+        private int    count;
 
-        public MessageGetResult(String url, ) {
-
+        public MessageGetResult(String url, int count) {
+            this.url = url;
+            this.count = count;
         }
 
+        public int getCount() {
+            return count;
+        }
+
+        public String getUrl() {
+            return url;
+        }
     }
 
     static class MessageCacheResult {
