@@ -53,7 +53,7 @@ public class AverageHttpResponseTimeApp {
                     return new Pair<>(url, count);
                         }
                 ).mapAsync(1, req -> {
-                    CompletionStage<Object> result = Patterns.ask(
+                    CompletionStage<Object> result = (CompletionStage<Object>) Patterns.ask(
                             actor,
                             new MessageGetResult(req.first()),
                             TIMEOUT_MILLISEC
