@@ -61,7 +61,7 @@ public class AverageHttpResponseTimeApp extends AllDirectives {
     static class MessageGetResult {
         private final String url;
 
-        public MessageGetResult(String url, int count) {
+        public MessageGetResult(String url) {
             this.url = url;
         }
 
