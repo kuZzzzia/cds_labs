@@ -50,7 +50,8 @@ public class AverageHttpResponseTimeApp {
                 .thenAccept(unbound -> system.terminate());
     }
 
-    private static Flow<HttpRequest, HttpResponse, NotUsed> flowHttpRequest(ActorSystem system, ActorMaterializer materializer, ActorRef actor) {
+    private static Flow<HttpRequest, HttpResponse, NotUsed> flowHttpRequest(
+            ActorSystem system, ActorMaterializer materializer, ActorRef actor) {
         return Flow.of(HttpRequest.class)
                 .map( req -> {
                     Query query = req.getUri().query();
@@ -65,11 +66,11 @@ public class AverageHttpResponseTimeApp {
                                         new MessageGetResult(req.first()),
                                         TIMEOUT_MILLISEC
                                 )
-                        ).thenCompose( res ->
-                                (res != null)
-                                        ? CompletableFuture.completedFuture(new Pair<>(req.first(), res))
-                                        : Source.from(Collections.singletonList(res)).toMat(testSink, Keep.right()).run(materializer)
-                                )
+                        ).thenCompose( res -> (res != null)
+                                ? CompletableFuture.completedFuture(new Pair<>(req.first(), res))
+                                : Source.from(Collections.singletonList(req))
+                                .toMat(testSink, Keep.right()).run(materializer)
+                        )
                 );
 
     }
