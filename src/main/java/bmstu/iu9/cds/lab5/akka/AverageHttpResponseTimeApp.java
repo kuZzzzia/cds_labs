@@ -16,6 +16,7 @@ import akka.japi.Pair;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import scala.compat.java8.FutureConverters;
 
 
 import java.io.IOException;
@@ -53,12 +54,13 @@ public class AverageHttpResponseTimeApp {
                     return new Pair<>(url, count);
                         }
                 ).mapAsync(1, req -> {
-                    CompletionStage<Object> result = (CompletionStage<Object>) Patterns.ask(
+                    return FutureConverters.toJava(Patterns.ask(
                             actor,
                             new MessageGetResult(req.first()),
                             TIMEOUT_MILLISEC
+                    )).thenCompose( res -> {
+                            }
                     );
-                    return result.thenCompose();
                 })
 
     }
