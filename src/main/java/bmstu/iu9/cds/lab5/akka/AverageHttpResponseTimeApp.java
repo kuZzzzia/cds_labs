@@ -76,8 +76,7 @@ public class AverageHttpResponseTimeApp {
                             new MessageCacheResult(res.first(), res.second()),
                             ActorRef.noSender()
                     );
-                    return new HttpResponse() {
-                    }
+                    return new HttpResponse.create()
                 });
 
     }
