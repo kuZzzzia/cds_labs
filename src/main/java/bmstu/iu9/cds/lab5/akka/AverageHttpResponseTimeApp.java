@@ -71,7 +71,7 @@ public class AverageHttpResponseTimeApp {
 
     }
 
-    private static 
+    private static
 
     static class MessageGetResult {
         private final String url;
