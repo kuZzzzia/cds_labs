@@ -13,6 +13,7 @@ import akka.http.javadsl.model.Query;
 import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Route;
 import akka.http.javadsl.unmarshalling.StringUnmarshallers;
+import akka.japi.Pair;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
@@ -51,8 +52,8 @@ public class AverageHttpResponseTimeApp {
     private Flow<HttpRequest, HttpResponse, NotUsed> flowHttpRequest(ActorSystem system, ActorMaterializer materializer, ActorRef actor) {
         return Flow.of(HttpRequest.class)
                 .map( req -> {
-                    Query query = req.getUri();
-                    
+                    Query query = req.getUri().query();
+                    return Pair<String, Integer>
                         }
                 )
 //        return parameter("testUrl", url ->
