@@ -13,6 +13,7 @@ import akka.http.javadsl.model.Query;
 
 import akka.japi.Pair;
 
+import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
@@ -52,7 +53,11 @@ public class AverageHttpResponseTimeApp {
                     return new Pair<String, Integer>(url, count);
                         }
                 ).mapAsync( req -> {
-                    
+                    CompletionStage<Object> result = Patterns.ask(
+                            actor,
+                            MessageGetResult(req),
+                            TIMEOUT_MILLISEC
+                    )
                 })
 
     }
