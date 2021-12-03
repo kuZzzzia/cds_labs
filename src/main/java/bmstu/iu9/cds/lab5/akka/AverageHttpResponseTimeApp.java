@@ -58,7 +58,8 @@ public class AverageHttpResponseTimeApp {
                 .mapAsync(req -> {
                     long start = System.currentTimeMillis();
                     Dsl.asyncHttpClient().prepareGet("http://www.example.com/").execute();
-
+                    long end = System.currentTimeMillis();
+                    
                 })
         return Flow.of(HttpRequest.class)
                 .map( req -> {
