@@ -57,7 +57,7 @@ public class AverageHttpResponseTimeApp {
                 .mapConcat(req -> new ArrayList<>(Collections.nCopies(req.second(), req.first())))
                 .mapAsync(req -> {
                     long start = System.currentTimeMillis();
-                    assyncprepareGet("http://www.example.com/").execute();
+                    assyncHttpClient.prepareGet("http://www.example.com/").execute();
                 })
         return Flow.of(HttpRequest.class)
                 .map( req -> {
@@ -76,7 +76,7 @@ public class AverageHttpResponseTimeApp {
                         ).thenCompose( res -> (res != null)
                                 ? CompletableFuture.completedFuture(new Pair<>(req.first(), res))
                                 : Source.from(Collections.singletonList(req))
-                                .toMat(sink, Keep.right()).run(materializer)
+                                .toMat(, Keep.right()).run(materializer)
                         )
                 ).map(res -> {
                     actor.tell(
