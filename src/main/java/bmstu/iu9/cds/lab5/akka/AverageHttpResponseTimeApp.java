@@ -19,7 +19,9 @@ import akka.stream.javadsl.Flow;
 import scala.compat.java8.FutureConverters;
 
 
+import javax.annotation.processing.Completion;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 public class AverageHttpResponseTimeApp {
@@ -59,9 +61,10 @@ public class AverageHttpResponseTimeApp {
                             new MessageGetResult(req.first()),
                             TIMEOUT_MILLISEC
                     )).thenCompose( res -> {
-                            }
-                    );
-                })
+                        return (res != null)
+                                ? CompletableFuture.completedFuture(req.first(), res);
+                    });
+                });
 
     }
 
