@@ -49,13 +49,13 @@ public class AverageHttpResponseTimeApp extends AllDirectives{
     private Route createRoute(ActorSystem system, ActorMaterializer materializer, ActorRef actor) {
         return parameter("testUrl", url ->
                 parameter(StringUnmarshallers.INTEGER, "count", count -> {
-                    CompletableFuture<Object> result = FutureConverters.toJava(Patterns.ask(
+                    FutureConverters.toJava(Patterns.ask(
                             actor,
                             new MessageGetResult(url),
                             TIMEOUT_MILLISEC
                     )).thenCompose(res -> (res != null)
                             ? CompletableFuture.completedFuture(res)
-                            : 
+                            :
                             );
 
                 })
