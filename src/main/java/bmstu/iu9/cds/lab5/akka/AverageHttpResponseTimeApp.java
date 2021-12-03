@@ -79,10 +79,10 @@ public class AverageHttpResponseTimeApp {
                                         .mapConcat(r -> new ArrayList<>(Collections.nCopies(r.second(), r.first())))
                                         .mapAsync(req.second(), r -> {
                                             long start = System.currentTimeMillis();
-                                            Dsl.asyncHttpClient().prepareGet("http://www.example.com/").execute();
+                                            Dsl.asyncHttpClient().prepareGet(r).execute();
                                             long end = System.currentTimeMillis();
-                                            return CompletableFuture.completedFuture((int) (start - end));
-                                        }).toMat(Sink.fold(0.0, (agg, next) -> agg + next), Keep.right());
+                                            return CompletableFuture.completedFuture(start - end);
+                                        }).toMat(Sink.fold(0, (agg, next) -> agg + next), Keep.right());
 
                                 return Source.from(Collections.singletonList(req))
                                         .toMat(sink, Keep.right()).run(materializer);
