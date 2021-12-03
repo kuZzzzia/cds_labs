@@ -62,15 +62,16 @@ public class AverageHttpResponseTimeApp {
                     int count = Integer.parseInt(query.get("count").get());
                     return new Pair<>(url, count);
                 })
-                .mapAsync(1, req -> {
-                        CompletionStage<Object> response = (CompletionStage<Object>) Patterns.ask(
+                .mapAsync(1, req ->
+                        FutureConverters.toJava(
+                                Patterns.ask(
                                         actor,
                                         new MessageGetResult(req.first()),
                                         TIMEOUT_MILLISEC
-                                );
-                        return response.thenCompose( res -> {
-                            if (res != null) {
-                                return CompletableFuture.completedFuture(new Pair<>(req.first(), res));
+                                )
+                        ).thenCompose( res -> {
+                            if ((int)res > 0) {
+                                return CompletableFuture.completedFuture(new Pair<>(req.first(), (int) res));
                             } else {
                                 Sink<Integer, CompletionStage<Integer>> fold = Sink.fold(0, Integer::sum);
                                 Sink<Pair<String, Integer>, CompletionStage<Integer>> sink = Flow.<Pair<String, Integer>>create()
@@ -87,7 +88,6 @@ public class AverageHttpResponseTimeApp {
                                         .toMat(sink, Keep.right()).run(materializer)
                                         .thenApply(sum -> new Pair<>(req.first(), sum / req.second()));
                             }
-                        }
                         })
                 )
                 .map(res -> {

@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ActorCache extends AbstractActor {
+    private static final int NOT_MEASURED_YET_VALUE = -1000;
+
     private final Map<String, Integer> results = new HashMap<>();
 
     @Override
@@ -14,7 +16,7 @@ public class ActorCache extends AbstractActor {
                 .match(
                         AverageHttpResponseTimeApp.MessageGetResult.class,
                         message -> sender().tell(
-                                results.get(message.getUrl()),
+                                results.getOrDefault(message.getUrl(), NOT_MEASURED_YET_VALUE),
                                 self())
                 )
                 .match(
