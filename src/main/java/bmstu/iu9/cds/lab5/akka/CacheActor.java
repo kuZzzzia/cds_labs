@@ -8,7 +8,16 @@ public class CacheActor extends AbstractActor {
         return receiveBuilder()
                 .match(
                         AverageHttpResponseTimeApp.MessageGetResult.class,
-                        
+                        message -> {
+
+                        }
                 )
+                .match(
+                        AverageHttpResponseTimeApp.MessageCacheResult.class,
+                        message -> {
+
+                        }
+                )
+                .build();
     }
 }
