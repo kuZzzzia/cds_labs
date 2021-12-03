@@ -1,6 +1,7 @@
 package bmstu.iu9.cds.lab5.akka;
 
 import akka.NotUsed;
+import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
@@ -17,7 +18,7 @@ public class AverageHttpResponseTimeApp {
     public static void main(String[] args) throws IOException {
         System.out.println("start!");
         ActorSystem system = ActorSystem.create("routes");
-        ActorRef cacheActor = 
+        ActorRef cacheActor = system.actorOf()
 
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
