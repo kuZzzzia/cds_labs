@@ -88,7 +88,7 @@ public class AverageHttpResponseTimeApp {
                                 Sink<Pair<String, Integer>, CompletionStage<Integer>> testSink = flow.toMat(fold, Keep.right());
 
                                 return Source.from(Collections.singletonList(req))
-                                        .toMat(testSink, Keep.right()).run(materializer);
+                                        .toMat(testSink, Keep.right()).run(materializer).thenApply();
                             }
                         })
                 )
