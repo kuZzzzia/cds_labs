@@ -78,9 +78,9 @@ public class AverageHttpResponseTimeApp {
                                 Sink<Integer, CompletionStage<Integer>> fold = Sink.fold(0, Integer::sum);
                                 Sink<Pair<String, Integer>, CompletionStage<Integer>> sink = Flow.<Pair<String, Integer>>create()
                                         .mapConcat(r -> new ArrayList<>(Collections.nCopies(r.second(), r.first())))
-                                        .mapAsync(req.second(), req.first() -> {
+                                        .mapAsync(req.second(), url -> {
                                             long start = System.currentTimeMillis();
-                                            Dsl.asyncHttpClient().prepareGet(r).execute();
+                                            Dsl.asyncHttpClient().prepareGet(url).execute();
                                             long end = System.currentTimeMillis();
                                             int duration = (int) (start - end);
                                             return CompletableFuture.completedFuture(duration);
