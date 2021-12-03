@@ -32,5 +32,11 @@ public class AverageHttpResponseTimeApp {
                 .thenAccept(unbound -> system.terminate());
     }
 
-    static class MessageGet
+    static class MessageGetResult {
+
+    }
+
+    static class MessageCacheResult {
+        
+    }
 }
