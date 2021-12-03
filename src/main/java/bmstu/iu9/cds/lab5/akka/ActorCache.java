@@ -23,4 +23,8 @@ public class ActorCache extends AbstractActor {
                 )
                 .build();
     }
+
+    static class MessageReturnTimeResponse {
+        private final long 
+    }
 }
