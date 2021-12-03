@@ -72,7 +72,7 @@ public class AverageHttpResponseTimeApp {
     }
 
     private static void createFlow() {
-        Flow<Object, Object, NotUsed> flow = Flow.create()
+        Flow<Pair<String, Integer>, Long, NotUsed> flow = Flow.create();
     }
 
     static class MessageGetResult {
