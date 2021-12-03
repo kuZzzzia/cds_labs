@@ -54,7 +54,7 @@ public class AverageHttpResponseTimeApp {
 
     private static Flow<HttpRequest, HttpResponse, NotUsed> flowHttpRequest(
             ActorSystem system, ActorMaterializer materializer, ActorRef actor) {
-        Flow.Pair<String, Integer>
+        Flow.<Pair<String, Integer>>create().map()
         return Flow.of(HttpRequest.class)
                 .map( req -> {
                     Query query = req.getUri().query();
