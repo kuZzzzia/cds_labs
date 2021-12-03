@@ -47,20 +47,22 @@ public class AverageHttpResponseTimeApp {
     }
 
     private Flow<HttpRequest, HttpResponse, NotUsed> flowHttpRequest(ActorSystem system, ActorMaterializer materializer, ActorRef actor) {
-        return parameter("testUrl", url ->
-                parameter(StringUnmarshallers.INTEGER, "count", count ->
-                        completeOKWithFuture(
-                                FutureConverters.toJava(
-                                        Patterns.ask(
-                                                actor,
-                                                new MessageGetResult(url),
-                                                TIMEOUT_MILLISEC
-                                        )).thenCompose(res ->
-                                                (res != null)
-                                                        ? CompletableFuture.completedFuture(res)
-                                                        :
-                        ))
-        ));
+        return Flow.of(HttpRequest.class)
+                .map()
+//        return parameter("testUrl", url ->
+//                parameter(StringUnmarshallers.INTEGER, "count", count ->
+//                        completeOKWithFuture(
+//                                FutureConverters.toJava(
+//                                        Patterns.ask(
+//                                                actor,
+//                                                new MessageGetResult(url),
+//                                                TIMEOUT_MILLISEC
+//                                        )).thenCompose(res ->
+//                                                (res != null)
+//                                                        ? CompletableFuture.completedFuture(res)
+//                                                        :
+//                        ))
+//        ));
     }
 
     static class MessageGetResult {
