@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class AverageHttpResponseTimeApp {
     private static final String QUERY_PARAMETER_URL = "testUrl";
@@ -95,10 +94,12 @@ public class AverageHttpResponseTimeApp {
                                                         return CompletableFuture.completedFuture(duration);
                                                     }
                                             );
-                                        }).toMat(fold, Keep.right());
+                                        })
+                                        .toMat(fold, Keep.right());
 
                                 return Source.from(Collections.singletonList(req))
-                                        .toMat(sink, Keep.right()).run(materializer)
+                                        .toMat(sink, Keep.right())
+                                        .run(materializer)
                                         .thenApply(sum -> new Pair<>(req.first(), sum / req.second()));
                             }
                         })
