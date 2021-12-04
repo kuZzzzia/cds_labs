@@ -81,7 +81,7 @@ public class AverageHttpResponseTimeApp {
                                 )
                         ).thenCompose( res -> {
                             if (!(Objects.isNull(res))) {
-                                return CompletableFuture.completedFuture(new Pair<>(req.first(), (long) ((Optional)res).get()));
+                                return CompletableFuture.completedFuture(new Pair<>(req.first(), (long) ((Optional)res).ifPresent(c -> c).get()));
                             } else {
                                 Sink<Integer, CompletionStage<Long>> fold = Sink.fold(0L, (Function2<Long, Integer, Long>) Long::sum);
 
