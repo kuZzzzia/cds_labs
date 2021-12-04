@@ -24,13 +24,12 @@ import org.asynchttpclient.Dsl;
 
 import org.asynchttpclient.Request;
 import org.asynchttpclient.Response;
-import scala.compat.java8.FutureConverters;
+import scala.concurrent.duration.Duration;
 
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -73,11 +72,10 @@ public class AverageHttpResponseTimeApp {
                     return new Pair<>(url, count);
                 })
                 .mapAsync(MAP_PARALLELISM_FOR_EACH_GET_REQUEST, req ->
-                        FutureConverters.toJava(
-                                Patterns.ask(
-                                        actor,
-                                        new MessageGetResult(req.first()),
-                                        TIMEOUT_MILLISEC
+                        Patterns.ask(
+                                actor,
+                                new MessageGetResult(req.first()),
+                                new Duration(TIMEOUT_MILLISEC)
                                 )
                         ).thenCompose( res -> {
                             if (((Optional<Long>) res).isPresent()) {
