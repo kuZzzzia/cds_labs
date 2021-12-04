@@ -22,6 +22,7 @@ import akka.stream.javadsl.Source;
 import org.asynchttpclient.Dsl;
 
 import org.asynchttpclient.Request;
+import org.asynchttpclient.Response;
 import scala.compat.java8.FutureConverters;
 
 
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Future;
 
 public class AverageHttpResponseTimeApp {
     private static final String QUERY_PARAMETER_URL = "testUrl";
@@ -87,7 +89,7 @@ public class AverageHttpResponseTimeApp {
                                         .mapAsync(req.second(), url -> {
                                             long start = System.currentTimeMillis();
                                             Request request = Dsl.get(url).build();
-                                            Dsl.asyncHttpClient().prepareGet(url).execute();
+                                            Future<Response> whenResponse = Dsl.asyncHttpClient().executeRequest(request);
                                             long end = System.currentTimeMillis();
                                             int duration = (int) (end - start);
                                             return CompletableFuture.completedFuture(duration);
