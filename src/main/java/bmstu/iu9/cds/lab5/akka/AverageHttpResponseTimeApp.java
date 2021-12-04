@@ -72,9 +72,9 @@ public class AverageHttpResponseTimeApp {
                 })
                 .mapAsync(MAP_PARALLELISM_FOR_EACH_GET_REQUEST, req ->
                         Patterns.ask(
-                                actor, 
+                                actor,
                                 new MessageGetResult(req.first()),
-                                new Duration(TIMEOUT_MILLISEC)
+                                new java.time.Duration(TIMEOUT_MILLISEC, 0);
                                 )
                         ).thenCompose( res -> {
                             if (((Optional<Long>) res).isPresent()) {
