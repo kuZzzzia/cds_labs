@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class AverageHttpResponseTimeApp {
     private static final String QUERY_PARAMETER_URL = "testUrl";
@@ -90,12 +90,13 @@ public class AverageHttpResponseTimeApp {
                                             long start = System.currentTimeMillis();
                                             Request request = Dsl.get(url).build();
                                             CompletableFuture<Response> whenResponse = Dsl.asyncHttpClient().executeRequest(request).toCompletableFuture();
+                                            AtomicLong end = new AtomicLong();
                                             whenResponse.thenCompose( time -> {
-                                                        return System.currentTimeMillis();
+                                                        end.set(System.currentTimeMillis());
+                                                        return null;
                                                     }
-                                            )
-                                            long end = System.currentTimeMillis();
-                                            int duration = (int) (end - start);
+                                            );
+                                            int duration = (int) (end.get() - start);
                                             return CompletableFuture.completedFuture(duration);
                                         }).toMat(fold, Keep.right());
 
