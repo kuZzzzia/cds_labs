@@ -24,7 +24,6 @@ import org.asynchttpclient.Dsl;
 
 import org.asynchttpclient.Request;
 import org.asynchttpclient.Response;
-import scala.concurrent.duration.Duration;
 
 
 import java.io.IOException;
@@ -73,7 +72,7 @@ public class AverageHttpResponseTimeApp {
                 })
                 .mapAsync(MAP_PARALLELISM_FOR_EACH_GET_REQUEST, req ->
                         Patterns.ask(
-                                actor,
+                                actor, 
                                 new MessageGetResult(req.first()),
                                 new Duration(TIMEOUT_MILLISEC)
                                 )
