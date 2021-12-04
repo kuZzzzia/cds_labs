@@ -16,7 +16,7 @@ public class ActorCache extends AbstractActor {
                 .match(
                         AverageHttpResponseTimeApp.MessageGetResult.class,
                         message -> sender().tell(
-                                Optional.of(results.get(message.getUrl())),
+                                Optional.ofNullable(results.get(message.getUrl())),
                                 self())
                 )
                 .match(
