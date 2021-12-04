@@ -86,7 +86,7 @@ public class AverageHttpResponseTimeApp {
                                         .mapConcat(r -> new ArrayList<>(Collections.nCopies(r.second(), r.first())))
                                         .mapAsync(req.second(), url -> {
                                             long start = System.currentTimeMillis();
-                                            Request request = get(url).build();
+                                            Request request = Dsl.get(url).build();
                                             Dsl.asyncHttpClient().prepareGet(url).execute();
                                             long end = System.currentTimeMillis();
                                             int duration = (int) (end - start);
