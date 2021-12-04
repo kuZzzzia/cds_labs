@@ -7,9 +7,8 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ActorCache extends AbstractActor {
-    private static final int NOT_MEASURED_YET_VALUE = -1000;
 
-    private final Map<String, Integer> results = new HashMap<>();
+    private final Map<String, Long> results = new HashMap<>();
 
     @Override
     public Receive createReceive() {
@@ -17,7 +16,7 @@ public class ActorCache extends AbstractActor {
                 .match(
                         AverageHttpResponseTimeApp.MessageGetResult.class,
                         message -> sender().tell(
-                                Optional.of(results.getOrDefault(message.getUrl(), NOT_MEASURED_YET_VALUE)),
+                                Optional.of(results.get(message.getUrl())),
                                 self())
                 )
                 .match(

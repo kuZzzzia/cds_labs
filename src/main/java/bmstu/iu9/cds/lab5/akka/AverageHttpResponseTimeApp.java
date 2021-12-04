@@ -13,6 +13,7 @@ import akka.http.javadsl.model.Query;
 
 import akka.japi.Pair;
 
+import akka.japi.function.Function2;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
@@ -29,6 +30,7 @@ import scala.compat.java8.FutureConverters;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
@@ -77,12 +79,12 @@ public class AverageHttpResponseTimeApp {
                                         TIMEOUT_MILLISEC
                                 )
                         ).thenCompose( res -> {
-                            if ((int)res > 0) {
-                                return CompletableFuture.completedFuture(new Pair<>(req.first(), (int) res));
+                            if (!(Objects.isNull(res))) {
+                                return CompletableFuture.completedFuture(new Pair<>(req.first(), (Long) res));
                             } else {
-                                Sink<Integer, CompletionStage<Integer>> fold = Sink.fold(0, Integer::sum);
+                                Sink<Integer, CompletionStage<Long>> fold = Sink.fold(0L, (Function2<Long, Integer, Long>) Long::sum);
 
-                                Sink<Pair<String, Integer>, CompletionStage<Integer>> sink = Flow
+                                Sink<Pair<String, Integer>, CompletionStage<Long>> sink = Flow
                                         .<Pair<String, Integer>>create()
                                         .mapConcat(r -> new ArrayList<>(Collections.nCopies(r.second(), r.first())))
                                         .mapAsync(req.second(), url -> {
@@ -128,9 +130,9 @@ public class AverageHttpResponseTimeApp {
 
     static class MessageCacheResult {
         private final String url;
-        private final int   responseTime;
+        private final long   responseTime;
 
-        public MessageCacheResult(String url, int responseTime) {
+        public MessageCacheResult(String url, long responseTime) {
             this.url = url;
             this.responseTime = responseTime;
         }
@@ -139,7 +141,7 @@ public class AverageHttpResponseTimeApp {
             return url;
         }
 
-        public int getResponseTime() {
+        public long getResponseTime() {
             return responseTime;
         }
     }
