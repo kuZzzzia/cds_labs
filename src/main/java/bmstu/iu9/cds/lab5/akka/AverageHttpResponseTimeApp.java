@@ -80,8 +80,8 @@ public class AverageHttpResponseTimeApp {
                                         TIMEOUT_MILLISEC
                                 )
                         ).thenCompose( res -> {
-                            if (Optional.of((long) res).isPresent()) {
-                                return CompletableFuture.completedFuture(new Pair<>(req.first(), (long) ((Optional)res).ifPresent(c -> c).get()));
+                            if (((Optional<Long>) res).isPresent()) {
+                                return CompletableFuture.completedFuture(new Pair<>(req.first(), ((Optional<Long>) res).get()));
                             } else {
                                 Sink<Integer, CompletionStage<Long>> fold = Sink.fold(0L, (Function2<Long, Integer, Long>) Long::sum);
 
