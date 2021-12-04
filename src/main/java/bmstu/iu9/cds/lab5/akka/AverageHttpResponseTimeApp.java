@@ -90,14 +90,11 @@ public class AverageHttpResponseTimeApp {
                                             long start = System.currentTimeMillis();
                                             Request request = Dsl.get(url).build();
                                             CompletableFuture<Response> whenResponse = Dsl.asyncHttpClient().executeRequest(request).toCompletableFuture();
-                                            AtomicLong end = new AtomicLong();
-                                            whenResponse.thenCompose( time -> {
-                                                        end.set(System.currentTimeMillis());
-                                                        return null;
+                                            return whenResponse.thenCompose( time -> {
+                                                        int duration = (int) (System.currentTimeMillis() - start);
+                                                        return CompletableFuture.completedFuture(duration);
                                                     }
                                             );
-                                            int duration = (int) (end.get() - start);
-                                            return CompletableFuture.completedFuture(duration);
                                         }).toMat(fold, Keep.right());
 
                                 return Source.from(Collections.singletonList(req))
