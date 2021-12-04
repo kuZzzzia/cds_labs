@@ -19,7 +19,7 @@ import akka.stream.javadsl.Flow;
 import akka.stream.javadsl.Keep;
 import akka.stream.javadsl.Sink;
 import akka.stream.javadsl.Source;
-import org.asynchttpclient.Dsl;
+import org.asynchttpclient.*;
 
 import org.asynchttpclient.Request;
 import org.asynchttpclient.Response;
@@ -89,6 +89,7 @@ public class AverageHttpResponseTimeApp {
                                         .mapAsync(req.second(), url -> {
                                             long start = System.currentTimeMillis();
                                             Request request = Dsl.get(url).build();
+                                            asyncHttpClient
                                             CompletionStage<Response> whenResponse = Dsl.asyncHttpClient().executeRequest(request);
                                             whenResponse.
                                             FutureConverters.toJava(whenResponse).thenCompose()
