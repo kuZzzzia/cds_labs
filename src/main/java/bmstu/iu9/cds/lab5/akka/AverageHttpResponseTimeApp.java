@@ -89,7 +89,9 @@ public class AverageHttpResponseTimeApp {
                                         .mapAsync(req.second(), url -> {
                                             long start = System.currentTimeMillis();
                                             Request request = Dsl.get(url).build();
-                                            Future<Response> whenResponse = Dsl.asyncHttpClient().executeRequest(request);
+                                            CompletionStage<Response> whenResponse = Dsl.asyncHttpClient().executeRequest(request);
+                                            whenResponse.
+                                            FutureConverters.toJava(whenResponse).thenCompose()
                                             long end = System.currentTimeMillis();
                                             int duration = (int) (end - start);
                                             return CompletableFuture.completedFuture(duration);
