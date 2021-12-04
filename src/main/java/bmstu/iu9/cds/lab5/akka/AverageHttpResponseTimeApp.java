@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
@@ -80,7 +81,7 @@ public class AverageHttpResponseTimeApp {
                                 )
                         ).thenCompose( res -> {
                             if (!(Objects.isNull(res))) {
-                                return CompletableFuture.completedFuture(new Pair<>(req.first(), (Long) res));
+                                return CompletableFuture.completedFuture(new Pair<>(req.first(), (long) ((Optional)res).get()));
                             } else {
                                 Sink<Integer, CompletionStage<Long>> fold = Sink.fold(0L, (Function2<Long, Integer, Long>) Long::sum);
 
