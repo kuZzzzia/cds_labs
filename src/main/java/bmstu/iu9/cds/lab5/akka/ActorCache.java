@@ -4,6 +4,7 @@ import akka.actor.AbstractActor;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class ActorCache extends AbstractActor {
     private static final int NOT_MEASURED_YET_VALUE = -1000;
@@ -16,7 +17,7 @@ public class ActorCache extends AbstractActor {
                 .match(
                         AverageHttpResponseTimeApp.MessageGetResult.class,
                         message -> sender().tell(
-                                Optional<Integer>(results.getOrDefault(message.getUrl(), NOT_MEASURED_YET_VALUE)),
+                                Optional.of(results.getOrDefault(message.getUrl(), NOT_MEASURED_YET_VALUE)),
                                 self())
                 )
                 .match(
