@@ -90,8 +90,9 @@ public class AverageHttpResponseTimeApp {
                                             long start = System.currentTimeMillis();
                                             Request request = Dsl.get(url).build();
                                             CompletableFuture<Response> whenResponse = Dsl.asyncHttpClient().executeRequest(request).toCompletableFuture();
-                                            whenResponse.thenCompose( res ->
-                                                    
+                                            whenResponse.thenCompose( time -> {
+                                                        return System.currentTimeMillis();
+                                                    }
                                             )
                                             long end = System.currentTimeMillis();
                                             int duration = (int) (end - start);
