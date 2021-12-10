@@ -5,7 +5,7 @@ import akka.http.javadsl.server.Route;
 public class HTTPServer {
 
     private Route route () {
-        return route();
+        return route("/");
     }
 
 }
