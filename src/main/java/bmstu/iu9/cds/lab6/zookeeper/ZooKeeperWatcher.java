@@ -24,7 +24,7 @@ public class ZooKeeperWatcher implements Watcher {
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
 
-        byte[] data = this.zooKeeper.getData(SERVERS_PATH , true, null);
+        byte[] data = this.zooKeeper.getData(SERVERS_PATH, true, null);
         System.out.println("servers" + " data=" + new String(data));
     }
 
