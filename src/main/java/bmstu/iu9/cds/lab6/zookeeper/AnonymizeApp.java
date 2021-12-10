@@ -23,7 +23,10 @@ import java.util.concurrent.CompletionStage;
 public class AnonymizeApp {
 
     public static void main(String[] args) throws IOException, InterruptedException, KeeperException {
-
+        if (args.length < 2) {
+            System.err.println("Usage: AnonymizeApp localhost:2181 8000 8001");
+            System.exit(-1);
+        }
         System.out.println("start!\n" + Arrays.toString(args));
         ActorSystem system = ActorSystem.create("lab6");
         ActorRef actorConfig = system.actorOf(Props.create(ActorConfig.class));
