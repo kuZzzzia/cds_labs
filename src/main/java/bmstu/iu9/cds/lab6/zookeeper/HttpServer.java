@@ -3,12 +3,10 @@ package bmstu.iu9.cds.lab6.zookeeper;
 import akka.actor.ActorRef;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.model.HttpRequest;
-import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.server.Route;
 import akka.pattern.Patterns;
 
 import java.time.Duration;
-import java.util.concurrent.CompletionStage;
 
 import static akka.http.javadsl.server.Directives.*;
 
@@ -33,9 +31,10 @@ public class HttpServer {
 
     public Route createRoute() {
         return route(
-                path(PATH,
-                        route(get(
-                                () -> parameter(URL_QUERY_PARAM, (url) ->
+                path(PATH, () ->
+                        route(
+                                get(() ->
+                                        parameter(URL_QUERY_PARAM, (url) ->
                                         parameter(COUNT_QUERY_PARAM, (count) -> {
                                             if (count.equals(ZERO_COUNT_STRING)) {
                                                 return completeWithFuture(
@@ -44,7 +43,11 @@ public class HttpServer {
                                             }
                                             return completeWithFuture(
                                                     Patterns
-                                                            .ask(actorConfig, new MessageGetRandomServerUrl(portNumber), TIMEOUT)
+                                                            .ask(
+                                                                    actorConfig,
+                                                                    new MessageGetRandomServerUrl(portNumber),
+                                                                    TIMEOUT
+                                                            )
                                                             .thenCompose(resPort ->
                                                                     http.singleRequest(HttpRequest.create(
                                                                             String.format(
@@ -57,9 +60,9 @@ public class HttpServer {
                                                             ));
                                         })
 
-                                )
-                        )));
-
+                                ))
+                        )
+                )
         );
     }
 
