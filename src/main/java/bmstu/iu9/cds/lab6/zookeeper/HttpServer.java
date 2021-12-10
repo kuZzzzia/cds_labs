@@ -43,6 +43,6 @@ public class HttpServer {
         );
     }
 
-    static class 
+    static class MessageGet
 
 }
