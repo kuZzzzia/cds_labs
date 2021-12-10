@@ -12,7 +12,7 @@ public class ActorConfig extends AbstractActor {
     @Override
     public Receive createReceive() {
         return receiveBuilder()
-                .match()
+                .match(HttpServer.MessageGetRandomServerUrl.class, msg -> )
                 .match()
                 .build();
     }
