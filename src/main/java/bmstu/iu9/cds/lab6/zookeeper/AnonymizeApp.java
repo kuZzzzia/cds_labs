@@ -31,7 +31,11 @@ public class AnonymizeApp {
 
         final HttpServer server = new HttpServer(http, actorConfig);
 //TODO: check args list
-        new ZooKeeperWatcher(args[0], actorConfig, Arrays.copyOfRange(args, 1, args.length));
+        ZooKeeperWatcher zooKeeperWatcher = new ZooKeeperWatcher(args[0], actorConfig);
+
+        for (int i = 1; i < args.length; i++) {
+
+        }
 
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = server.createRoute().flow(system, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
