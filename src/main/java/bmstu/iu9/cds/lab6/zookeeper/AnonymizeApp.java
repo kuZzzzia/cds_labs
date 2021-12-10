@@ -11,6 +11,7 @@ import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooKeeper;
 
@@ -23,6 +24,7 @@ import java.util.concurrent.CompletionStage;
 public class AnonymizeApp {
 
     public static void main(String[] args) throws IOException, InterruptedException, KeeperException {
+        BasicConfigurator.configure();
         System.out.println("start!\n" + Arrays.toString(args));
         ActorSystem system = ActorSystem.create("lab6");
         ActorRef actorConfig = system.actorOf(Props.create(ActorConfig.class));
