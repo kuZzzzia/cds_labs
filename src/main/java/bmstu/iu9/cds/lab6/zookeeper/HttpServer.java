@@ -50,7 +50,7 @@ public class HttpServer {
                                                         HttpRequest.create(
                                                                 String.format(
                                                                         URL_PATTERN,
-                                                                        "",
+                                                                        resPort,
                                                                         url,
                                                                         Integer.parseInt(count) - 1
                                                                 )
