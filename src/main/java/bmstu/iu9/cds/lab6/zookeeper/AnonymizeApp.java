@@ -25,9 +25,16 @@ public class AnonymizeApp {
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_RESET = "\u001B[0m";
 
+    private static final int MIN_AMOUNT_OF_ARGS = 2;
+    private static final int ZOOKEEPER_SESSION_TIMEOUT = 3000;
+    private static final int INDEX_OF_ZOOKEEPER_ADDRESS_IN_ARGS = 0;
+    private static final int NO_SERVERS_RUNNING = 0;
+    private static final String HOST = "localhost";
+    private static final String NO_SERVERS_RUNNING_ERROR = "NO SERVERS ARE RUNNING";
+
 
     public static void main(String[] args) throws IOException {
-        if (args.length < 2) {
+        if (args.length < MIN_AMOUNT_OF_ARGS) {
             System.err.println("Usage: AnonymizeApp localhost:2181 8000 8001");
             System.exit(-1);
         }
@@ -41,7 +48,7 @@ public class AnonymizeApp {
         ZooKeeper zk = null;
 
         try {
-            zk = new ZooKeeper(args[0], 3000, null);
+            zk = new ZooKeeper(args[INDEX_OF_ZOOKEEPER_ADDRESS_IN_ARGS], ZOOKEEPER_SESSION_TIMEOUT, null);
             new ZooKeeperWatcher(zk, actorConfig);
         } catch (InterruptedException | KeeperException e) {
             e.printStackTrace();
@@ -57,13 +64,17 @@ public class AnonymizeApp {
                 final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = server.createRoute().flow(system, materializer);
                 bindings.add(http.bindAndHandle(
                         routeFlow,
-                        ConnectHttp.toHost("localhost", Integer.parseInt(args[i])),
+                        ConnectHttp.toHost(HOST, Integer.parseInt(args[i])),
                         materializer
                 ));
                 serversInfo.append("http://localhost:").append(args[i]).append("/\n");
             } catch (InterruptedException | KeeperException e) {
                 e.printStackTrace();
             }
+        }
+
+        if (bindings.size() == 0) {
+            System.err.println(NO_SERVERS_RUNNING_ERROR);
         }
 
 
