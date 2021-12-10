@@ -22,6 +22,10 @@ public class ZooKeeperWatcher implements Watcher {
 
     }
 
+    private List<String> sendServers() {
+        zooKeeper.getChildren()
+    }
+
     @Override
     public void process(WatchedEvent watchedEvent) {
 
