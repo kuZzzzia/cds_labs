@@ -18,7 +18,6 @@ import org.apache.zookeeper.ZooKeeper;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.CompletionStage;
 
 public class AnonymizeApp {
@@ -33,7 +32,7 @@ public class AnonymizeApp {
 
         final HttpServer server = new HttpServer(http, actorConfig);
 //TODO: check args list
-        ZooKeeperWatcher zooKeeperWatcher = new ZooKeeperWatcher(args[0], actorConfig, Arrays.copyOfRange(args, 1, args.length));
+        new ZooKeeperWatcher(args[0], actorConfig, Arrays.copyOfRange(args, 1, args.length));
 
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = server.createRoute().flow(system, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
