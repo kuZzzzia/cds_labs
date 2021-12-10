@@ -27,6 +27,7 @@ public class AnonymizeApp {
 
     public static void main(String[] args) throws IOException, InterruptedException, KeeperException {
         System.out.println("start!\n" + Arrays.toString(args));
+        BasicConfigurator.configure();
         ActorSystem system = ActorSystem.create();
         ActorRef actorConfig = system.actorOf(Props.create(ActorConfig.class));
         final ActorMaterializer materializer = ActorMaterializer.create(system);
