@@ -40,19 +40,23 @@ public class HttpServer {
                                                         HttpRequest.create(url)
                                                 )
                                         );
-                                    } else {
-                                        return completeWithFuture(Patterns.ask(
-                                                actorConfig,
-                                                new MessageGetRandomServerUrl(serverNumber),
-                                                TIMEOUT
-                                        ).thenCompose(resPort ->
-                                                http.singleRequest(
-                                                        HttpRequest.create(
-                                                                String.format(URL_PATTERN, resPort, url, Integer.parseInt(count) - 1)
-                                                        )
-                                                )
-                                        ));
                                     }
+                                    return completeWithFuture(Patterns.ask(
+                                            actorConfig,
+                                            new MessageGetRandomServerUrl(serverNumber),
+                                            TIMEOUT
+                                    ).thenCompose(resPort ->
+                                            http.singleRequest(
+                                                    HttpRequest.create(
+                                                            String.format(
+                                                                    URL_PATTERN,
+                                                                    resPort,
+                                                                    url,
+                                                                    Integer.parseInt(count) - 1
+                                                            )
+                                                    )
+                                            )
+                                    ));
                                 })
                         )
                 )
