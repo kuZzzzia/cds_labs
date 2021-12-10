@@ -43,7 +43,8 @@ public class HttpServer {
                                     );
                                 }
                                 CompletionStage<Object> redirect = Patterns
-                                        .ask(actorConfig, new MessageGetRandomServerUrl(portNumber), TIMEOUT)
+                                        .ask(actorConfig, new MessageGetRandomServerUrl(portNumber), TIMEOUT);
+                                redirect.thenCompose()
                                         .thenCompose(resPort -> {
                                             return http.singleRequest(
                                                     HttpRequest.create(
