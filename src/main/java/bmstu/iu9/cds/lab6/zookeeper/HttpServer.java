@@ -44,7 +44,7 @@ public class HttpServer {
                                                 new MessageGetRandomServerUrl(serverNumber),
                                                 TIMEOUT
                                         ).thenCompose(resPort ->
-                                                http.singleRequest(HttpRequest.create()));
+                                                http.singleRequest(HttpRequest.create(URL_PATTERN.)));
                                     }
                                 })
                                 )
