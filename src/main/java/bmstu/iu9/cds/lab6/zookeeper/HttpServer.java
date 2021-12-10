@@ -33,8 +33,8 @@ public class HttpServer {
 
     public Route route () {
         return route(get(
-                    () -> parameter(URL_QUERY_PARAM, url ->
-                            parameter(COUNT_QUERY_PARAM, count -> {
+                    () -> parameter(URL_QUERY_PARAM, (url) ->
+                            parameter(COUNT_QUERY_PARAM, (count) -> {
                                 if (count.equals(ZERO_COUNT_STRING)) {
                                     return completeWithFuture(
                                             http.singleRequest(
