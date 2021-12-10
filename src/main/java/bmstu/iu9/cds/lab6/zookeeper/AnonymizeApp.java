@@ -12,7 +12,7 @@ public class AnonymizeApp {
         ActorSystem system = ActorSystem.create();
         ActorRef actorConfig = system.actorOf(Props.create(ActorConfig.class));
 
-        final Http http = Http.
+        final Http http = Http.get(system);
     }
 
 }
