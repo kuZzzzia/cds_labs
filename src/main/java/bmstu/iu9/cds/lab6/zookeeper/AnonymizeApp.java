@@ -16,7 +16,9 @@ import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooKeeper;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.CompletionStage;
 
 public class AnonymizeApp {
@@ -32,22 +34,31 @@ public class AnonymizeApp {
         ZooKeeper zk = new ZooKeeper(args[0], 3000, null);
         ZooKeeperWatcher zooKeeperWatcher = new ZooKeeperWatcher(zk, actorConfig);
 
+        List<CompletionStage<ServerBinding>> bindings = new ArrayList<>();
+
         final HttpServer server = new HttpServer(http, actorConfig);
+        StringBuilder serversInfo = new StringBuilder("Servers online at ");
         for (int i = 1; i < args.length; i++) {
             new HttpServer(http, actorConfig, zk, args[i]);
+            final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = server.createRoute().flow(system, materializer);
+            bindings.add(http.bindAndHandle(
+                    routeFlow,
+                    ConnectHttp.toHost("localhost", Integer.parseInt(args[i])),
+                    materializer
+            ));
+            serversInfo.append("http://localhost:").append(args[i]);
         }
 
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = server.createRoute().flow(system, materializer);
-        final CompletionStage<ServerBinding> binding = http.bindAndHandle(
-                routeFlow,
-                ConnectHttp.toHost("localhost", 8000),
-                materializer
-        );
-        System.out.println("Server online at http://localhost:8000/\nPress RETURN to stop...");
+
+
+        System.out.println(serversInfo +
+                "/\nPress RETURN to stop...");
         System.in.read();
-        binding
-                .thenCompose(ServerBinding::unbind)
-                .thenAccept(unbound -> system.terminate());
+        for (CompletionStage<ServerBinding> binding : bindings) {
+            binding
+                    .thenCompose(ServerBinding::unbind)
+                    .thenAccept(unbound -> system.terminate());
+        }
     }
 
 }
