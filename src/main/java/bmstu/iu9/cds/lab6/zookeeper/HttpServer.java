@@ -42,21 +42,19 @@ public class HttpServer {
                                             )
                                     );
                                 }
-                                CompletionStage<HttpResponse> redirect = Patterns
+                                CompletionStage<Object> redirect = Patterns
                                         .ask(actorConfig, new MessageGetRandomServerUrl(portNumber), TIMEOUT);
-                                redirect.thenCompose(resPort -> {
+                                return completeWithFuture(redirect.thenCompose(resPort -> {
                                             return http.singleRequest(
                                                     HttpRequest.create(
-                                                            //String.format(
-                                                            //        URL_PATTERN,
-                                                            //        resPort,
-                                                            //        url,
-                                                            //        Integer.parseInt(count) - 1
-                                                            url
+                                                            String.format(
+                                                                    URL_PATTERN,
+                                                                    resPort,
+                                                                    url,
+                                                                    Integer.parseInt(count) - 1
                                                     )
-                                            );
-                                        });
-                                return completeWithFuture(redirect);
+                                            ));
+                                        }));
                             })
                     )
                 ));
