@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ActorConfig extends AbstractActor {
     private List<String> servers;
-    
+
 
     @Override
     public Receive createReceive() {
