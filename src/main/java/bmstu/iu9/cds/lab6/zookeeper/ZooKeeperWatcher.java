@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ZooKeeperWatcher implements Watcher {
     private static final String SERVERS_PATH = "/servers";
-    peivate static final String CLIENT_PATH = ""
+    private static final String CLIENT_PATH = "localhost";
 
     private final ZooKeeper zooKeeper;
     private final ActorRef  actorConfig;
@@ -17,7 +17,8 @@ public class ZooKeeperWatcher implements Watcher {
         this.actorConfig = actorConfig;
 
         zooKeeper = new ZooKeeper(servers, 3000, this);
-        zooKeeper.create("/servers/s",
+        for (String port : clients)
+        zooKeeper.create("/servers/",
                 "data".getBytes(),
                 ZooDefs.Ids.OPEN_ACL_UNSAFE ,
                 CreateMode.EPHEMERAL_SEQUENTIAL
