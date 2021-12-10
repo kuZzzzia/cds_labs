@@ -12,7 +12,7 @@ import java.util.Random;
 public class ActorConfig extends AbstractActor {
     private List<String> servers = new ArrayList<>();
 
-    private final Random random = new SecureRandom();
+    private final Random random = new Random();
 
 
     @Override
