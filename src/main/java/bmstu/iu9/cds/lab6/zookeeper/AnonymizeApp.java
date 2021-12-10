@@ -11,6 +11,7 @@ import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooKeeper;
 
@@ -22,22 +23,28 @@ import java.util.concurrent.CompletionStage;
 
 public class AnonymizeApp {
     public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET = "\u001B[0m";
 
 
-    public static void main(String[] args) throws IOException, InterruptedException, KeeperException {
+    public static void main(String[] args) throws IOException {
         if (args.length < 2) {
             System.err.println("Usage: AnonymizeApp localhost:2181 8000 8001");
             System.exit(-1);
         }
-        System.out.println("start!\n" + Arrays.toString(args));
+        BasicConfigurator.configure();
+        printInGreen("start!\n" + Arrays.toString(args));
         ActorSystem system = ActorSystem.create("lab6");
         ActorRef actorConfig = system.actorOf(Props.create(ActorConfig.class));
         final ActorMaterializer materializer = ActorMaterializer.create(system);
 
         final Http http = Http.get(system);
 
-        ZooKeeper zk = new ZooKeeper(args[0], 3000, null);
-        new ZooKeeperWatcher(zk, actorConfig);
+        try {
+            ZooKeeper zk = new ZooKeeper(args[0], 3000, null);
+            new ZooKeeperWatcher(zk, actorConfig);
+        } catch (InterruptedException | KeeperException e) {
+            e.printStackTrace();
+        }
 
         List<CompletionStage<ServerBinding>> bindings = new ArrayList<>();
 
@@ -55,7 +62,7 @@ public class AnonymizeApp {
 
 
 
-        System.out.println(serversInfo +
+        printInGreen(serversInfo +
                 "\nPress RETURN to stop...");
         System.in.read();
         for (CompletionStage<ServerBinding> binding : bindings) {
@@ -63,6 +70,10 @@ public class AnonymizeApp {
                     .thenCompose(ServerBinding::unbind)
                     .thenAccept(unbound -> system.terminate());
         }
+    }
+
+    public static void printInGreen(String s) {
+        System.out.println(ANSI_GREEN + s + ANSI_RESET);
     }
 
 }
