@@ -8,7 +8,6 @@ import akka.pattern.Patterns;
 
 import java.time.Duration;
 
-import static akka.actor.Nobody.path;
 import static akka.http.javadsl.server.Directives.*;
 
 public class HttpServer {
