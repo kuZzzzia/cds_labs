@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ZooKeeperWatcher implements Watcher {
-    private static final String SERVERS_PATH = "/servers";
+    private static final String SERVERS_PATH = "/servers/";
 
     private final ZooKeeper zooKeeper;
     private final ActorRef  actorConfig;
