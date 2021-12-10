@@ -24,6 +24,7 @@ public class ZooKeeperWatcher implements Watcher {
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
 
+        sendServers();
     }
 
     private void sendServers() throws InterruptedException, KeeperException {
