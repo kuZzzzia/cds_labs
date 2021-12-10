@@ -43,6 +43,8 @@ public class HttpServer {
         );
     }
 
-    static class MessageGet
+    static class MessageGetRandomServerUrl() {
+        private 
+    }
 
 }
