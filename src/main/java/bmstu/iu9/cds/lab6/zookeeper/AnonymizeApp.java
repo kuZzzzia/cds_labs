@@ -73,11 +73,9 @@ public class AnonymizeApp {
             }
         }
 
-        if (bindings.size() == 0) {
+        if (bindings.size() == NO_SERVERS_RUNNING) {
             System.err.println(NO_SERVERS_RUNNING_ERROR);
         }
-
-
 
         printInGreen(serversInfo +
                 "\nPress RETURN to stop...");
