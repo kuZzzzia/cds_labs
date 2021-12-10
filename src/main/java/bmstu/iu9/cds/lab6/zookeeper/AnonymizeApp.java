@@ -34,11 +34,10 @@ public class AnonymizeApp {
         ZooKeeperWatcher zooKeeperWatcher = new ZooKeeperWatcher(zk, actorConfig);
 
         List<CompletionStage<ServerBinding>> bindings = new ArrayList<>();
-
-        final HttpServer server = new HttpServer(http, actorConfig);
+        
         StringBuilder serversInfo = new StringBuilder("Servers online at\n");
         for (int i = 1; i < args.length; i++) {
-            new HttpServer(http, actorConfig, zk, args[i]);
+            HttpServer server = new HttpServer(http, actorConfig, zk, args[i]);
             final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = server.createRoute().flow(system, materializer);
             bindings.add(http.bindAndHandle(
                     routeFlow,

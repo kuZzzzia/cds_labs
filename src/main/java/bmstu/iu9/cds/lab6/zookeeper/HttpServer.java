@@ -39,13 +39,6 @@ public class HttpServer implements Watcher {
 
     }
 
-    public HttpServer(Http http, ActorRef actorConfig) {
-        this.http = http;
-        this.actorConfig = actorConfig;
-        this.zoo = null;
-        path = PATH_MAIN_SERVER;
-    }
-
     public Route createRoute() {
         return route(
                 path(PATH, () ->
