@@ -57,7 +57,7 @@ public class HttpServer {
                                                         )
                                                 ));
                                 return completeWithFuture(redirect);
-                            })
+                            };)
                     )
                 )))
         );
