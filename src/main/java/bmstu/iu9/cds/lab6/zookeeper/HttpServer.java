@@ -2,6 +2,7 @@ package bmstu.iu9.cds.lab6.zookeeper;
 
 import akka.actor.ActorRef;
 import akka.http.javadsl.Http;
+import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.server.Route;
 
 import static akka.actor.Nobody.path;
@@ -14,6 +15,7 @@ public class HttpServer {
     private static final String ZERO_COUNT_STRING = "0";
 
     private Http http;
+    private ActorRef actorConfig;
 
 
     public HttpServer(Http http) {
@@ -27,9 +29,9 @@ public class HttpServer {
                         parameter(URL_QUERY_PARAM, (url) ->
                                 parameter(COUNT_QUERY_PARAM, (count) -> {
                                     if (count.equals(ZERO_COUNT_STRING)) {
-                                        return Http.get
+                                        return http.singleRequest(HttpRequest.create(url));
                                     } else {
-
+                                        
                                     }
                                 })
                                 )
