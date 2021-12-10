@@ -17,7 +17,7 @@ public class HttpServer {
     private static final String     COUNT_QUERY_PARAM = "count";
     private static final String     ZERO_COUNT_STRING = "0";
     private static final Duration   TIMEOUT = Duration.ofMillis(5000);
-    private static final String     URL_PATTERN = "http://localhost"
+    private static final String     URL_PATTERN = "http://localhost%s"
 
     private final Http        http;
     private final ActorRef    actorConfig;
