@@ -11,10 +11,8 @@ import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
-import org.apache.zookeeper.CreateMode;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.ZooDefs;
-import org.apache.zookeeper.ZooKeeper;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -24,6 +22,7 @@ public class AnonymizeApp {
 
     public static void main(String[] args) throws IOException, InterruptedException, KeeperException {
         System.out.println("start!");
+        BasicConfigurator.configure();
         ActorSystem system = ActorSystem.create();
         ActorRef actorConfig = system.actorOf(Props.create(ActorConfig.class));
         final ActorMaterializer materializer = ActorMaterializer.create(system);
