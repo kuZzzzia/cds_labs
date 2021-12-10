@@ -45,7 +45,7 @@ public class HttpServer implements Watcher {
                                 get(() ->
                                         parameter(URL_QUERY_PARAM, (url) ->
                                         parameter(COUNT_QUERY_PARAM, (count) -> {
-                                            System.out.println("Count = " + count + " on " + path);
+                                            AnonymizeApp.printInGreen("Count = " + count + " on " + path);
                                             if (count.equals(ZERO_COUNT_STRING)) {
                                                 return completeWithFuture(
                                                         http.singleRequest(HttpRequest.create(url))
