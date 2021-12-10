@@ -9,30 +9,29 @@ import java.util.List;
 
 public class ZooKeeperWatcher implements Watcher {
     private static final String SERVERS_PATH = "/servers";
-    private static final String CLIENT_PATH = "localhost:";
 
     private final ZooKeeper zooKeeper;
     private final ActorRef  actorConfig;
 
-    public ZooKeeperWatcher(String servers, ActorRef actorConfig) throws IOException, InterruptedException, KeeperException {
+    public ZooKeeperWatcher(ZooKeeper zooKeeper, ActorRef actorConfig) throws IOException, InterruptedException, KeeperException {
         this.actorConfig = actorConfig;
 
-        zooKeeper = new ZooKeeper(servers, 3000, this);
+        this.zooKeeper = zooKeeper;
 
-        zooKeeper.create("/servers",
+        this.zooKeeper.create(SERVERS_PATH,
                 "lab6".getBytes(),
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
 
-        byte[] data = zooKeeper.getData("/servers" , true, null);
+        byte[] data = this.zooKeeper.getData(SERVERS_PATH , true, null);
         System.out.println("servers" + " data=" + new String(data));
     }
 
     private void sendServers() throws InterruptedException, KeeperException {
         List<String> servers = new ArrayList<>();
         for (String s : zooKeeper.getChildren(SERVERS_PATH, this)) {
-            servers.add(new String(zooKeeper.getData("/servers/" + s, false, null)));
+            servers.add(new String(zooKeeper.getData(SERVERS_PATH + "/" + s, false, null)));
         }
         actorConfig.tell(new MessageSendServersList(servers),  ActorRef.noSender());
     }
@@ -45,6 +44,10 @@ public class ZooKeeperWatcher implements Watcher {
         } catch (InterruptedException | KeeperException e) {
             e.printStackTrace();
         }
+    }
+
+    public ZooKeeper getZooKeeper() {
+        return zooKeeper;
     }
 
     static class MessageSendServersList {

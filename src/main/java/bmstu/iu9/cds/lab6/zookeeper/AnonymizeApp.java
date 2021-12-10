@@ -13,6 +13,7 @@ import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.ZooKeeper;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -29,12 +30,12 @@ public class AnonymizeApp {
 
         final Http http = Http.get(system);
 
+        ZooKeeper zk = new ZooKeeper(args[0], 3000, null);
+        ZooKeeperWatcher zooKeeperWatcher = new ZooKeeperWatcher(zk, actorConfig);
+
         final HttpServer server = new HttpServer(http, actorConfig);
-//TODO: check args list
-        ZooKeeperWatcher zooKeeperWatcher = new ZooKeeperWatcher(args[0], actorConfig);
-
         for (int i = 1; i < args.length; i++) {
-
+            new HttpServer(http, actorConfig, zk, args[i]);
         }
 
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = server.createRoute().flow(system, materializer);

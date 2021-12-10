@@ -22,16 +22,24 @@ public class HttpServer implements Watcher {
     private final Http        http;
     private final ActorRef    actorConfig;
     private final ZooKeeper   zoo;
+    private final String      path;
 
 
-    public HttpServer(Http http, ActorRef actorConfig, ZooKeeper zoo, int port) throws InterruptedException, KeeperException {
+    public HttpServer(Http http, ActorRef actorConfig, ZooKeeper zoo, String port) throws InterruptedException, KeeperException {
         this.http = http;
         this.actorConfig = actorConfig;
         this.zoo = zoo;
-        zoo.create("/servers/localhost:" +  port,
-                ("localhost:" +  port).getBytes(),
+        path = "localhost:" + port;
+        zoo.create("/servers/" + path,
+                path.getBytes(),
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL_SEQUENTIAL);
+    }
+
+    public HttpServer(Http http, ActorRef actorConfig) {
+        this.http = http;
+        this.actorConfig = actorConfig;
+        this.zoo = null;
     }
 
     public Route createRoute() {
@@ -73,7 +81,7 @@ public class HttpServer implements Watcher {
 
     @Override
     public void process(WatchedEvent watchedEvent) {
-
+        zoo.getData(path, this, false);
     }
 
     static class MessageGetRandomServerUrl {
