@@ -32,6 +32,7 @@ public class HttpServer {
     private Route route (ActorRef actorConfig) {
         return route(
                 path(PATH, () ->
+                        route(
                         get(() ->
                                 parameter(URL_QUERY_PARAM, url ->
                                         parameter(COUNT_QUERY_PARAM, count -> {
@@ -55,7 +56,7 @@ public class HttpServer {
                                                 ));
                                             }
                                 })
-                        ))
+                        )))
 
                 )
         );
