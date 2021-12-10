@@ -52,14 +52,18 @@ public class AnonymizeApp {
 
         StringBuilder serversInfo = new StringBuilder("Servers online at\n");
         for (int i = 1; i < args.length; i++) {
-            HttpServer server = new HttpServer(http, actorConfig, zk, args[i]);
-            final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = server.createRoute().flow(system, materializer);
-            bindings.add(http.bindAndHandle(
-                    routeFlow,
-                    ConnectHttp.toHost("localhost", Integer.parseInt(args[i])),
-                    materializer
-            ));
-            serversInfo.append("http://localhost:").append(args[i]).append("/\n");
+            try {
+                HttpServer server = new HttpServer(http, actorConfig, zk, args[i]);
+                final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = server.createRoute().flow(system, materializer);
+                bindings.add(http.bindAndHandle(
+                        routeFlow,
+                        ConnectHttp.toHost("localhost", Integer.parseInt(args[i])),
+                        materializer
+                ));
+                serversInfo.append("http://localhost:").append(args[i]).append("/\n");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
 
