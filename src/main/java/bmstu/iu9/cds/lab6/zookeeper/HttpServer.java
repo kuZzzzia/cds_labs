@@ -36,6 +36,7 @@ public class HttpServer implements Watcher {
                 path.getBytes(),
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL_SEQUENTIAL);
+
     }
 
     public HttpServer(Http http, ActorRef actorConfig) {
