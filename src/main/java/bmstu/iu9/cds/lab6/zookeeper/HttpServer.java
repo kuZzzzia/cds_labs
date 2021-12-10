@@ -20,13 +20,13 @@ public class HttpServer {
 
     private final Http        http;
     private final ActorRef    actorConfig;
-    private final int         serverNumber;
+    private final String      portNumber;
 
 
-    public HttpServer(Http http, ActorRef actorConfig, int serverNumber) {
+    public HttpServer(Http http, ActorRef actorConfig, String portNumber) {
         this.http = http;
         this.actorConfig = actorConfig;
-        this.serverNumber = serverNumber;
+        this.portNumber = portNumber;
     }
 
     private Route route (ActorRef actorConfig) {
@@ -43,7 +43,7 @@ public class HttpServer {
                                 }
                                 return completeWithFuture(Patterns.ask(
                                         actorConfig,
-                                        new MessageGetRandomServerUrl(serverNumber),
+                                        new MessageGetRandomServerUrl(portNumber),
                                         TIMEOUT
                                 ).thenCompose(resPort ->
                                         http.singleRequest(
@@ -64,14 +64,14 @@ public class HttpServer {
     }
 
     static class MessageGetRandomServerUrl {
-        private final int serverNumber;
+        private final String portNumber;
 
-        public MessageGetRandomServerUrl(int serverNumber) {
-            this.serverNumber = serverNumber;
+        public MessageGetRandomServerUrl(String portNumber) {
+            this.portNumber = portNumber;
         }
 
-        public int getServerNumber() {
-            return serverNumber;
+        public String getPortNumber() {
+            return portNumber;
         }
     }
 

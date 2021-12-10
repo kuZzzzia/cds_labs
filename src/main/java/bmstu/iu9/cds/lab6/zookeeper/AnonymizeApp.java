@@ -20,7 +20,9 @@ public class AnonymizeApp {
 
         final Http http = Http.get(system);
 
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = 
+        final HttpServer server = new HttpServer(http, actorConfig, 0);
+
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow =
     }
 
 }
