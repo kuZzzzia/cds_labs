@@ -24,8 +24,10 @@ public class ZooKeeperWatcher implements Watcher {
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
         List<String> serversList = zooKeeper.getChildren(SERVERS_PATH, this);
-        for ()
-
+        for (String s : serversList) {
+            byte[] data = zooKeeper.getData("/servers/" + s, false, null);
+            System.out.println("server " + s + " data=" + new String(data));
+        }
         sendServers();
     }
 
