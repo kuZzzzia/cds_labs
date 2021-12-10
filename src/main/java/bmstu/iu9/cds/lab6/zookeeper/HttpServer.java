@@ -18,7 +18,7 @@ public class HttpServer implements Watcher {
     private static final String     COUNT_QUERY_PARAM = "count";
     private static final String     ZERO_COUNT_STRING = "0";
     private static final Duration   TIMEOUT = Duration.ofMillis(5000);
-    private static final String     URL_PATTERN = "https://%s/?url=%s&count=%d";
+    private static final String     URL_PATTERN = "http://%s/?url=%s&count=%d";
 
     private final Http        http;
     private final ActorRef    actorConfig;
