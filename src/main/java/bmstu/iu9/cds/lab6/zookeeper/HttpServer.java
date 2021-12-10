@@ -9,8 +9,7 @@ import akka.pattern.Patterns;
 import java.time.Duration;
 
 import static akka.actor.Nobody.path;
-import static akka.http.javadsl.server.Directives.get;
-import static akka.http.javadsl.server.Directives.parameter;
+import static akka.http.javadsl.server.Directives.*;
 
 public class HttpServer {
     private static final String     URL_QUERY_PARAM = "url";
@@ -37,15 +36,18 @@ public class HttpServer {
                         parameter(URL_QUERY_PARAM, url ->
                                 parameter(COUNT_QUERY_PARAM, count -> {
                                     if (count.equals(ZERO_COUNT_STRING)) {
-                                        return http.singleRequest(HttpRequest.create(url));
-                                    } else {
-                                        Patterns.ask(
-                                                actorConfig,
-                                                new MessageGetRandomServerUrl(serverNumber),
-                                                TIMEOUT
-                                        ).thenCompose(resPort ->
-                                                http.singleRequest(HttpRequest.create(String.format(URL_PATTERN, resPort, url, Integer.parseInt(count) - 1))));
+                                        return completeWithFuture(
+                                                http.singleRequest(
+                                                        HttpRequest.create(url)
+                                                )
+                                        );
                                     }
+                                    return completeWithFuture(Patterns.ask(
+                                            actorConfig,
+                                            new MessageGetRandomServerUrl(serverNumber),
+                                            TIMEOUT
+                                    ).thenCompose(resPort ->
+                                            http.singleRequest(HttpRequest.create(String.format(URL_PATTERN, resPort, url, Integer.parseInt(count) - 1)))));
                                 })
                                 )
                         )
