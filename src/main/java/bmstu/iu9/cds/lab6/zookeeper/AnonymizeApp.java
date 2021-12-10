@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.concurrent.CompletionStage;
 
 public class AnonymizeApp {
-    static Logger log = Logger.getLogger(log4jExample.class.getName());
+    static Logger log = Logger.getLogger("");
 
     public static void main(String[] args) throws IOException, InterruptedException, KeeperException {
         System.out.println("start!\n" + Arrays.toString(args));
