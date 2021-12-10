@@ -43,7 +43,7 @@ public class HttpServer {
                                                         )
                                                 );
                                             } else {
-                                                return completeWithFuture((Patterns.ask(
+                                                return Patterns.ask(
                                                         actorConfig,
                                                         new MessageGetRandomServerUrl(serverNumber),
                                                         TIMEOUT
@@ -53,7 +53,7 @@ public class HttpServer {
                                                                         String.format(URL_PATTERN, resPort, url, Integer.parseInt(count) - 1)
                                                                 )
                                                         )
-                                                )));
+                                                ));
                                             }
                                 })
                         ))
