@@ -61,7 +61,7 @@ public class AnonymizeApp {
                         materializer
                 ));
                 serversInfo.append("http://localhost:").append(args[i]).append("/\n");
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | KeeperException e) {
                 e.printStackTrace();
             }
         }
