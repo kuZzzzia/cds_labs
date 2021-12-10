@@ -1,4 +1,4 @@
-package bmstu.iu9.cds.lab6;
+package bmstu.iu9.cds.lab6.zookeeper;
 
 public class ActorConfig extends AbstractActor {
 }

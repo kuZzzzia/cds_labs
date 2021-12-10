@@ -18,7 +18,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>bmstu.iu9.cds.lab6.AnonymizeApp</mainClass>
+                            <mainClass>bmstu.iu9.cds.lab6.zookeeper.AnonymizeApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
