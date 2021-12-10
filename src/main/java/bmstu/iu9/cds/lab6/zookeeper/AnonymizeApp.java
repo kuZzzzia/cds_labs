@@ -11,6 +11,7 @@ public class AnonymizeApp {
         System.out.println("start!");
         ActorSystem system = ActorSystem.create();
         ActorRef actorConfig = system.actorOf(Props.create(ActorConfig.class));
+        
 
         final Http http = Http.get(system);
     }
