@@ -4,6 +4,7 @@ import akka.actor.ActorRef;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.server.Route;
+import akka.pattern.Patterns;
 
 import static akka.actor.Nobody.path;
 import static akka.http.javadsl.server.Directives.get;
@@ -13,6 +14,7 @@ public class HttpServer {
     private static final String URL_QUERY_PARAM = "url";
     private static final String COUNT_QUERY_PARAM = "count";
     private static final String ZERO_COUNT_STRING = "0";
+    private static int   TIMEOUT = 5000;
 
     private Http http;
     private ActorRef actorConfig;
@@ -31,7 +33,7 @@ public class HttpServer {
                                     if (count.equals(ZERO_COUNT_STRING)) {
                                         return http.singleRequest(HttpRequest.create(url));
                                     } else {
-                                        
+                                        Patterns.ask(actorConfig, new )
                                     }
                                 })
                                 )
@@ -40,5 +42,7 @@ public class HttpServer {
                 )
         );
     }
+
+    static class 
 
 }
