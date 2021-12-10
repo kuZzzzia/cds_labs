@@ -42,10 +42,8 @@ public class HttpServer {
                                             )
                                     );
                                 }
-                                CompletionStage<HttpRequest> = Patterns.ask(
-                                                actorConfig,
-                                                new MessageGetRandomServerUrl(portNumber),
-                                                TIMEOUT)
+                                CompletionStage<HttpRequest> redirect = Patterns
+                                        .ask(actorConfig, new MessageGetRandomServerUrl(portNumber), TIMEOUT)
                                         .thenCompose(resPort ->
                                                 http.singleRequest(
                                                         HttpRequest.create(
@@ -56,10 +54,8 @@ public class HttpServer {
                                                                         Integer.parseInt(count) - 1
                                                                 )
                                                         )
-                                                );
-                                return completeWithFuture(
-                                )
-                                );
+                                                ));
+                                return completeWithFuture(redirect);
                             })
                     )
                 )
