@@ -31,7 +31,7 @@ public class AnonymizeApp {
         final Http http = Http.get(system);
 
         ZooKeeper zk = new ZooKeeper(args[0], 3000, null);
-        ZooKeeperWatcher zooKeeperWatcher = new ZooKeeperWatcher(zk, actorConfig);
+        new ZooKeeperWatcher(zk, actorConfig);
 
         List<CompletionStage<ServerBinding>> bindings = new ArrayList<>();
 
