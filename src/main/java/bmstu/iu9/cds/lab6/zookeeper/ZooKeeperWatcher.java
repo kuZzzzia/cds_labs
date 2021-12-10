@@ -23,6 +23,8 @@ public class ZooKeeperWatcher implements Watcher {
                 ZooDefs.Ids.OPEN_ACL_UNSAFE ,
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
+        List<String> serversList = zooKeeper.getChildren(SERVERS_PATH, this);
+        for ()
 
         sendServers();
     }
