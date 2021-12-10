@@ -24,6 +24,8 @@ public class ZooKeeperWatcher implements Watcher {
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
+
+        
     }
 
     private void sendServers() throws InterruptedException, KeeperException {
