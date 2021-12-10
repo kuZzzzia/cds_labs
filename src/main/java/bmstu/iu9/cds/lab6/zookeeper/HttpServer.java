@@ -32,8 +32,7 @@ public class HttpServer {
     }
 
     public Route route () {
-        return route(
-                path("", () -> route(get(
+        return route(get(
                     () -> parameter(URL_QUERY_PARAM, url ->
                             parameter(COUNT_QUERY_PARAM, count -> {
                                 if (count.equals(ZERO_COUNT_STRING)) {
@@ -43,24 +42,24 @@ public class HttpServer {
                                             )
                                     );
                                 }
-                                CompletionStage<HttpResponse> redirect = Patterns
+                                CompletionStage<HttpRequest> redirect = Patterns
                                         .ask(actorConfig, new MessageGetRandomServerUrl(portNumber), TIMEOUT)
-                                        .thenCompose(resPort ->
-                                                http.singleRequest(
-                                                        HttpRequest.create(
-                                                                String.format(
-                                                                        URL_PATTERN,
-                                                                        resPort,
-                                                                        url,
-                                                                        Integer.parseInt(count) - 1
-                                                                )
-                                                        )
-                                                ));
+                                        .thenCompose(resPort -> {
+                                            return http.singleRequest(
+                                                    HttpRequest.create(
+                                                            //String.format(
+                                                            //        URL_PATTERN,
+                                                            //        resPort,
+                                                            //        url,
+                                                            //        Integer.parseInt(count) - 1
+                                                            url
+                                                    )
+                                            );
+                                        });
                                 return completeWithFuture(redirect);
                             })
                     )
-                )))
-        );
+                ));
     }
 
     static class MessageGetRandomServerUrl {
