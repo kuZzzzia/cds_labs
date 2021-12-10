@@ -43,14 +43,14 @@ public class HttpServer {
                                                         )
                                                 );
                                             } else {
-                                                return Patterns.ask(
+                                                return completeWithFuture(Patterns.ask(
                                                         actorConfig,
                                                         new MessageGetRandomServerUrl(serverNumber),
                                                         TIMEOUT
                                                 ).thenCompose(resPort ->
                                                         http.singleRequest(
                                                                 HttpRequest.create(
-                                                                        String.format(URL_PATTERN, resPort, url, Integer.parseInt(count) - 1)
+                                                                        String.format(URL_PATTERN, (String)resPort, url, Integer.parseInt(count) - 1)
                                                                 )
                                                         )
                                                 ));
