@@ -24,20 +24,25 @@ public class ZooKeeperWatcher implements Watcher {
 
     }
 
-    private List<String> sendServers() throws InterruptedException, KeeperException {
-        return zooKeeper.getChildren(SERVERS_PATH, this);
+    private void sendServers() throws InterruptedException, KeeperException {
+        List<String> servers = zooKeeper.getChildren(SERVERS_PATH, this);
+        actorConfig.tell(new MessageSendServersList(servers),  ActorRef.noSender());
     }
 
     @Override
     public void process(WatchedEvent watchedEvent) {
-
+        try {
+            sendServers();
+        } catch (InterruptedException | KeeperException e) {
+            e.printStackTrace();
+        }
     }
 
     static class MessageSendServersList {
-        private List<String> servers;
+        private final List<String> servers;
 
-        MessageSendServersList() {
-
+        MessageSendServersList(List<String> servers) {
+            this.servers = servers;
         }
 
         public List<String> getServers() {
