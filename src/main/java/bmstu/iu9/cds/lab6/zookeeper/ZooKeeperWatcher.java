@@ -8,11 +8,12 @@ import java.util.List;
 
 public class ZooKeeperWatcher implements Watcher {
     private static final String SERVERS_PATH = "/servers";
+    peivate static final String CLIENT_PATH = ""
 
     private final ZooKeeper zooKeeper;
     private final ActorRef  actorConfig;
 
-    public ZooKeeperWatcher(String servers, ActorRef actorConfig, String[]) throws IOException, InterruptedException, KeeperException {
+    public ZooKeeperWatcher(String servers, ActorRef actorConfig, String[] clients) throws IOException, InterruptedException, KeeperException {
         this.actorConfig = actorConfig;
 
         zooKeeper = new ZooKeeper(servers, 3000, this);
