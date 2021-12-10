@@ -33,7 +33,7 @@ public class HttpServer {
 
     public Route route () {
         return route(
-                path("", route(get(
+                path("", () -> route(get(
                     () -> parameter(URL_QUERY_PARAM, url ->
                             parameter(COUNT_QUERY_PARAM, count -> {
                                 if (count.equals(ZERO_COUNT_STRING)) {
