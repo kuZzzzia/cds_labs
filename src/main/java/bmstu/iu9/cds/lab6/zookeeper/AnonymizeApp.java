@@ -32,7 +32,7 @@ public class AnonymizeApp {
 
         final HttpServer server = new HttpServer(http, actorConfig, 8080);
 
-        ZooKeeper zoo = new ZooKeeper("127.0.0.1:2181", 3000, this);
+        ZooKeeper zoo = new ZooKeeper("127.0.0.1:2181MB", 3000, this);
         zoo.create("/servers/s",
                 "data".getBytes(),
                 ZooDefs.Ids.OPEN_ACL_UNSAFE ,
