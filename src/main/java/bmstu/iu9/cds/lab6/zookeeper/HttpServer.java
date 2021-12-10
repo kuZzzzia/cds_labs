@@ -3,6 +3,7 @@ package bmstu.iu9.cds.lab6.zookeeper;
 import akka.actor.ActorRef;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.model.HttpRequest;
+import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.server.Route;
 import akka.pattern.Patterns;
 
@@ -42,14 +43,14 @@ public class HttpServer {
                                             )
                                     );
                                 }
-                                CompletionStage<Object> redirect = Patterns
+                                CompletionStage<HttpResponse> redirect = Patterns
                                         .ask(actorConfig, new MessageGetRandomServerUrl(portNumber), TIMEOUT)
                                         .thenCompose(resPort ->
                                                 http.singleRequest(
                                                         HttpRequest.create(
                                                                 String.format(
                                                                         URL_PATTERN,
-                                                                        resPort,
+                                                                        "",
                                                                         url,
                                                                         Integer.parseInt(count) - 1
                                                                 )
