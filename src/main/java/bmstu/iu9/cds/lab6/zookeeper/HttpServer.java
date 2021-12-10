@@ -16,7 +16,7 @@ public class HttpServer {
     private static final String     COUNT_QUERY_PARAM = "count";
     private static final String     ZERO_COUNT_STRING = "0";
     private static final Duration   TIMEOUT = Duration.ofMillis(5000);
-    private static final String     URL_PATTERN = "http://localhost%s/?url=%s&count=%d";
+    private static final String     URL_PATTERN = "localhost%s/?url=%s&count=%d";
 
     private final Http        http;
     private final ActorRef    actorConfig;
@@ -31,34 +31,34 @@ public class HttpServer {
 
     private Route route (ActorRef actorConfig) {
         return route(
-                (ActorRef) get(
-                        () -> parameter(URL_QUERY_PARAM, url ->
-                                parameter(COUNT_QUERY_PARAM, count -> {
-                                    if (count.equals(ZERO_COUNT_STRING)) {
-                                        return completeWithFuture(
-                                                http.singleRequest(
-                                                        HttpRequest.create(url)
-                                                )
-                                        );
-                                    }
-                                    return completeWithFuture(Patterns.ask(
-                                            actorConfig,
-                                            new MessageGetRandomServerUrl(serverNumber),
-                                            TIMEOUT
-                                    ).thenCompose(resPort ->
+                get(
+                    () -> parameter(URL_QUERY_PARAM, url ->
+                            parameter(COUNT_QUERY_PARAM, count -> {
+                                if (count.equals(ZERO_COUNT_STRING)) {
+                                    return completeWithFuture(
                                             http.singleRequest(
-                                                    HttpRequest.create(
-                                                            String.format(
-                                                                    URL_PATTERN,
-                                                                    resPort,
-                                                                    url,
-                                                                    Integer.parseInt(count) - 1
-                                                            )
-                                                    )
+                                                    HttpRequest.create(url)
                                             )
-                                    ));
-                                })
-                        )
+                                    );
+                                }
+                                return completeWithFuture(Patterns.ask(
+                                        actorConfig,
+                                        new MessageGetRandomServerUrl(serverNumber),
+                                        TIMEOUT
+                                ).thenCompose(resPort ->
+                                        http.singleRequest(
+                                                HttpRequest.create(
+                                                        String.format(
+                                                                URL_PATTERN,
+                                                                resPort,
+                                                                url,
+                                                                Integer.parseInt(count) - 1
+                                                        )
+                                                )
+                                        )
+                                ));
+                            })
+                    )
                 )
         );
     }
