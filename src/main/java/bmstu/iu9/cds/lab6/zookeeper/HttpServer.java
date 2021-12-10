@@ -41,19 +41,19 @@ public class HttpServer {
                                                                 HttpRequest.create(url)
                                                         )
                                                 );
-                                            }
-                                            return completeWithFuture(Patterns.ask(
-                                                    actorConfig,
-                                                            new MessageGetRandomServerUrl(serverNumber),
-                                                            TIMEOUT
-                                            ).thenCompose(resPort -> {
-                                                        return http.singleRequest(
+                                            } else {
+                                                return completeWithFuture((Patterns.ask(
+                                                        actorConfig,
+                                                        new MessageGetRandomServerUrl(serverNumber),
+                                                        TIMEOUT
+                                                ).thenCompose(resPort ->
+                                                        http.singleRequest(
                                                                 HttpRequest.create(
                                                                         String.format(URL_PATTERN, resPort, url, Integer.parseInt(count) - 1)
                                                                 )
                                                         )
-                                                    }
-                                            ));
+                                                )));
+                                            }
                                 })
                         ))
 
