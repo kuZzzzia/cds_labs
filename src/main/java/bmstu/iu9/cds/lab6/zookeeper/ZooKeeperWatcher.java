@@ -1,17 +1,15 @@
 package bmstu.iu9.cds.lab6.zookeeper;
 
-import org.apache.zookeeper.CreateMode;
-import org.apache.zookeeper.ZooDefs;
-import org.apache.zookeeper.ZooKeeper;
+import org.apache.zookeeper.*;
 
+import java.io.IOException;
 import java.util.List;
 
-public class ZooKeeperWatcher {
-
+public class ZooKeeperWatcher implements Watcher {
     private final ZooKeeper zooKeeper;
 
-    public ZooKeeperWatcher() {
-        ZooKeeper zoo = new ZooKeeper("127.0.0.1:2181MB", 3000, this);
+    public ZooKeeperWatcher(String servers) throws IOException {
+        zooKeeper = new ZooKeeper(servers, 3000, this);
         zoo.create("/servers/s",
                 "data".getBytes(),
                 ZooDefs.Ids.OPEN_ACL_UNSAFE ,
@@ -22,6 +20,11 @@ public class ZooKeeperWatcher {
             byte[] data = zoo.getData("/servers/" + s, false, null);
             System.out.println("server " + s + " data=" + new String(data));
         }
+    }
+
+    @Override
+    public void process(WatchedEvent watchedEvent) {
+
     }
 
     static class MessageSendServersList {
