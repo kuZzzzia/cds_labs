@@ -21,7 +21,7 @@ public class ZooKeeperWatcher implements Watcher {
         this.zooKeeper.create(SERVERS_PATH,
                 "lab6".getBytes(),
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
-                CreateMode.EPHEMERAL_SEQUENTIAL
+                CreateMode.PERSISTENT_SEQUENTIAL
         );
 
         byte[] data = this.zooKeeper.getData(SERVERS_PATH, true, null);
