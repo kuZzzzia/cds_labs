@@ -12,7 +12,7 @@ public class ZooKeeperWatcher implements Watcher {
     private final ZooKeeper zooKeeper;
     private final ActorRef  actorConfig;
 
-    public ZooKeeperWatcher(String servers, ActorRef actorConfig) throws IOException, InterruptedException, KeeperException {
+    public ZooKeeperWatcher(String servers, ActorRef actorConfig, String[]) throws IOException, InterruptedException, KeeperException {
         this.actorConfig = actorConfig;
 
         zooKeeper = new ZooKeeper(servers, 3000, this);
