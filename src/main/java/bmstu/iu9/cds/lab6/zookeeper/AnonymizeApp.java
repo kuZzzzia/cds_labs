@@ -22,7 +22,8 @@ public class AnonymizeApp {
 
         final HttpServer server = new HttpServer(http, actorConfig, "8080");
 
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = server.route();
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = server.route().flow(system, materializer);
+        
     }
 
 }
