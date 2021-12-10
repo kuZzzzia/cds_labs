@@ -46,13 +46,13 @@ public class AnonymizeApp {
                     ConnectHttp.toHost("localhost", Integer.parseInt(args[i])),
                     materializer
             ));
-            serversInfo.append("http://localhost:").append(args[i]).append(" ");
+            serversInfo.append("http://localhost:").append(args[i]).append("/ ");
         }
 
 
 
         System.out.println(serversInfo +
-                "/\nPress RETURN to stop...");
+                "\nPress RETURN to stop...");
         System.in.read();
         for (CompletionStage<ServerBinding> binding : bindings) {
             binding
