@@ -5,12 +5,14 @@ import akka.http.javadsl.Http;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.server.Route;
 import akka.pattern.Patterns;
+import org.apache.zookeeper.WatchedEvent;
+import org.apache.zookeeper.Watcher;
 
 import java.time.Duration;
 
 import static akka.http.javadsl.server.Directives.*;
 
-public class HttpServer {
+public class HttpServer implements Watcher {
     private static final String     PATH = "";
     private static final String     URL_QUERY_PARAM = "url";
     private static final String     COUNT_QUERY_PARAM = "count";
@@ -62,6 +64,11 @@ public class HttpServer {
                         )
                 )
         );
+    }
+
+    @Override
+    public void process(WatchedEvent watchedEvent) {
+
     }
 
     static class MessageGetRandomServerUrl {
