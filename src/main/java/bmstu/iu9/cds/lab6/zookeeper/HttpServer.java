@@ -33,24 +33,29 @@ public class HttpServer {
         return route(
                 path( "", () ->
                         get(() ->
-                        parameter(URL_QUERY_PARAM, url ->
-                                parameter(COUNT_QUERY_PARAM, count -> {
-                                    if (count.equals(ZERO_COUNT_STRING)) {
-                                        return completeWithFuture(
-                                                http.singleRequest(
-                                                        HttpRequest.create(url)
-                                                )
-                                        );
-                                    }
-                                    return completeWithFuture(Patterns.ask(
-                                            actorConfig,
-                                            new MessageGetRandomServerUrl(serverNumber),
-                                            TIMEOUT
-                                    ).thenCompose(resPort ->
-                                            http.singleRequest(HttpRequest.create(String.format(URL_PATTERN, resPort, url, Integer.parseInt(count) - 1)))));
+                                parameter(URL_QUERY_PARAM, url ->
+                                        parameter(COUNT_QUERY_PARAM, count -> {
+                                            if (count.equals(ZERO_COUNT_STRING)) {
+                                                return completeWithFuture(
+                                                        http.singleRequest(
+                                                                HttpRequest.create(url)
+                                                        )
+                                                );
+                                            }
+                                            return completeWithFuture(Patterns.ask(
+                                                    actorConfig,
+                                                            new MessageGetRandomServerUrl(serverNumber),
+                                                            TIMEOUT
+                                            ).thenCompose(resPort -> {
+                                                        return http.singleRequest(
+                                                                HttpRequest.create(
+                                                                        String.format(URL_PATTERN, resPort, url, Integer.parseInt(count) - 1)
+                                                                )
+                                                        )
+                                                    }
+                                            ));
                                 })
-                                )
-                        )
+                        ))
 
                 )
         );
