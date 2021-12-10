@@ -12,6 +12,7 @@ import akka.http.javadsl.model.HttpResponse;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooKeeper;
 
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.concurrent.CompletionStage;
 
 public class AnonymizeApp {
+    static Logger log = Logger.getLogger(log4jExample.class.getName());
 
     public static void main(String[] args) throws IOException, InterruptedException, KeeperException {
         System.out.println("start!\n" + Arrays.toString(args));
