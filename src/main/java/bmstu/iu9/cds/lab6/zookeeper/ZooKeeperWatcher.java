@@ -25,7 +25,7 @@ public class ZooKeeperWatcher implements Watcher {
         );
 
         byte[] data = this.zooKeeper.getData(SERVERS_PATH, true, null);
-        System.out.println("servers" + " data=" + new String(data));
+        System.err.println("servers" + " data=" + new String(data));
     }
 
     private void sendServers() throws InterruptedException, KeeperException {
