@@ -32,7 +32,7 @@ public class AnonymizeApp {
 
         final HttpServer server = new HttpServer(http, actorConfig, 8080);
 //TODO: check args list
-        ZooKeeperWatcher zooKeeperWatcher = new ZooKeeperWatcher(args[0]);
+        ZooKeeperWatcher zooKeeperWatcher = new ZooKeeperWatcher(args[0], actorConfig);
 
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = server.createRoute().flow(system, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
