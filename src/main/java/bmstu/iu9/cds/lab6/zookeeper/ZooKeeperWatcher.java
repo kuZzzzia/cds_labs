@@ -40,10 +40,6 @@ public class ZooKeeperWatcher implements Watcher {
         }
     }
 
-    public ZooKeeper getZooKeeper() {
-        return zooKeeper;
-    }
-
     static class MessageSendServersList {
         private final List<String> servers;
 
