@@ -29,7 +29,7 @@ public class HttpServer {
         this.portNumber = portNumber;
     }
 
-    private Route route (ActorRef actorConfig) {
+    public Route route () {
         return route(
                 get(
                     () -> parameter(URL_QUERY_PARAM, url ->
@@ -41,7 +41,7 @@ public class HttpServer {
                                             )
                                     );
                                 }
-                                return completeWithFuture(Patterns.ask(
+                                return Patterns.ask(
                                         actorConfig,
                                         new MessageGetRandomServerUrl(portNumber),
                                         TIMEOUT
@@ -56,7 +56,7 @@ public class HttpServer {
                                                         )
                                                 )
                                         )
-                                ));
+                                );
                             })
                     )
                 )
