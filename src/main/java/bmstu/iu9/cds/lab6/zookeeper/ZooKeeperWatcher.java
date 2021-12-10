@@ -40,7 +40,7 @@ public class ZooKeeperWatcher implements Watcher {
     @Override
     public void process(WatchedEvent watchedEvent) {
         try {
-            zooKeeper.getData("/servers" , true, null);
+            zooKeeper.getChildren(SERVERS_PATH, this);
             sendServers();
         } catch (InterruptedException | KeeperException e) {
             e.printStackTrace();
