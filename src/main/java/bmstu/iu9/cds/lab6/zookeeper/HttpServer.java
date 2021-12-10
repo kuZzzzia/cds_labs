@@ -5,8 +5,7 @@ import akka.http.javadsl.Http;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.server.Route;
 import akka.pattern.Patterns;
-import org.apache.zookeeper.WatchedEvent;
-import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.*;
 
 import java.time.Duration;
 
@@ -22,11 +21,17 @@ public class HttpServer implements Watcher {
 
     private final Http        http;
     private final ActorRef    actorConfig;
+    private final ZooKeeper   zoo;
 
 
-    public HttpServer(Http http, ActorRef actorConfig) {
+    public HttpServer(Http http, ActorRef actorConfig, ZooKeeper zoo, int port) throws InterruptedException, KeeperException {
         this.http = http;
         this.actorConfig = actorConfig;
+        this.zoo = zoo;
+        zoo.create("/servers/localhost:" +  port,
+                ("localhost:" +  port).getBytes(),
+                ZooDefs.Ids.OPEN_ACL_UNSAFE,
+                CreateMode.EPHEMERAL_SEQUENTIAL);
     }
 
     public Route createRoute() {
