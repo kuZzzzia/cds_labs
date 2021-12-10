@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.concurrent.CompletionStage;
 
 public class AnonymizeApp {
+    public static final String ANSI_GREEN = "\u001B[32m";
+
 
     public static void main(String[] args) throws IOException, InterruptedException, KeeperException {
         if (args.length < 2) {
