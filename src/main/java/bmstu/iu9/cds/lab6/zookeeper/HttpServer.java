@@ -33,7 +33,7 @@ public class HttpServer {
 
     public Route route () {
         return route(
-                get(
+                path("", route(get(
                     () -> parameter(URL_QUERY_PARAM, url ->
                             parameter(COUNT_QUERY_PARAM, count -> {
                                 if (count.equals(ZERO_COUNT_STRING)) {
@@ -59,7 +59,7 @@ public class HttpServer {
                                 return completeWithFuture(redirect);
                             })
                     )
-                )
+                )))
         );
     }
 
