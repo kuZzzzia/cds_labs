@@ -7,6 +7,7 @@ import akka.http.javadsl.server.Route;
 import akka.pattern.Patterns;
 
 import java.time.Duration;
+import java.util.concurrent.CompletionStage;
 
 import static akka.http.javadsl.server.Directives.*;
 
@@ -41,21 +42,23 @@ public class HttpServer {
                                             )
                                     );
                                 }
-                                return Patterns.ask(
-                                        actorConfig,
-                                        new MessageGetRandomServerUrl(portNumber),
-                                        TIMEOUT)
+                                CompletionStage<HttpRequest> = Patterns.ask(
+                                                actorConfig,
+                                                new MessageGetRandomServerUrl(portNumber),
+                                                TIMEOUT)
                                         .thenCompose(resPort ->
-                                        http.singleRequest(
-                                                HttpRequest.create(
-                                                        String.format(
-                                                                URL_PATTERN,
-                                                                resPort,
-                                                                url,
-                                                                Integer.parseInt(count) - 1
+                                                http.singleRequest(
+                                                        HttpRequest.create(
+                                                                String.format(
+                                                                        URL_PATTERN,
+                                                                        resPort,
+                                                                        url,
+                                                                        Integer.parseInt(count) - 1
+                                                                )
                                                         )
-                                                )
-                                        )
+                                                );
+                                return completeWithFuture(
+                                )
                                 );
                             })
                     )
