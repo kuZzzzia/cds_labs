@@ -17,11 +17,7 @@ public class ZooKeeperWatcher implements Watcher {
         this.actorConfig = actorConfig;
 
         zooKeeper = new ZooKeeper(servers, 3000, this);
-        zooKeeper.create("/servers",
-                "servers".getBytes(),
-                ZooDefs.Ids.OPEN_ACL_UNSAFE ,
-                CreateMode.EPHEMERAL_SEQUENTIAL
-        );
+
         for (String port : clients)
         zooKeeper.create("/servers/" + CLIENT_PATH + port,
                 port.getBytes(),
