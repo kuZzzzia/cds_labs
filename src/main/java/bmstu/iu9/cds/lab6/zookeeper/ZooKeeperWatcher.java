@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ZooKeeperWatcher implements Watcher {
-    private static final String SERVERS_PATH = "/servers/s";
+    private static final String SERVERS_PATH = "/servers";
 
     private final ZooKeeper zooKeeper;
     private final ActorRef  actorConfig;
@@ -17,12 +17,6 @@ public class ZooKeeperWatcher implements Watcher {
         this.actorConfig = actorConfig;
 
         this.zooKeeper = zooKeeper;
-
-        this.zooKeeper.create(SERVERS_PATH,
-                "lab6".getBytes(),
-                ZooDefs.Ids.OPEN_ACL_UNSAFE,
-                CreateMode.PERSISTENT_SEQUENTIAL
-        );
 
         byte[] data = this.zooKeeper.getData(SERVERS_PATH, true, null);
         System.err.println("servers" + " data=" + new String(data));
