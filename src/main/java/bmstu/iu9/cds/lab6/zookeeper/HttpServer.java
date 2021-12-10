@@ -16,14 +16,17 @@ public class HttpServer {
     private static final String URL_QUERY_PARAM = "url";
     private static final String COUNT_QUERY_PARAM = "count";
     private static final String ZERO_COUNT_STRING = "0";
-    private static final Duration TIMEOUT = Duration(5000);
+    private static final Duration TIMEOUT = Duration.ofMillis(5000);
 
-    private Http http;
-    private ActorRef actorConfig;
+    private final Http        http;
+    private final ActorRef    actorConfig;
+    private final int         serverNumber;
 
 
-    public HttpServer(Http http) {
+    public HttpServer(Http http, ActorRef actorConfig, int serverNumber) {
         this.http = http;
+        this.actorConfig = actorConfig;
+        this.serverNumber = serverNumber;
     }
 
     private Route route (ActorRef actorConfig) {
@@ -35,7 +38,10 @@ public class HttpServer {
                                     if (count.equals(ZERO_COUNT_STRING)) {
                                         return http.singleRequest(HttpRequest.create(url));
                                     } else {
-                                        Patterns.ask(actorConfig, new )
+                                        Patterns.ask(
+                                                actorConfig,
+                                                new MessageGetRandomServerUrl(serverNumber),
+                                                TIMEOUT).thenApply((url) -> );
                                     }
                                 })
                                 )
@@ -45,8 +51,16 @@ public class HttpServer {
         );
     }
 
-    static class MessageGetRandomServerUrl() {
-        private
+    static class MessageGetRandomServerUrl {
+        private final int serverNumber;
+
+        public MessageGetRandomServerUrl(int serverNumber) {
+            this.serverNumber = serverNumber;
+        }
+
+        public int getServerNumber() {
+            return serverNumber;
+        }
     }
 
 }
