@@ -31,7 +31,7 @@ public class AnonymizeApp {
 
         final Http http = Http.get(system);
 
-        final HttpServer server = new HttpServer(http, actorConfig, 8080);
+        final HttpServer server = new HttpServer(http, actorConfig);
 //TODO: check args list
         ZooKeeperWatcher zooKeeperWatcher = new ZooKeeperWatcher(args[0], actorConfig, Arrays.copyOfRange(args, 1, args.length));
 

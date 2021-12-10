@@ -2,6 +2,7 @@ package bmstu.iu9.cds.lab6.zookeeper;
 
 import akka.actor.AbstractActor;
 import akka.actor.Actor;
+import akka.japi.pf.ReceiveBuilder;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class ActorConfig extends AbstractActor {
     public Receive createReceive() {
         return receiveBuilder()
                 .match(HttpServer.MessageGetRandomServerUrl.class, msg -> sender().tell(getRandomServerPort(), Actor.noSender()))
-                .match(ZooKeeperWatcher.MessageSendServersList.class, msg -> {servers = msg.getServers();});
+                .match(ZooKeeperWatcher.MessageSendServersList.class, msg -> servers = msg.getServers())
                 .build();
     }
 
