@@ -31,33 +31,36 @@ public class HttpServer {
         this.portNumber = portNumber;
     }
 
-    public Route route () {
-        return route(get(()
-                        -> parameter(URL_QUERY_PARAM, (url) ->
-                            parameter(COUNT_QUERY_PARAM, (count) -> {
-                                if (count.equals(ZERO_COUNT_STRING)) {
-                                    return completeWithFuture(
-                                            http.singleRequest(
-                                                    HttpRequest.create(url)
-                                            )
-                                    );
-                                }
-                                CompletionStage<Object> redirect = Patterns
-                                        .ask(actorConfig, new MessageGetRandomServerUrl(portNumber), TIMEOUT);
-                                return completeWithFuture(redirect.thenCompose(resPort -> {
-                                            return http.singleRequest(
-                                                    HttpRequest.create(
-                                                            String.format(
-                                                                    URL_PATTERN,
-                                                                    resPort,
-                                                                    url,
-                                                                    Integer.parseInt(count) - 1
-                                                    )
-                                            ));
-                                        }));
-                            })
-                    )
-                ));
+    public Route createRoute() {
+        return route(
+                path(PATH,
+                        route(get(
+                                () -> parameter(URL_QUERY_PARAM, (url) ->
+                                        parameter(COUNT_QUERY_PARAM, (count) -> {
+                                            if (count.equals(ZERO_COUNT_STRING)) {
+                                                return completeWithFuture(
+                                                        http.singleRequest(HttpRequest.create(url))
+                                                );
+                                            }
+                                            return completeWithFuture(
+                                                    Patterns
+                                                            .ask(actorConfig, new MessageGetRandomServerUrl(portNumber), TIMEOUT)
+                                                            .thenCompose(resPort ->
+                                                                    http.singleRequest(HttpRequest.create(
+                                                                            String.format(
+                                                                                    URL_PATTERN,
+                                                                                    resPort,
+                                                                                    url,
+                                                                                    Integer.parseInt(count) - 1
+                                                                            )
+                                                                    ))
+                                                            ));
+                                        })
+
+                                )
+                        )));
+
+        );
     }
 
     static class MessageGetRandomServerUrl {
