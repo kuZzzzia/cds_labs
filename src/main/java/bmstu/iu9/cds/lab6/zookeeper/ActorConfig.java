@@ -18,10 +18,12 @@ public class ActorConfig extends AbstractActor {
     @Override
     public Receive createReceive() {
         return receiveBuilder()
-                .match(HttpServer.MessageGetRandomServerUrl.class, msg -> sender().tell(servers.get(random.nextInt(servers.size()))), Actor.noSender())
+                .match(HttpServer.MessageGetRandomServerUrl.class, msg -> sender().tell(getRandomServerPort(), Actor.noSender()))
                 .match()
                 .build();
     }
 
-    return String rand
+    private String getRandomServerPort() {
+        return servers.get(random.nextInt(servers.size()));
+    }
 }
