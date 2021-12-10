@@ -4,6 +4,7 @@ import akka.actor.ActorRef;
 import org.apache.zookeeper.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ZooKeeperWatcher implements Watcher {
@@ -18,22 +19,18 @@ public class ZooKeeperWatcher implements Watcher {
 
         zooKeeper = new ZooKeeper(servers, 3000, this);
 
-        for (String port : clients)
-        zooKeeper.create("/servers/" + CLIENT_PATH + port,
-                port.getBytes(),
-                ZooDefs.Ids.OPEN_ACL_UNSAFE ,
+        zooKeeper.create("/servers",
+                "lab6".getBytes(),
+                ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
-        List<String> serversList = zooKeeper.getChildren(SERVERS_PATH, this);
-        for (String s : serversList) {
-            byte[] data = zooKeeper.getData("/servers/" + s, false, null);
-            System.err.println("server " + s + " data=" + new String(data));
-        }
-        sendServers();
     }
 
     private void sendServers() throws InterruptedException, KeeperException {
-        List<String> servers = zooKeeper.getChildren(SERVERS_PATH, this);
+        List<String> servers = new ArrayList<>();
+        for (String s : zooKeeper.getChildren(SERVERS_PATH, this)) {
+            servers.add(new String(zooKeeper.getData("/servers/" + s, false, null)));
+        }
         actorConfig.tell(new MessageSendServersList(servers),  ActorRef.noSender());
     }
 
@@ -57,6 +54,5 @@ public class ZooKeeperWatcher implements Watcher {
             return servers;
         }
     }
-
 
 }
