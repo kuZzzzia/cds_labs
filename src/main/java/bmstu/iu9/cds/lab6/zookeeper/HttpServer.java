@@ -91,16 +91,6 @@ public class HttpServer implements Watcher {
     static class MessageGetRandomServerUrl {
 
         public MessageGetRandomServerUrl() {}
-
-    /*
-        private final int portNumber;
-
-
-
-        public int getPortNumber() {
-            return portNumber;
-        }
-     */
     }
 
 }
