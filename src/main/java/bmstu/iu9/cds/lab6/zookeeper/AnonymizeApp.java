@@ -46,7 +46,7 @@ public class AnonymizeApp {
                     ConnectHttp.toHost("localhost", Integer.parseInt(args[i])),
                     materializer
             ));
-            serversInfo.append("http://localhost:").append(args[i]);
+            serversInfo.append("http://localhost:").append(args[i]).append(" ");
         }
 
 
