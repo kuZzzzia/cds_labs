@@ -32,6 +32,8 @@ public class AnonymizeApp {
 
         final HttpServer server = new HttpServer(http, actorConfig, 8080);
 
+        ZooKeeperWatcher 
+
         ZooKeeper zoo = new ZooKeeper("127.0.0.1:2181MB", 3000, this);
         zoo.create("/servers/s",
                 "data".getBytes(),
