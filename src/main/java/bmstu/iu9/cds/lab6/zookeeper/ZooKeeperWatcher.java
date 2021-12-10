@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class ZooKeeperWatcher implements Watcher {
+    private static final String SERVERS_PATH = "/servers";
+
     private final ZooKeeper zooKeeper;
     private final ActorRef  actorConfig;
 
@@ -22,8 +24,8 @@ public class ZooKeeperWatcher implements Watcher {
 
     }
 
-    private List<String> sendServers() {
-        zooKeeper.getChildren()
+    private List<String> sendServers() throws InterruptedException, KeeperException {
+        return zooKeeper.getChildren(SERVERS_PATH, this);
     }
 
     @Override
