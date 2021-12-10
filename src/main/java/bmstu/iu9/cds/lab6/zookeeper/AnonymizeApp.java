@@ -12,11 +12,12 @@ import akka.http.javadsl.model.HttpResponse;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
+import java.io.IOException;
 import java.util.concurrent.CompletionStage;
 
 public class AnonymizeApp {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.out.println("start!");
         ActorSystem system = ActorSystem.create();
         ActorRef actorConfig = system.actorOf(Props.create(ActorConfig.class));
@@ -24,7 +25,7 @@ public class AnonymizeApp {
 
         final Http http = Http.get(system);
 
-        final HttpServer server = new HttpServer(http, actorConfig, "8080");
+        final HttpServer server = new HttpServer(http, actorConfig, 8080);
 
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = server.createRoute().flow(system, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
@@ -36,7 +37,7 @@ public class AnonymizeApp {
         System.in.read();
         binding
                 .thenCompose(ServerBinding::unbind)
-                .thenAccept(unbound -> actorSystem.terminate());
+                .thenAccept(unbound -> system.terminate());
     }
 
 }

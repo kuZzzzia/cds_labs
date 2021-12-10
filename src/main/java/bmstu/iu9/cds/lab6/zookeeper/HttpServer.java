@@ -20,10 +20,10 @@ public class HttpServer {
 
     private final Http        http;
     private final ActorRef    actorConfig;
-    private final String      portNumber;
+    private final int         portNumber;
 
 
-    public HttpServer(Http http, ActorRef actorConfig, String portNumber) {
+    public HttpServer(Http http, ActorRef actorConfig, int portNumber) {
         this.http = http;
         this.actorConfig = actorConfig;
         this.portNumber = portNumber;
@@ -67,13 +67,13 @@ public class HttpServer {
     }
 
     static class MessageGetRandomServerUrl {
-        private final String portNumber;
+        private final int portNumber;
 
-        public MessageGetRandomServerUrl(String portNumber) {
+        public MessageGetRandomServerUrl(int portNumber) {
             this.portNumber = portNumber;
         }
 
-        public String getPortNumber() {
+        public int getPortNumber() {
             return portNumber;
         }
     }
