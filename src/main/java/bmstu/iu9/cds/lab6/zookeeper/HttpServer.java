@@ -2,7 +2,6 @@ package bmstu.iu9.cds.lab6.zookeeper;
 
 import akka.actor.ActorRef;
 import akka.http.javadsl.Http;
-import akka.http.javadsl.marshallers.jackson.Jackson;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.server.Route;
@@ -37,10 +36,10 @@ public class HttpServer {
                     () -> parameter(URL_QUERY_PARAM, (url) ->
                             parameter(COUNT_QUERY_PARAM, (count) -> {
                                 if (count.equals(ZERO_COUNT_STRING)) {
-                                    return completeOKWithFuture(
+                                    return completeWithFuture(
                                             http.singleRequest(
                                                     HttpRequest.create(url)
-                                            ), Jackson.marshaller()
+                                            )
                                     );
                                 }
                                 CompletionStage<Object> redirect = Patterns
