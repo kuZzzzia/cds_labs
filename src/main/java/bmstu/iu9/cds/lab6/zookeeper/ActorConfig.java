@@ -18,7 +18,5 @@ public class ActorConfig extends AbstractActor {
                 .build();
     }
 
-    static class MessageSendRandomServerPort {
-
-    }
+    return String rand
 }
