@@ -81,7 +81,11 @@ public class HttpServer implements Watcher {
 
     @Override
     public void process(WatchedEvent watchedEvent) {
-        zoo.getData(path, this, false);
+        try {
+            zoo.getData(path, this, null);
+        } catch (KeeperException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     static class MessageGetRandomServerUrl {
