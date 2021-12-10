@@ -33,15 +33,16 @@ public class HttpServer {
         return route(
                 path( "", () ->
                         get(() ->
-                        parameter(URL_QUERY_PARAM, (url) ->
-                                parameter(COUNT_QUERY_PARAM, (count) -> {
+                        parameter(URL_QUERY_PARAM, url ->
+                                parameter(COUNT_QUERY_PARAM, count -> {
                                     if (count.equals(ZERO_COUNT_STRING)) {
                                         return http.singleRequest(HttpRequest.create(url));
                                     } else {
                                         Patterns.ask(
                                                 actorConfig,
                                                 new MessageGetRandomServerUrl(serverNumber),
-                                                TIMEOUT).thenApply((url) -> );
+                                                TIMEOUT
+                                        ).thenCompose(resUrl -> );
                                     }
                                 })
                                 )
