@@ -13,6 +13,8 @@ import static akka.http.javadsl.server.Directives.*;
 
 public class HttpServer implements Watcher {
     private static final String     PATH = "";
+    private static final String     PATH_MAIN_SERVER = "localhost:8080";
+    private static final String     PATH_SERVERS = "localhost:";
     private static final String     URL_QUERY_PARAM = "url";
     private static final String     COUNT_QUERY_PARAM = "count";
     private static final String     ZERO_COUNT_STRING = "0";
@@ -29,7 +31,7 @@ public class HttpServer implements Watcher {
         this.http = http;
         this.actorConfig = actorConfig;
         this.zoo = zoo;
-        path = "localhost:" + port;
+        path = PATH_SERVERS + port;
         zoo.create("/servers/" + path,
                 path.getBytes(),
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
@@ -40,6 +42,7 @@ public class HttpServer implements Watcher {
         this.http = http;
         this.actorConfig = actorConfig;
         this.zoo = null;
+        path = PATH_MAIN_SERVER;
     }
 
     public Route createRoute() {
