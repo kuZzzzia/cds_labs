@@ -44,8 +44,8 @@ public class HttpServer {
                                 return Patterns.ask(
                                         actorConfig,
                                         new MessageGetRandomServerUrl(portNumber),
-                                        TIMEOUT
-                                ).thenCompose(resPort ->
+                                        TIMEOUT)
+                                        .thenCompose(resPort ->
                                         http.singleRequest(
                                                 HttpRequest.create(
                                                         String.format(
