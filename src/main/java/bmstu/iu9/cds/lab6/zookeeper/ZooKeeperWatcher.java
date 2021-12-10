@@ -25,7 +25,8 @@ public class ZooKeeperWatcher implements Watcher {
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
 
-        
+        byte[] data = zooKeeper.getData("/servers" , true, null);
+        System.out.println("servers" + " data=" + new String(data));
     }
 
     private void sendServers() throws InterruptedException, KeeperException {
@@ -39,6 +40,7 @@ public class ZooKeeperWatcher implements Watcher {
     @Override
     public void process(WatchedEvent watchedEvent) {
         try {
+            zooKeeper.getData("/servers" , true, null);
             sendServers();
         } catch (InterruptedException | KeeperException e) {
             e.printStackTrace();
