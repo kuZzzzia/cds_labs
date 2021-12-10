@@ -27,7 +27,7 @@ public class ZooKeeperWatcher implements Watcher {
         List<String> serversList = zooKeeper.getChildren(SERVERS_PATH, this);
         for (String s : serversList) {
             byte[] data = zooKeeper.getData("/servers/" + s, false, null);
-            System.out.println("server " + s + " data=" + new String(data));
+            System.err.println("server " + s + " data=" + new String(data));
         }
         sendServers();
     }
