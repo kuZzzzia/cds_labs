@@ -38,12 +38,14 @@ public class AnonymizeApp {
         final ActorMaterializer materializer = ActorMaterializer.create(system);
 
         final Http http = Http.get(system);
+        ZooKeeper zk = null;
 
         try {
-            ZooKeeper zk = new ZooKeeper(args[0], 3000, null);
+            zk = new ZooKeeper(args[0], 3000, null);
             new ZooKeeperWatcher(zk, actorConfig);
         } catch (InterruptedException | KeeperException e) {
             e.printStackTrace();
+            System.exit(-1);
         }
 
         List<CompletionStage<ServerBinding>> bindings = new ArrayList<>();
@@ -64,7 +66,13 @@ public class AnonymizeApp {
 
         printInGreen(serversInfo +
                 "\nPress RETURN to stop...");
-        System.in.read();
+
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
         for (CompletionStage<ServerBinding> binding : bindings) {
             binding
                     .thenCompose(ServerBinding::unbind)
