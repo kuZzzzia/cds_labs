@@ -23,6 +23,8 @@ public class ActorConfig extends AbstractActor {
     }
 
     private String getRandomServerPort() {
+        AnonymizeApp.printInGreen(String.valueOf(servers));
+        
         return servers.get(random.nextInt(servers.size()));
     }
 }
